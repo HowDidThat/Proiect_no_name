@@ -5,13 +5,26 @@ Group composition:
 	Maftei Briana Stefania -> [SOA](/soa_Briana.txt), [Github](https://github.com/brianamaftei), Discord ->  @brianastefania  
 	(Scrum Master) Maxim Matei -> [SOA](/soa_Matei.txt), [Github](https://github.com/HowDidThat), Discord -> @howdidthat
   
-  Coordinator -> Maria Olariu
+### Coordinator
+Olariu Maria
+
+Faculty of Computer Science
+
+Alexandru Ioan Cuza University
+
+Iasi, Romania
    
 # [Tasks](/tasks.txt)
-# [Useful Links](/links.txt)
+# [Useful Links](/links.md)
 # Data set
 The initial dataset is found [here](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset).
 
 Alongside the initial database we will use user inputs, that will be maually checked for correctness ( to ensure data integrity ), to expend our database.
+
+# Known issues
+Data intgrity.\
+Each deseas can differ from patient to patient, we can only predict what we have in the dataset but the reality may differ.
+
+#	
 
 
