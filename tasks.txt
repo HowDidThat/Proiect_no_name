@@ -1,10 +1,12 @@
 Catîru Ștefan 
     -> Tools and resources
-    -> Benchmark results? - Performance metrics of top applications in this topic 
+    -> Possible Obstacles
+    -> Task negotiation
 Maftei Briana Stefania 
     -> Relevant Datasets
     -> Existing applications
-    -> Possible Obstacles
+    -> Relevant Links
 Maxim Matei 
     -> Key Research Papers on this topic
     -> Use cases of our app
+    -> What did the others do

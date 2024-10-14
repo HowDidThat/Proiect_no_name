@@ -1,3 +1,5 @@
+**[Google Docs where we wrote down stuff](https://docs.google.com/document/d/1hW2lWB3y-qJdXqzaCUtqm1wPLW5EsuzqJVTTV1XZtwU/edit?usp=sharing)**
+
 **[Dataset1](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset)**
 
 **[Dataset2](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset)**
