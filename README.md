@@ -9,3 +9,9 @@ Group composition:
    
 # [Tasks](/tasks.txt)
 # [Useful Links](/links.txt)
+# Data set
+The initial dataset is found [here](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset).
+
+Alongside the initial database we will use user inputs, that will be maually checked for correctness ( to ensure data integrity ), to expend our database.
+
+
