@@ -1,9 +1,9 @@
 # Symptom
 This is the GitHub page for the project for the class of "Advanced Software Engineering Techniques 2024-2025"
 Group composition:  
-	Catîru Ștefan -> [SOA](/soa_Stefan.txt), [Github](https://github.com/StefanUAIC), Discord -> @stefan696969  
-	Maftei Briana Stefania -> [SOA](/soa_Briana.txt), [Github](https://github.com/brianamaftei), Discord ->  @brianastefania  
-	(Scrum Master) Maxim Matei -> [SOA](/soa_Matei.txt), [Github](https://github.com/HowDidThat), Discord -> @howdidthat
+	Catîru Ștefan -> [SOA](/sota_Stefan.md), [Github](https://github.com/StefanUAIC), Discord -> @stefan696969  
+	Maftei Briana Stefania -> [SOA](/sota_Briana.md), [Github](https://github.com/brianamaftei), Discord ->  @brianastefania  
+	(Scrum Master) Maxim Matei -> [SOA](/sota_Matei.md), [Github](https://github.com/HowDidThat), Discord -> @howdidthat
   
 ### Coordinator
 Olariu Maria
@@ -17,7 +17,7 @@ Iasi, Romania
 # [Tasks](/tasks.txt)
 # [Useful Links](/links.md)
 # Data set
-The initial dataset is found [here](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset).
+The initial dataset we found [here](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset).
 
 Alongside the initial database we will use user inputs, that will be maually checked for correctness ( to ensure data integrity ), to expend our database.
 
@@ -25,6 +25,6 @@ Alongside the initial database we will use user inputs, that will be maually che
 Data intgrity.\
 Each deseas can differ from patient to patient, we can only predict what we have in the dataset but the reality may differ.
 
-#	
+	
 
 

@@ -1,0 +1,10 @@
+Catîru Ștefan 
+    -> Tools and resources
+    -> Benchmark results? - Performance metrics of top applications in this topic 
+Maftei Briana Stefania 
+    -> Relevant Datasets
+    -> Existing applications
+    -> Possible Obstacles
+Maxim Matei 
+    -> Key Research Papers on this topic
+    -> Use cases of our app

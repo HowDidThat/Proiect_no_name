@@ -1,4 +1,9 @@
-**[Dataset](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset)**
+**[Dataset1](https://www.kaggle.com/datasets/waqi786/heart-attack-dataset)**
+
+**[Dataset2](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset)**
+
+**[Dataset3](https://www.kaggle.com/datasets/kaushil268/disease-prediction-using-machine-learning)**
+
 
 **Related research papers**
 
