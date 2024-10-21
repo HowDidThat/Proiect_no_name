@@ -1,16 +1,26 @@
 Catîru Ștefan 
-    -> Tools and resources
-    -> Possible Obstacles
-    -> Task negotiation
-Maftei Briana Stefania 
-    -> Relevant Datasets
-    -> Existing applications
-    -> Relevant Links
+    Lab1:
+    	-> Tools and resources
+    	-> Possible Obstacles
+    	-> Task negotiation
+    Lab2:
+	->
+	->
+	-> 
+Maftei Briana Stefania
+    Lab1:
+    	-> Relevant Datasets
+    	-> Existing applications
+    	-> Relevant Links
+    Lab2:
+	->
+	->
+	->
 Maxim Matei 
     Lab1:
-	    -> Key Research Papers on this topic
-	    -> Use cases of our app
-	    -> What did the others do
+	-> Key Research Papers on this topic
+	-> Use cases of our app
+	-> What did the others do
     Lab2:
     	-> State chart diagram
     	-> Classes diagram
