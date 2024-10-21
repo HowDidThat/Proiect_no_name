@@ -4,18 +4,16 @@ Catîru Ștefan
     	-> Possible Obstacles
     	-> Task negotiation
     Lab2:
-	->
-	->
-	-> 
+	-> C1 Diagram & C2 Diagram
+	-> Requirements Analysis - Major components part
 Maftei Briana Stefania
     Lab1:
     	-> Relevant Datasets
     	-> Existing applications
     	-> Relevant Links
     Lab2:
-	->
-	->
-	->
+	-> Use Case Diagram & Requirements Analysis - Use case part
+	-> 
 Maxim Matei 
     Lab1:
 	-> Key Research Papers on this topic
