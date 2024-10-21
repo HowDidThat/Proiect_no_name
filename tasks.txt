@@ -7,6 +7,10 @@ Maftei Briana Stefania
     -> Existing applications
     -> Relevant Links
 Maxim Matei 
-    -> Key Research Papers on this topic
-    -> Use cases of our app
-    -> What did the others do
+    Lab1:
+	    -> Key Research Papers on this topic
+	    -> Use cases of our app
+	    -> What did the others do
+    Lab2:
+    	-> State chart diagram
+    	-> Classes diagram
