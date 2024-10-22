@@ -139,7 +139,7 @@
 
 #### 2.1 User Authentication
 
-##### UC1: Register
+#### UC1: Register
 - **Primary Actor:** Medical Student
 - **Preconditions:** None
 - **Main Flow:**
@@ -161,7 +161,7 @@
   - Password doesn't meet requirements
   - Registration form incomplete
 
-##### UC2: Login
+#### UC2: Login
 - **Primary Actor:** Medical Student, Administrator
 - **Preconditions:** User has registered account
 - **Main Flow:**
@@ -176,7 +176,7 @@
 
 #### 2.2 Core Quiz Functionality
 
-##### UC3: Take Quiz
+#### UC3: Take Quiz
 - **Primary Actor:** Medical Student
 - **Preconditions:** User is logged in
 - **Main Flow:**
@@ -197,7 +197,7 @@
 
 #### 2.3 Progress Tracking
 
-##### UC4: Track Progress
+#### UC4: Track Progress
 - **Primary Actor:** Medical Student
 - **Preconditions:** User has completed quizzes
 - **Main Flow:**
@@ -219,7 +219,7 @@
 
 #### 2.4 Administrative Functions
 
-##### UC5: Manage Question Bank
+#### UC5: Manage Question Bank
 - **Primary Actor:** Administrator
 - **Preconditions:** Admin is logged in
 - **Main Flow:**
@@ -238,7 +238,7 @@
   - Duplicate questions
   - Batch updates
 
-##### UC6: Monitor User Activity
+#### UC6: Monitor User Activity
 - **Primary Actor:** Administrator
 - **Preconditions:** Admin is logged in
 - **Main Flow:**
