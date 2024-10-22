@@ -91,6 +91,14 @@
     - Quiz creation interface for administrators
     - Version control for quiz questions
 
+#### 4.2 Analytics System (Maybe implemented this semester)
+
+- **Description**: Provides detailed insights into user behavior and application performance.
+- **Key Features**:
+    - User engagement metrics
+    - Quiz performance analytics
+    - System usage statistics
+
 ### 4. External Integrations
 
 #### 4.1 Email Service (To be implemented this semester)
@@ -100,14 +108,6 @@
     - User registration confirmation
     - Password reset emails
     - Notifications for new quizzes or important updates
-
-#### 4.2 Analytics System (Maybe implemented this semester)
-
-- **Description**: Provides detailed insights into user behavior and application performance.
-- **Key Features**:
-    - User engagement metrics
-    - Quiz performance analytics
-    - System usage statistics
 
 ### 5. AWS Integration (To be implemented throughout the semester)
 
