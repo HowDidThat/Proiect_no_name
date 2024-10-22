@@ -91,7 +91,7 @@
     - Quiz creation interface for administrators
     - Version control for quiz questions
 
-#### 4.2 Analytics System (Maybe implemented this semester)
+#### 3.3 Analytics System (Maybe implemented this semester)
 
 - **Description**: Provides detailed insights into user behavior and application performance.
 - **Key Features**:
