@@ -144,6 +144,7 @@
 ### 1. Registration and Authentication
 
 #### UC1: Register New Account
+
 **Actor:** Medical Student
 **Description:** New user creates an account in the system
 **Main Flow:**
@@ -160,6 +161,7 @@
 - Verification email fails to send
 
 #### UC2: Login
+
 **Actor:** Medical Student, Administrator
 **Description:** User authenticates to access the system
 **Main Flow:**
@@ -173,6 +175,7 @@
 - Account locked after multiple failed attempts
 
 #### UC3: Change Password
+
 **Actor:** Medical Student, Administrator
 **Description:** User modifies their account password
 **Main Flow:**
@@ -188,6 +191,7 @@
 ### 2. Quiz and Game Functionality
 
 #### UC4: Take Quiz
+
 **Actor:** Medical Student
 **Description:** User participates in a medical knowledge quiz
 **Main Flow:**
@@ -204,6 +208,7 @@
 - Time limit exceeded
 
 #### UC5: Play Symptom-Disease Game
+
 **Actor:** Medical Student
 **Description:** User engages in interactive symptom-disease matching game
 **Main Flow:**
@@ -220,6 +225,7 @@
 - Invalid matches
 
 #### UC6: Review Answers
+
 **Actor:** Medical Student
 **Description:** User reviews their quiz/game performance
 **Main Flow:**
@@ -235,6 +241,7 @@
 ### 3. Progress Tracking
 
 #### UC7: Track Progress
+
 **Actor:** Medical Student
 **Description:** User monitors their learning progress
 **Main Flow:**
@@ -248,6 +255,7 @@
 - Incomplete metrics
 
 #### UC8: View Statistics
+
 **Actor:** Medical Student
 **Description:** User views detailed performance statistics
 **Main Flow:**
@@ -263,6 +271,7 @@
 ### 4. Administrative Functions
 
 #### UC9: Manage Question Bank
+
 **Actor:** Administrator
 **Description:** Admin maintains and updates question database
 **Main Flow:**
@@ -277,6 +286,7 @@
 - Import/export issues
 
 #### UC10: Monitor User Activity
+
 **Actor:** Administrator
 **Description:** Admin tracks system usage and user performance
 **Main Flow:**
@@ -290,6 +300,7 @@
 - System performance issues
 
 #### UC11: Update Medical Content
+
 **Actor:** Administrator
 **Description:** Admin maintains medical information accuracy
 **Main Flow:**
