@@ -1,4 +1,4 @@
-# Requirements Analysis: Medical Student Quiz App
+# Requirements Analysis
 
 ## Major Components
 
