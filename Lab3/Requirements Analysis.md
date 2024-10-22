@@ -123,9 +123,7 @@
     - **Amazon API Gateway**: For managing API endpoints and integrations
     - **Amazon CloudFormation**: For infrastructure as code and automated deployment
  
-## Use Case
-
-### Possible Actors
+## Use Case - Possible Actors
 
 ### 1. Medical Student
 - Primary user of the application
@@ -139,7 +137,7 @@
 - Monitors user activity and system performance
 - Manages the medical knowledge base
 
-### Use Case Scenarios
+## Use Case - Scenarios
 
 ### 1. Registration and Authentication
 
