@@ -1,0 +1,70 @@
+@startuml Symptom Disease Quiz Activity Diagram
+
+scale 1.5
+skinparam ActivityBackgroundColor White
+skinparam ActivityBorderColor DarkSlateGray
+skinparam ActivityDiamondBackgroundColor White
+skinparam ActivityDiamondBorderColor DarkSlateGray
+skinparam ArrowColor DarkSlateGray
+
+|Student|
+start
+:Login/Register;
+if (Registered User?) then (no)
+  :Complete Registration Form;
+  :Submit Registration;
+else (yes)
+  :Enter Credentials;
+endif
+
+|System|
+:Validate Credentials;
+if (Valid?) then (no)
+  :Show Error Message;
+  |Student|
+  :Review Error;
+  detach
+else (yes)
+  :Load User Profile;
+endif
+
+|Student|
+fork
+  :Select Quiz Mode;
+  if (Quiz Type?) then (Disease to Symptoms)
+    :View Disease;
+    :List Related Symptoms;
+  else (Symptom to Diseases)
+    :View Symptom;
+    :List Possible Diseases;
+  endif
+  :Submit Answers;
+  
+  |System|
+  :Evaluate Answers;
+  :Calculate Score;
+  :Save Progress;
+  
+  |Student|
+  :View Results;
+  :Review Correct Answers;
+fork again
+  :Set Difficulty Level;
+fork again
+  :Access Progress Statistics;
+  |System|
+  :Generate Statistics;
+  :Display Progress Charts;
+end fork
+
+|Student|
+:Choose Next Action;
+if (Continue?) then (yes)
+  :Select New Activity;
+  detach
+else (no)
+  :Logout;
+  stop
+endif
+
+@enduml
