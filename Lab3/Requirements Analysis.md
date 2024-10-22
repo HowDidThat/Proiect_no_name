@@ -124,181 +124,147 @@
     - **Amazon CloudFormation**: For infrastructure as code and automated deployment
  
 ## Use Case 
-### Possible Actors
 
-### 1. Medical Student
-- Primary user of the application
-- Learning medicine through interactive quizzes and games
-- Manages their own learning progress and performance
-- Can access both basic and advanced features of the application
+### 1. Actors
+- **Medical Student**
+  - Main user of the application
+  - Focuses on learning and practicing medical diagnosis
+  - Tracks their progress and performance
 
-### 2. Administrator
-- System maintainer and content manager
-- Responsible for system functionality and content quality
-- Monitors user activity and system performance
-- Manages the medical knowledge base
+- **Administrator**
+  - Manages the system content and users
+  - Monitors system usage and maintains quality
 
-### Scenarios
+## 2. Scenarios
 
-### 1. Registration and Authentication
+### 2.1 User Authentication
 
-#### UC1: Register New Account
-
-- **Actor:** Medical Student
-- **Description:** New user creates an account in the system
+#### UC1: Register
+- **Primary Actor:** Medical Student
+- **Preconditions:** None
 - **Main Flow:**
-1. User accesses the registration page
-2. Enters required personal information (name, email, password)
-3. System validates input data
-4. System creates new account
-5. System sends verification email
-6. User verifies email address
+  1. Student selects "Register" option
+  2. System displays registration form
+  3. Student enters required information:
+     - Full name
+     - Email address
+     - Password
+     - Academic institution
+     - Year of study
+  4. System validates the information
+  5. System creates new account
+  6. System sends verification email
+
 - **Alternative Flows:**
   - Email already registered
-  - Invalid input data
-  - Verification email fails to send
+  - Invalid email format
+  - Password doesn't meet requirements
+  - Registration form incomplete
 
 #### UC2: Login
-
-- **Actor:** Medical Student, Administrator
-- **Description:** User authenticates to access the system
+- **Primary Actor:** Medical Student, Administrator
+- **Preconditions:** User has registered account
 - **Main Flow:**
-1. User enters credentials
-2. System validates credentials
-3. System grants appropriate access level
+  1. User enters email and password
+  2. System validates credentials
+  3. System grants access to appropriate interface
+
 - **Alternative Flows:**
   - Invalid credentials
   - Forgotten password
-  - Account locked after multiple failed attempts
+  - Account locked
 
-#### UC3: Change Password
+### 2.2 Core Quiz Functionality
 
-- **Actor:** Medical Student, Administrator
-- **Description:** User modifies their account password
+#### UC3: Take Quiz
+- **Primary Actor:** Medical Student
+- **Preconditions:** User is logged in
 - **Main Flow:**
-1. User selects change password option
-2. Enters current password
-3. Enters and confirms new password
-4. System validates and updates password
+  1. Student selects "Take Quiz" option
+  2. System presents difficulty level selection
+  3. Student chooses quiz type:
+     - Disease to Symptoms
+     - Symptoms to Disease
+  4. System presents quiz questions
+  5. Student submits answers
+  6. System provides immediate feedback
+  7. System saves progress
+
 - **Alternative Flows:**
-  - Current password incorrect
-  - New password doesn't meet requirements
-
-### 2. Quiz and Game Functionality
-
-#### UC4: Take Quiz
-
-- **Actor:** Medical Student
-- **Description:** User participates in a medical knowledge quiz
-- **Main Flow:**
-1. User selects quiz type (Disease to Symptoms or Symptoms to Disease)
-2. Sets difficulty level
-3. System presents questions
-4. User provides answers
-5. System provides immediate feedback
-6. Progress is automatically saved
-- **Alternative Flows:**
-  - Quiz interruption
-  - Connection loss during quiz
+  - Quiz interrupted
+  - Connection lost
   - Time limit exceeded
 
-#### UC5: Play Symptom-Disease Game
+### 2.3 Progress Tracking
 
-- **Actor:** Medical Student
-- **Description:** User engages in interactive symptom-disease matching game
+#### UC4: Track Progress
+- **Primary Actor:** Medical Student
+- **Preconditions:** User has completed quizzes
 - **Main Flow:**
-1. User starts new game session
-2. Sets difficulty level
-3. System presents game scenario
-4. User matches symptoms with diseases
-5. System provides real-time feedback
-6. Progress is saved automatically
-- **Alternative Flows:**
-  - Game interruption
-  - Connection issues
-  - Invalid matches
+  1. Student accesses progress dashboard
+  2. System displays:
+     - Overall performance metrics
+     - Quiz completion rates
+     - Accuracy statistics
+     - Time-based progress
+  3. Student can filter results by:
+     - Time period
+     - Quiz type
+     - Difficulty level
 
-#### UC6: Review Answers
-- **Actor:** Medical Student
-- **Description:** User reviews their quiz/game performance
-- **Main Flow:**
-1. User selects completed quiz/game
-2. System displays questions and user's answers
-3. Shows correct answers and explanations
-4. Provides learning resources for missed questions
-- **Alternative Flows:**
-  - Session expired
-  - Data not available
-
-### 3. Progress Tracking
-
-#### UC7: Track Progress
-
-- **Actor:** Medical Student
-- **Description:** User monitors their learning progress
-- **Main Flow:**
-1. User accesses progress dashboard
-2. Views performance metrics
-3. Analyzes strength/weakness areas
-4. Reviews historical performance  
 - **Alternative Flows:**
   - No data available
-  - Incomplete metrics
+  - Export statistics
+  - Reset progress view
 
-#### UC8: View Statistics
+### 2.4 Administrative Functions
 
-- **Actor:** Medical Student
-- **Description:** User views detailed performance statistics
+#### UC5: Manage Question Bank
+- **Primary Actor:** Administrator
+- **Preconditions:** Admin is logged in
 - **Main Flow:**
-1. User selects statistics view
-2. Chooses time period
-3. Views various performance metrics
-4. Can export statistics
-- **Alternative Flows:**
-  - No data for selected period
-  - Export failure
+  1. Admin accesses question management interface
+  2. System displays current question bank
+  3. Admin can:
+     - Add new questions
+     - Edit existing questions
+     - Review question statistics
+     - Manage difficulty levels
+  4. System validates changes
+  5. System updates question bank
 
-### 4. Administrative Functions
-
-#### UC9: Manage Question Bank
-
-- **Actor:** Administrator
-- **Description:** Admin maintains and updates question database
-- **Main Flow:**
-1. Admin accesses question bank
-2. Can add/edit/delete questions
-3. Manages difficulty levels
-4. Updates answer keys
 - **Alternative Flows:**
   - Validation errors
   - Duplicate questions
-  - Import/export issues
+  - Batch updates
 
-#### UC10: Monitor User Activity
-
-- **Actor:** Administrator
-- **Description:** Admin tracks system usage and user performance
+#### UC6: Monitor User Activity
+- **Primary Actor:** Administrator
+- **Preconditions:** Admin is logged in
 - **Main Flow:**
-1. Admin views activity dashboard
-2. Monitors user engagement
-3. Reviews system performance
-4. Generates usage reports
-- **Alternative Flows:**
-  - Data inconsistencies
-  - System performance issues
+  1. Admin accesses monitoring dashboard
+  2. System displays:
+     - Active users
+     - Usage patterns
+     - Performance metrics
+     - System health indicators
+  3. Admin can generate reports
+  4. System allows filtering and analysis
 
-#### UC11: Update Medical Content
-
-- **Actor:** Administrator
-- **Description:** Admin maintains medical information accuracy
-- **Main Flow:**
-1. Reviews existing content
-2. Updates medical information
-3. Adds new content
-4. Validates content accuracy
 - **Alternative Flows:**
-  - Version conflicts
-  - Content validation failures
- 
-  
-    
+  - Export reports
+  - Flag suspicious activity
+  - System alerts
+
+## 3. Relationships
+
+### Include Relationships
+- Take Quiz **includes** Set Difficulty Level
+- Take Quiz **includes** Save Progress
+- Track Progress **includes** View Statistics
+
+### Extend Relationships
+- Take Quiz **extended by** Disease to Symptoms Quiz
+- Take Quiz **extended by** Symptom to Diseases Quiz
+- Take Quiz **extended by** Review Answers
+- Login **extended by** Change Password
