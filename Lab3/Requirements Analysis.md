@@ -122,4 +122,185 @@
     - **Amazon Comprehend**: For natural language processing tasks in quiz content analysis, if required
     - **Amazon API Gateway**: For managing API endpoints and integrations
     - **Amazon CloudFormation**: For infrastructure as code and automated deployment
+ 
+## Use Case
+
+### Possible Actors
+
+### 1. Medical Student
+- Primary user of the application
+- Learning medicine through interactive quizzes and games
+- Manages their own learning progress and performance
+- Can access both basic and advanced features of the application
+
+### 2. Administrator
+- System maintainer and content manager
+- Responsible for system functionality and content quality
+- Monitors user activity and system performance
+- Manages the medical knowledge base
+
+### Use Case Scenarios
+
+### 1. Registration and Authentication
+
+#### UC1: Register New Account
+**Actor:** Medical Student
+**Description:** New user creates an account in the system
+**Main Flow:**
+1. User accesses the registration page
+2. Enters required personal information (name, email, password)
+3. System validates input data
+4. System creates new account
+5. System sends verification email
+6. User verifies email address
+   
+**Alternative Flows:**
+- Email already registered
+- Invalid input data
+- Verification email fails to send
+
+#### UC2: Login
+**Actor:** Medical Student, Administrator
+**Description:** User authenticates to access the system
+**Main Flow:**
+1. User enters credentials
+2. System validates credentials
+3. System grants appropriate access level
+
+**Alternative Flows:**
+- Invalid credentials
+- Forgotten password
+- Account locked after multiple failed attempts
+
+#### UC3: Change Password
+**Actor:** Medical Student, Administrator
+**Description:** User modifies their account password
+**Main Flow:**
+1. User selects change password option
+2. Enters current password
+3. Enters and confirms new password
+4. System validates and updates password
+
+**Alternative Flows:**
+- Current password incorrect
+- New password doesn't meet requirements
+
+### 2. Quiz and Game Functionality
+
+#### UC4: Take Quiz
+**Actor:** Medical Student
+**Description:** User participates in a medical knowledge quiz
+**Main Flow:**
+1. User selects quiz type (Disease to Symptoms or Symptoms to Disease)
+2. Sets difficulty level
+3. System presents questions
+4. User provides answers
+5. System provides immediate feedback
+6. Progress is automatically saved
+
+**Alternative Flows:**
+- Quiz interruption
+- Connection loss during quiz
+- Time limit exceeded
+
+#### UC5: Play Symptom-Disease Game
+**Actor:** Medical Student
+**Description:** User engages in interactive symptom-disease matching game
+**Main Flow:**
+1. User starts new game session
+2. Sets difficulty level
+3. System presents game scenario
+4. User matches symptoms with diseases
+5. System provides real-time feedback
+6. Progress is saved automatically
+
+**Alternative Flows:**
+- Game interruption
+- Connection issues
+- Invalid matches
+
+#### UC6: Review Answers
+**Actor:** Medical Student
+**Description:** User reviews their quiz/game performance
+**Main Flow:**
+1. User selects completed quiz/game
+2. System displays questions and user's answers
+3. Shows correct answers and explanations
+4. Provides learning resources for missed questions
+   
+**Alternative Flows:**
+- Session expired
+- Data not available
+
+### 3. Progress Tracking
+
+#### UC7: Track Progress
+**Actor:** Medical Student
+**Description:** User monitors their learning progress
+**Main Flow:**
+1. User accesses progress dashboard
+2. Views performance metrics
+3. Analyzes strength/weakness areas
+4. Reviews historical performance
+   
+**Alternative Flows:**
+- No data available
+- Incomplete metrics
+
+#### UC8: View Statistics
+**Actor:** Medical Student
+**Description:** User views detailed performance statistics
+**Main Flow:**
+1. User selects statistics view
+2. Chooses time period
+3. Views various performance metrics
+4. Can export statistics
+   
+**Alternative Flows:**
+- No data for selected period
+- Export failure
+
+### 4. Administrative Functions
+
+#### UC9: Manage Question Bank
+**Actor:** Administrator
+**Description:** Admin maintains and updates question database
+**Main Flow:**
+1. Admin accesses question bank
+2. Can add/edit/delete questions
+3. Manages difficulty levels
+4. Updates answer keys
+
+**Alternative Flows:**
+- Validation errors
+- Duplicate questions
+- Import/export issues
+
+#### UC10: Monitor User Activity
+**Actor:** Administrator
+**Description:** Admin tracks system usage and user performance
+**Main Flow:**
+1. Admin views activity dashboard
+2. Monitors user engagement
+3. Reviews system performance
+4. Generates usage reports
+   
+**Alternative Flows:**
+- Data inconsistencies
+- System performance issues
+
+#### UC11: Update Medical Content
+**Actor:** Administrator
+**Description:** Admin maintains medical information accuracy
+**Main Flow:**
+1. Reviews existing content
+2. Updates medical information
+3. Adds new content
+4. Validates content accuracy
+   
+**Alternative Flows:**
+- Version conflicts
+- Content validation failures
+ 
+  
     
