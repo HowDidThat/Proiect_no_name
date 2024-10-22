@@ -13,7 +13,7 @@ Maftei Briana Stefania
     	-> Relevant Links
     Lab2:
 	-> Use Case Diagram & Requirements Analysis - Use case part
-	-> 
+	-> Activity Diagram
 Maxim Matei 
     Lab1:
 	-> Key Research Papers on this topic
