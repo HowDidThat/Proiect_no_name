@@ -135,11 +135,11 @@
   - Manages the system content and users
   - Monitors system usage and maintains quality
 
-## 2. Scenarios
+### 2. Scenarios
 
-### 2.1 User Authentication
+#### 2.1 User Authentication
 
-#### UC1: Register
+##### UC1: Register
 - **Primary Actor:** Medical Student
 - **Preconditions:** None
 - **Main Flow:**
@@ -161,7 +161,7 @@
   - Password doesn't meet requirements
   - Registration form incomplete
 
-#### UC2: Login
+##### UC2: Login
 - **Primary Actor:** Medical Student, Administrator
 - **Preconditions:** User has registered account
 - **Main Flow:**
@@ -174,9 +174,9 @@
   - Forgotten password
   - Account locked
 
-### 2.2 Core Quiz Functionality
+#### 2.2 Core Quiz Functionality
 
-#### UC3: Take Quiz
+##### UC3: Take Quiz
 - **Primary Actor:** Medical Student
 - **Preconditions:** User is logged in
 - **Main Flow:**
@@ -195,9 +195,9 @@
   - Connection lost
   - Time limit exceeded
 
-### 2.3 Progress Tracking
+#### 2.3 Progress Tracking
 
-#### UC4: Track Progress
+##### UC4: Track Progress
 - **Primary Actor:** Medical Student
 - **Preconditions:** User has completed quizzes
 - **Main Flow:**
@@ -217,9 +217,9 @@
   - Export statistics
   - Reset progress view
 
-### 2.4 Administrative Functions
+#### 2.4 Administrative Functions
 
-#### UC5: Manage Question Bank
+##### UC5: Manage Question Bank
 - **Primary Actor:** Administrator
 - **Preconditions:** Admin is logged in
 - **Main Flow:**
@@ -238,7 +238,7 @@
   - Duplicate questions
   - Batch updates
 
-#### UC6: Monitor User Activity
+##### UC6: Monitor User Activity
 - **Primary Actor:** Administrator
 - **Preconditions:** Admin is logged in
 - **Main Flow:**
@@ -255,16 +255,3 @@
   - Export reports
   - Flag suspicious activity
   - System alerts
-
-## 3. Relationships
-
-### Include Relationships
-- Take Quiz **includes** Set Difficulty Level
-- Take Quiz **includes** Save Progress
-- Track Progress **includes** View Statistics
-
-### Extend Relationships
-- Take Quiz **extended by** Disease to Symptoms Quiz
-- Take Quiz **extended by** Symptom to Diseases Quiz
-- Take Quiz **extended by** Review Answers
-- Login **extended by** Change Password
