@@ -1,0 +1,83 @@
+@startuml
+' Size adjustments
+scale 1.5
+
+skinparam {
+    DefaultTextAlignment center
+    usecase {
+        BackgroundColor White
+        BorderColor DarkSlateGray
+        ArrowColor DarkSlateGray
+        BorderThickness 2
+        FontSize 14
+    }
+    actorStyle awesome
+    actor {
+        FontSize 16
+    }
+    rectangleFontSize 18
+    packageFontSize 16
+    ArrowFontSize 12
+}
+
+' Left positioning for actors
+left to right direction
+
+' Actors
+:Medical Student: as Student
+:Admin: as Admin
+
+rectangle "Symptom Disease Quiz Application" {
+    ' Authentication & Profile
+    (Register) as Register
+    (Login) as Login
+    (Change Password) as ChangePassword
+    (Manage Profile) as ManageProfile
+    
+    ' Core features
+    (Take Quiz) as TakeQuiz
+    (Set Difficulty Level) as SetDifficulty
+    (Track Progress) as TrackProgress
+    (View Statistics) as ViewStats
+    
+    ' Quiz variations
+    (Disease to Symptoms Quiz) as DiseaseToSymptoms
+    (Symptom to Diseases Quiz) as SymptomToDiseases
+    (Review Answers) as ReviewAnswers
+    (Save Progress) as SaveProgress
+
+    ' Admin functionalities
+    (Manage Question Bank) as ManageQuestions
+    (Generate Reports) as GenReports
+    (Monitor User Activity) as MonitorActivity
+    (Update Medical Content) as UpdateContent
+}
+
+' Layout hints
+Login -[hidden]down-> ChangePassword
+
+' Student relationships
+Student --> Register
+Student --> Login
+Student --> ManageProfile
+Student --> TakeQuiz
+Student --> TrackProgress
+
+' Admin relationships
+Admin --> Login
+Admin --> ManageQuestions
+Admin --> GenReports
+Admin --> MonitorActivity
+Admin --> UpdateContent
+
+' Extensions
+TakeQuiz <.. DiseaseToSymptoms : <<extend>>
+TakeQuiz <.. SymptomToDiseases : <<extend>>
+TakeQuiz <.. ReviewAnswers : <<extend>>
+
+' Include relationships
+TakeQuiz ..> SetDifficulty : <<include>>
+TakeQuiz ..> SaveProgress : <<include>>
+TrackProgress ..> ViewStats : <<include>>
+Login ..> ChangePassword : <<extend>>
+@enduml
