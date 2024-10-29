@@ -10,7 +10,6 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 # Backend Communication Layer
 - Singleton API Adapter
 
-
 # Base card component as foundation
 ## Composition Pattern
 
@@ -20,5 +19,45 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 - Progress indicators
 - Interactive elements
 
+### 1. MVC pattern
+The main application frontend will be structured in a mvc fashion for separation of concerns
+***Usage***
+- User profiles
+- Settings pages
+- Data entry interfaces
+- Quiz validation logic
+The main application frontend will be structured in a mvc fashion for separation of concerns
+### 2. Singleton pattern
+```javaScript
+class ApiService {
+    async login(credentials){}
+    async signup(userData){}
+    async refreshToken(){}
+    ...
+}
+```
+***Usage***
+- Maintains a single source of truth for API communication
+- Centralizes authentication token management
+- Ensures consistent headers and request configurations
+- Prevents multiple instances from creating conflicting requests
 
+### 3. Adapter pattern
+```javaScript
+    async getQuizzes(params = {}){}
+    async getQuizById(quizId){}
+    async createQuiz(quizData){}
+    async updateQuiz(quizId, quizData){}
+    async deleteQuiz(quizId){}
+```
+***Usage***
+Creating a common denominator between the frontend and the backend APIs.
+### 4. Composite pattern
 
+The primary use for the composite pattern will be for creating the quiz and question cards providing a modular and scalable aproach for displaying the quiz.
+
+***Usage***
+- Quiz Structure Organization
+- Question Types Hierarchy
+- Navigation Structure
+- Content Management

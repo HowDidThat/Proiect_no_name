@@ -2,7 +2,6 @@ class ApiService {
     async login(credentials){}
     async signup(userData){}
     async refreshToken(){}
-    async logout(){}
   
     async getUserProfile(){}
     async updateProfile(profileData){}

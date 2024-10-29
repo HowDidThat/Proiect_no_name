@@ -51,4 +51,5 @@ class quizView{
     constructor(){}
     createQuizInfoWidget(){}
     createQuestionInfoWidget(){}
+    addCard(){}
 }
