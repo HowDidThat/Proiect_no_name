@@ -10,15 +10,9 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 # Backend Communication Layer
 - Singleton API Adapter
 
-Single instance managed through static factory
-Centralized point for all API communications
-Handles authentication and request/response lifecycle
-Implements retry and error handling strategies
 
-# Composition Pattern
-
-## Base card component as foundation
-## Specialized components through composition:
+# Base card component as foundation
+## Composition Pattern
 
 - Question display
 - Answer options
