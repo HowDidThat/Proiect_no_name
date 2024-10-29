@@ -1,0 +1,30 @@
+- Catîru Ștefan 
+	- Laboratory 1:
+		- Tools and resources
+	  	- Possible Obstacles
+   	  	- Task negotiation
+	- Laboratory 2:
+		- C1 Diagram & C2 Diagram
+		- Requirements Analysis - Major components part
+	- Laboratory 3:
+		- Backend side of the application [Click here to see a short description](backend/lab4.md)
+- Maftei Briana Stefania
+	- Laboratory 1:
+		- Relevant Datasets
+		- Existing applications
+		- Relevant Links
+	- Laboratory 2:
+		- Use Case Diagram & Requirements Analysis - Use case part
+		- Activity Diagram
+	- Laboratory 3:
+		- ML side of the application [Click here to see a short description](ml/lab4.md)
+- Maxim Matei 
+	- Laboratory 1:
+		- Key Research Papers on this topic
+		- Use cases of our app
+		- What did the others do
+	- Laboratory 2:
+		- State chart diagram
+		- Classes diagram
+  	- Laboratory 3:
+  	  	- Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
