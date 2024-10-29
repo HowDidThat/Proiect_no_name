@@ -4,4 +4,4 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 
 - base applicatin : MVC
 - quiz creation : composite
-- backend interation : singleton adapter
+- backend interation : singleton, adapter
