@@ -1,0 +1,61 @@
+(.venv) PS C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend> python manage.py test quiz
+Found 3 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+EEE
+======================================================================
+ERROR: test_can_create_quiz (quiz.tests.QuizTest.test_can_create_quiz)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\quiz\tests.py", line 20, in test_can_create_quiz
+    response = self.client.post(
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 85, in request
+    func, request, kwargs = self._resolve(method, path, data, request_params)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 109, in _resolve
+    raise Exception(f'Cannot resolve "{path}"')
+Exception: Cannot resolve "/create"
+
+======================================================================
+ERROR: test_can_submit_quiz_answers (quiz.tests.QuizTest.test_can_submit_quiz_answers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\quiz\tests.py", line 35, in test_can_submit_quiz_answers
+    quiz_response = self.client.post(
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 85, in request
+    func, request, kwargs = self._resolve(method, path, data, request_params)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 109, in _resolve
+    raise Exception(f'Cannot resolve "{path}"')
+Exception: Cannot resolve "/create"
+
+======================================================================
+ERROR: test_cannot_submit_quiz_without_answers (quiz.tests.QuizTest.test_cannot_submit_quiz_without_answers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\quiz\tests.py", line 60, in test_cannot_submit_quiz_without_answers
+    quiz_response = self.client.post(
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 85, in request
+    func, request, kwargs = self._resolve(method, path, data, request_params)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 109, in _resolve
+    raise Exception(f'Cannot resolve "{path}"')
+Exception: Cannot resolve "/create"
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.689s
+
+FAILED (errors=3)
+Destroying test database for alias 'default'...

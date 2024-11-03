@@ -1,0 +1,136 @@
+(.venv) PS C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend> python manage.py test authentication     
+Found 4 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+E.EE
+======================================================================
+ERROR: test_protected_endpoint_accepts_valid_token (authentication.tests.AuthenticationTest.test_protected_endpoint_accepts_valid_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\authentication\tests.py", line 48, in test_protected_endpoint_accepts_valid_token
+    login_response = self.client.post(
+                     ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 86, in request
+    return self._call(func, request, kwargs)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 161, in _call
+    return NinjaResponse(func(request, **kwargs))
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 400, in _sync_view
+    return operation.run(request, *a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 114, in run
+    return self.api.on_exception(request, e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\main.py", line 490, in on_exception
+    return handler(request, exc)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\errors.py", line 108, in _default_exception
+    raise exc  # let django deal with it
+    ^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 108, in run
+    return self._result_to_response(request, result, temporal_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 208, in _result_to_response
+    validated_object = response_model.model_validate(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\pydantic\main.py", line 551, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for NinjaResponseSchema
+response.token
+  Field required [type=missing, input_value=<DjangoGetter: None>, input_type=DjangoGetter]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+
+======================================================================
+ERROR: test_user_can_login_with_valid_credentials (authentication.tests.AuthenticationTest.test_user_can_login_with_valid_credentials)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\authentication\tests.py", line 21, in test_user_can_login_with_valid_credentials
+    response = self.client.post(
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 86, in request
+    return self._call(func, request, kwargs)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 161, in _call
+    return NinjaResponse(func(request, **kwargs))
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 400, in _sync_view
+    return operation.run(request, *a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 114, in run
+    return self.api.on_exception(request, e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\main.py", line 490, in on_exception
+    return handler(request, exc)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\errors.py", line 108, in _default_exception
+    raise exc  # let django deal with it
+    ^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 108, in run
+    return self._result_to_response(request, result, temporal_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 208, in _result_to_response
+    validated_object = response_model.model_validate(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\pydantic\main.py", line 551, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for NinjaResponseSchema
+response.token
+  Field required [type=missing, input_value=<DjangoGetter: None>, input_type=DjangoGetter]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+
+======================================================================
+ERROR: test_user_cannot_login_with_invalid_credentials (authentication.tests.AuthenticationTest.test_user_cannot_login_with_invalid_credentials)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Stefan\Documents\GitHub\Symptom-Disease-Quiz-Application\backend\authentication\tests.py", line 33, in test_user_cannot_login_with_invalid_credentials
+    response = self.client.post(
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 44, in post
+    return self.request("POST", path, data, json, **request_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 86, in request
+    return self._call(func, request, kwargs)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\testing\client.py", line 161, in _call
+    return NinjaResponse(func(request, **kwargs))
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 400, in _sync_view
+    return operation.run(request, *a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 114, in run
+    return self.api.on_exception(request, e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\main.py", line 490, in on_exception
+    return handler(request, exc)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\errors.py", line 108, in _default_exception
+    raise exc  # let django deal with it
+    ^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 108, in run
+    return self._result_to_response(request, result, temporal_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\ninja\operation.py", line 208, in _result_to_response
+    validated_object = response_model.model_validate(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stefan\Documents\GitHub\Licenta\djangoApp\.venv\Lib\site-packages\pydantic\main.py", line 551, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for NinjaResponseSchema
+response.token
+  Field required [type=missing, input_value=<DjangoGetter: None>, input_type=DjangoGetter]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.919s
+
+FAILED (errors=3)
+Destroying test database for alias 'default'...
