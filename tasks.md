@@ -1,16 +1,17 @@
-- Catîru Ștefan 
-	- Laboratory 1:
-		- Tools and resources
-	  	- Possible Obstacles
-   	  	- Task negotiation
-	- Laboratory 2:
-		- C1 Diagram & C2 Diagram
-		- Requirements Analysis - Major components part
-	- Laboratory 3:
-		- Backend side of the application [Click here to see a short description](backend/lab4.md)
-    	- Laboratory 4:
-       		- 2 Iterations of TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
-           	- BPMN diagram - Analytics and Mailing [Click here to see the diagram](Lab5/CatiruStefan/BPMN.png)
+- Catîru Ștefan
+    - Laboratory 1:
+        - Tools and resources
+        - Possible Obstacles
+        - Task negotiation
+    - Laboratory 2:
+        - C1 Diagram & C2 Diagram
+        - Requirements Analysis - Major components part
+    - Laboratory 3:
+        - Backend side of the application [Click here to see a short description](backend/lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of
+          TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
+        - BPMN diagram - Analytics and Mailing [Click here to see the diagram](Lab5/CatiruStefan/BPMN.png)
 - Maftei Briana Stefania
 	- Laboratory 1:
 		- Relevant Datasets
