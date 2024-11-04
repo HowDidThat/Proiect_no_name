@@ -5,3 +5,12 @@
 .idea/Symptom-Disease-Quiz-Application.iml
 .idea/vcs.xml
 .idea/workspace.xml
+backend/.idea/backend.iml
+backend/.idea/inspectionProfiles/profiles_settings.xml
+backend/.idea/inspectionProfiles/Project_Default.xml
+backend/.idea/misc.xml
+backend/.idea/modules.xml
+backend/.idea/vcs.xml
+backend/backend/__pycache__/__init__.cpython-312.pyc
+backend/backend/__pycache__/settings.cpython-312.pyc
+backend/.idea/workspace.xml
