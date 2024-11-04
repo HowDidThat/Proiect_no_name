@@ -1,4 +1,4 @@
-# Model driven development (MDD)
+# Model driven development (MDD) Profile
 
 ### User Stories
 
