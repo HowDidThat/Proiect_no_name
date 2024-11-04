@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+    xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+    xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+    id="Definitions_1" 
+    targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="EmailService" name="Email Service Process" isExecutable="false">
+    
+    <!-- Start Events -->
+    <bpmn:startEvent id="UserRegistrationEvent" name="User Registration">
+      <bpmn:outgoing>Flow_ToGenerateVerification</bpmn:outgoing>
+    </bpmn:startEvent>
+    
+    <bpmn:startEvent id="PasswordResetEvent" name="Password Reset Request">
+      <bpmn:outgoing>Flow_ToGenerateReset</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <!-- Email Generation Tasks -->
+    <bpmn:serviceTask id="GenerateVerificationEmail" name="Generate Verification Email">
+      <bpmn:incoming>Flow_ToGenerateVerification</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToCreateToken</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="GenerateResetEmail" name="Generate Reset Email">
+      <bpmn:incoming>Flow_ToGenerateReset</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToCreateResetToken</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <!-- Token Creation -->
+    <bpmn:serviceTask id="CreateVerificationToken" name="Create Verification Token">
+      <bpmn:incoming>Flow_ToCreateToken</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToSendVerification</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="CreateResetToken" name="Create Reset Token">
+      <bpmn:incoming>Flow_ToCreateResetToken</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToSendReset</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <!-- Send Emails -->
+    <bpmn:serviceTask id="SendVerificationEmail" name="Send Verification Email">
+      <bpmn:incoming>Flow_ToSendVerification</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToWaitVerification</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="SendResetEmail" name="Send Reset Email">
+      <bpmn:incoming>Flow_ToSendReset</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToWaitReset</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <!-- Timer Events -->
+    <bpmn:intermediateCatchEvent id="WaitForVerification" name="Wait for Verification">
+      <bpmn:incoming>Flow_ToWaitVerification</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToCheckVerification</bpmn:outgoing>
+      <bpmn:timerEventDefinition />
+    </bpmn:intermediateCatchEvent>
+
+    <bpmn:intermediateCatchEvent id="WaitForReset" name="Wait for Reset">
+      <bpmn:incoming>Flow_ToWaitReset</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToCheckReset</bpmn:outgoing>
+      <bpmn:timerEventDefinition />
+    </bpmn:intermediateCatchEvent>
+
+    <!-- Gateways -->
+    <bpmn:exclusiveGateway id="VerificationGateway" name="Verified?">
+      <bpmn:incoming>Flow_ToCheckVerification</bpmn:incoming>
+      <bpmn:outgoing>Flow_VerificationSuccess</bpmn:outgoing>
+      <bpmn:outgoing>Flow_VerificationExpired</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:exclusiveGateway id="ResetGateway" name="Reset Completed?">
+      <bpmn:incoming>Flow_ToCheckReset</bpmn:incoming>
+      <bpmn:outgoing>Flow_ResetSuccess</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ResetExpired</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <!-- End Events -->
+    <bpmn:endEvent id="VerificationSuccess" name="Account Verified">
+      <bpmn:incoming>Flow_VerificationSuccess</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:endEvent id="VerificationExpired" name="Verification Expired">
+      <bpmn:incoming>Flow_VerificationExpired</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:endEvent id="ResetSuccess" name="Password Reset">
+      <bpmn:incoming>Flow_ResetSuccess</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:endEvent id="ResetExpired" name="Reset Link Expired">
+      <bpmn:incoming>Flow_ResetExpired</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow_ToGenerateVerification" sourceRef="UserRegistrationEvent" targetRef="GenerateVerificationEmail" />
+    <bpmn:sequenceFlow id="Flow_ToCreateToken" sourceRef="GenerateVerificationEmail" targetRef="CreateVerificationToken" />
+    <bpmn:sequenceFlow id="Flow_ToSendVerification" sourceRef="CreateVerificationToken" targetRef="SendVerificationEmail" />
+    <bpmn:sequenceFlow id="Flow_ToWaitVerification" sourceRef="SendVerificationEmail" targetRef="WaitForVerification" />
+    <bpmn:sequenceFlow id="Flow_ToCheckVerification" sourceRef="WaitForVerification" targetRef="VerificationGateway" />
+    <bpmn:sequenceFlow id="Flow_VerificationSuccess" name="Yes" sourceRef="VerificationGateway" targetRef="VerificationSuccess" />
+    <bpmn:sequenceFlow id="Flow_VerificationExpired" name="No" sourceRef="VerificationGateway" targetRef="VerificationExpired" />
+
+    <bpmn:sequenceFlow id="Flow_ToGenerateReset" sourceRef="PasswordResetEvent" targetRef="GenerateResetEmail" />
+    <bpmn:sequenceFlow id="Flow_ToCreateResetToken" sourceRef="GenerateResetEmail" targetRef="CreateResetToken" />
+    <bpmn:sequenceFlow id="Flow_ToSendReset" sourceRef="CreateResetToken" targetRef="SendResetEmail" />
+    <bpmn:sequenceFlow id="Flow_ToWaitReset" sourceRef="SendResetEmail" targetRef="WaitForReset" />
+    <bpmn:sequenceFlow id="Flow_ToCheckReset" sourceRef="WaitForReset" targetRef="ResetGateway" />
+    <bpmn:sequenceFlow id="Flow_ResetSuccess" name="Yes" sourceRef="ResetGateway" targetRef="ResetSuccess" />
+    <bpmn:sequenceFlow id="Flow_ResetExpired" name="No" sourceRef="ResetGateway" targetRef="ResetExpired" />
+
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="EmailService">
+      <!-- Start Events -->
+      <bpmndi:BPMNShape id="UserRegistrationEvent_di" bpmnElement="UserRegistrationEvent">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="130" y="145" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="PasswordResetEvent_di" bpmnElement="PasswordResetEvent">
+        <dc:Bounds x="152" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="130" y="345" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Email Generation Tasks -->
+      <bpmndi:BPMNShape id="GenerateVerificationEmail_di" bpmnElement="GenerateVerificationEmail">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GenerateResetEmail_di" bpmnElement="GenerateResetEmail">
+        <dc:Bounds x="240" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Token Creation -->
+      <bpmndi:BPMNShape id="CreateVerificationToken_di" bpmnElement="CreateVerificationToken">
+        <dc:Bounds x="400" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="CreateResetToken_di" bpmnElement="CreateResetToken">
+        <dc:Bounds x="400" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Send Emails -->
+      <bpmndi:BPMNShape id="SendVerificationEmail_di" bpmnElement="SendVerificationEmail">
+        <dc:Bounds x="560" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="SendResetEmail_di" bpmnElement="SendResetEmail">
+        <dc:Bounds x="560" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Timer Events -->
+      <bpmndi:BPMNShape id="WaitForVerification_di" bpmnElement="WaitForVerification">
+        <dc:Bounds x="722" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="700" y="145" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="WaitForReset_di" bpmnElement="WaitForReset">
+        <dc:Bounds x="722" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="708" y="345" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Gateways -->
+      <bpmndi:BPMNShape id="VerificationGateway_di" bpmnElement="VerificationGateway" isMarkerVisible="true">
+        <dc:Bounds x="815" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="817" y="71" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="ResetGateway_di" bpmnElement="ResetGateway" isMarkerVisible="true">
+        <dc:Bounds x="815" y="295" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="804" y="271" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- End Events -->
+      <bpmndi:BPMNShape id="VerificationSuccess_di" bpmnElement="VerificationSuccess">
+        <dc:Bounds x="922" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="900" y="145" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="VerificationExpired_di" bpmnElement="VerificationExpired">
+        <dc:Bounds x="922" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="900" y="225" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="ResetSuccess_di" bpmnElement="ResetSuccess">
+        <dc:Bounds x="922" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="903" y="345" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="ResetExpired_di" bpmnElement="ResetExpired">
+        <dc:Bounds x="922" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="900" y="425" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Sequence Flows -->
+      <!-- Verification Flow -->
+      <bpmndi:BPMNEdge id="Flow_ToGenerateVerification_di" bpmnElement="Flow_ToGenerateVerification">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToCreateToken_di" bpmnElement="Flow_ToCreateToken">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="400" y="120" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToSendVerification_di" bpmnElement="Flow_ToSendVerification">
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="560" y="120" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToWaitVerification_di" bpmnElement="Flow_ToWaitVerification">
+        <di:waypoint x="660" y="120" />
+        <di:waypoint x="722" y="120" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToCheckVerification_di" bpmnElement="Flow_ToCheckVerification">
+        <di:waypoint x="758" y="120" />
+        <di:waypoint x="815" y="120" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_VerificationSuccess_di" bpmnElement="Flow_VerificationSuccess">
+        <di:waypoint x="865" y="120" />
+        <di:waypoint x="922" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="885" y="102" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_VerificationExpired_di" bpmnElement="Flow_VerificationExpired">
+        <di:waypoint x="840" y="145" />
+        <di:waypoint x="840" y="200" />
+        <di:waypoint x="922" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="848" y="170" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <!-- Reset Flow -->
+      <bpmndi:BPMNEdge id="Flow_ToGenerateReset_di" bpmnElement="Flow_ToGenerateReset">
+        <di:waypoint x="188" y="320" />
+        <di:waypoint x="240" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToCreateResetToken_di" bpmnElement="Flow_ToCreateResetToken">
+        <di:waypoint x="340" y="320" />
+        <di:waypoint x="400" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToSendReset_di" bpmnElement="Flow_ToSendReset">
+        <di:waypoint x="500" y="320" />
+        <di:waypoint x="560" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToWaitReset_di" bpmnElement="Flow_ToWaitReset">
+        <di:waypoint x="660" y="320" />
+        <di:waypoint x="722" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ToCheckReset_di" bpmnElement="Flow_ToCheckReset">
+        <di:waypoint x="758" y="320" />
+        <di:waypoint x="815" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ResetSuccess_di" bpmnElement="Flow_ResetSuccess">
+        <di:waypoint x="865" y="320" />
+        <di:waypoint x="922" y="320" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="885" y="302" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ResetExpired_di" bpmnElement="Flow_ResetExpired">
+        <di:waypoint x="840" y="345" />
+        <di:waypoint x="840" y="400" />
+        <di:waypoint x="922" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="848" y="370" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
