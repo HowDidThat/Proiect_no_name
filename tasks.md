@@ -35,5 +35,5 @@
   	- Laboratory 3:
   	  	- Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
   	- Laboratory 4:
-  	  	- 2 Iterations of MDD
+  	  	- 2 Iterations of MDD: [MDD login/register](frontend/vue_main/Maxim_Matei_1.md), [MDD user info](frontend/vue_main/Maxim_Matei_2.md), [pictures](frontend/vue_main) 
   	  	- BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/BPMN.png)
