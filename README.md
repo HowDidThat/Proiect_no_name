@@ -14,7 +14,7 @@ Alexandru Ioan Cuza University
 
 Iasi, Romania
    
-# [Tasks](/tasks.txt)
+# [Tasks](/tasks.md)
 # [Useful Links](/links.md)
 
 
