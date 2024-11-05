@@ -25,7 +25,7 @@
         - ML side of the application [Click here to see a short description](ml/lab4.md)
     - Laboratory 4:
         - 2 Iterations of TDD
-        - PMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
+        - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
 - Maxim Matei
     - Laboratory 1:
         - Key Research Papers on this topic
