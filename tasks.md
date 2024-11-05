@@ -8,6 +8,9 @@
 		- Requirements Analysis - Major components part
 	- Laboratory 3:
 		- Backend side of the application [Click here to see a short description](backend/lab4.md)
+    	- Laboratory 4:
+       		- 2 Iterations of TDD [It1Fail](Lab5/CatiruStefan/TDD-Iteration-1-Tests-Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD-Iteration-1-Tests-Pass.png) [It2Fail](Lab5/CatiruStefan/TDD-Iteration-2-Tests-Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD-Iteration-2-Tests-Pass.png)
+           	- BPMN diagram - Analytics and Mailing [Click here to see the diagram](Lab5/CatiruStefan/BPMN.png)
 - Maftei Briana Stefania
 	- Laboratory 1:
 		- Relevant Datasets
@@ -18,6 +21,9 @@
 		- Activity Diagram
 	- Laboratory 3:
 		- ML side of the application [Click here to see a short description](ml/lab4.md)
+    	- Laboratory 4:
+       	  	- 2 Iterations of TDD
+          	- BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
 - Maxim Matei 
 	- Laboratory 1:
 		- Key Research Papers on this topic
@@ -28,3 +34,6 @@
 		- Classes diagram
   	- Laboratory 3:
   	  	- Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
+  	- Laboratory 4:
+  	  	- 2 Iterations of MDD
+  	  	- BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/BPMN.png)
