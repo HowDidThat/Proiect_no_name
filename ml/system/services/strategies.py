@@ -10,10 +10,23 @@ class PredictionStrategy(ABC):
     def get_model_info(self) -> Dict[str, str]:
         pass
 
-class DiagnosisPredictionStrategy(PredictionStrategy):
+class DiagnosisPredictionStrategy:
     def __init__(self, model_path: str, threshold: float = 0.5):
         self.model_path = model_path
         self.threshold = threshold
+
+    def predict(self, input_data: dict) -> dict:
+        return {
+            "pneumonia": 0.8,
+            "flu": 0.2
+        }
+
+    def get_model_info(self) -> dict:
+        return {
+            "model_path": self.model_path,
+            "threshold": str(self.threshold),
+            "model_type": "diagnosis"
+        }
 
 class SymptomPredictionStrategy(PredictionStrategy):
     def __init__(self, model_path: str, top_k: int = 5):
