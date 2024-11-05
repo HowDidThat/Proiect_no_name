@@ -1,30 +1,42 @@
-- Catîru Ștefan 
-	- Laboratory 1:
-		- Tools and resources
-	  	- Possible Obstacles
-   	  	- Task negotiation
-	- Laboratory 2:
-		- C1 Diagram & C2 Diagram
-		- Requirements Analysis - Major components part
-	- Laboratory 3:
-		- Backend side of the application [Click here to see a short description](backend/lab4.md)
+- Catîru Ștefan
+    - Laboratory 1:
+        - Tools and resources
+        - Possible Obstacles
+        - Task negotiation
+    - Laboratory 2:
+        - C1 Diagram & C2 Diagram
+        - Requirements Analysis - Major components part
+    - Laboratory 3:
+        - Backend side of the application [Click here to see a short description](backend/lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of
+          TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
+        - BPMN Diagrams for Mailing Service and Analysis Service [Mailing Diagram](Lab5/CatiruStefan/BPMN%20-%20Mailing%20Service.png) - [Analysis Diagram](Lab5/CatiruStefan/BPMN%20-%20Analysis%20Service.PNG) 
+        - Tasks distribution and administrative stuff (like editing this markdown)
 - Maftei Briana Stefania
-	- Laboratory 1:
-		- Relevant Datasets
-		- Existing applications
-		- Relevant Links
-	- Laboratory 2:
-		- Use Case Diagram & Requirements Analysis - Use case part
-		- Activity Diagram
-	- Laboratory 3:
-		- ML side of the application [Click here to see a short description](ml/lab4.md)
-- Maxim Matei 
-	- Laboratory 1:
-		- Key Research Papers on this topic
-		- Use cases of our app
-		- What did the others do
-	- Laboratory 2:
-		- State chart diagram
-		- Classes diagram
-  	- Laboratory 3:
-  	  	- Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
+    - Laboratory 1:
+        - Relevant Datasets
+        - Existing applications
+        - Relevant Links
+    - Laboratory 2:
+        - Use Case Diagram & Requirements Analysis - Use case part
+        - Activity Diagram
+    - Laboratory 3:
+        - ML side of the application [Click here to see a short description](ml/lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of TDD
+        - PMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
+- Maxim Matei
+    - Laboratory 1:
+        - Key Research Papers on this topic
+        - Use cases of our app
+        - What did the others do
+    - Laboratory 2:
+        - State chart diagram
+        - Classes diagram
+    - Laboratory 3:
+        - Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of
+          MDD: [MDD login/register](Lab5/MaximMatei/Maxim_Matei_1.md), [MDD user info](Lab5/MaximMatei/Maxim_Matei_2.md), [pictures](Lab5/MaximMatei)
+        - BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/Login_Signup_BPMN.png)
