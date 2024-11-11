@@ -4,6 +4,7 @@ from typing import Dict, Any
 import numpy as np
 from .strategies import PredictionStrategy
 
+
 class MLPipeline(ABC):
     def __init__(self):
         self.preprocessor = None
