@@ -24,8 +24,8 @@
     - Laboratory 3:
         - ML side of the application [Click here to see a short description](ml/lab4.md)
     - Laboratory 4:
-        - 2 Iterations of TDD
-        - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
+        - 2 Iterations of TDD [It1Fail](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Pass.png) [Code1](ml/ml_system/tests.py) --- [It2Fail](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Pass.png) [Code2](ml/ml_system/tests.py)
+        - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/Quiz_Taking_BPMN.png)
 - Maxim Matei
     - Laboratory 1:
         - Key Research Papers on this topic

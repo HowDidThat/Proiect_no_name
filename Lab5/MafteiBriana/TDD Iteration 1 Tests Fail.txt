@@ -1,0 +1,73 @@
+EEEEE
+======================================================================
+ERROR: test_pipeline_initialization (tests.TestMLPipeline.test_pipeline_initialization)
+Test if pipeline initializes correctly
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 50, in setUp
+    self.pipeline = DiagnosisPipeline(prediction_strategy=self.strategy)
+                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class DiagnosisPipeline without an implementation for abstract methods 'postprocess_results', 'predict', 'preprocess_data'
+
+======================================================================
+ERROR: test_preprocess_data (tests.TestMLPipeline.test_preprocess_data)
+Test preprocessing of input data
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 50, in setUp
+    self.pipeline = DiagnosisPipeline(prediction_strategy=self.strategy)
+                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class DiagnosisPipeline without an implementation for abstract methods 'postprocess_results', 'predict', 'preprocess_data'
+
+======================================================================
+ERROR: test_diagnosis_strategy_get_model_info (tests.TestPredictionStrategies.test_diagnosis_strategy_get_model_info)
+Test if get_model_info returns correct information
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 18, in setUp
+    self.diagnosis_strategy = DiagnosisPredictionStrategy(
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_path="models/diagnosis.pkl",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        threshold=0.5
+        ^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Can't instantiate abstract class DiagnosisPredictionStrategy without an implementation for abstract methods 'get_model_info', 'predict'
+
+======================================================================
+ERROR: test_diagnosis_strategy_initialization (tests.TestPredictionStrategies.test_diagnosis_strategy_initialization)
+Test if DiagnosisPredictionStrategy initializes correctly
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 18, in setUp
+    self.diagnosis_strategy = DiagnosisPredictionStrategy(
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_path="models/diagnosis.pkl",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        threshold=0.5
+        ^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Can't instantiate abstract class DiagnosisPredictionStrategy without an implementation for abstract methods 'get_model_info', 'predict'
+
+======================================================================
+ERROR: test_diagnosis_strategy_predict (tests.TestPredictionStrategies.test_diagnosis_strategy_predict)
+Test if predict method returns expected format
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 18, in setUp
+    self.diagnosis_strategy = DiagnosisPredictionStrategy(
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model_path="models/diagnosis.pkl",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        threshold=0.5
+        ^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Can't instantiate abstract class DiagnosisPredictionStrategy without an implementation for abstract methods 'get_model_info', 'predict'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+FAILED (errors=5)

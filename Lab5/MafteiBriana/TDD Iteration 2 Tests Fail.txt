@@ -1,0 +1,25 @@
+EE
+======================================================================
+ERROR: test_adapter_initialization (tests.TestBERTAdapter.test_adapter_initialization)
+Test if adapter initializes correctly
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 64, in setUp
+    self.adapter = BERTModelAdapter(model_name="bert-base-uncased")
+                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class BERTModelAdapter without an implementation for abstract methods 'compute_similarity', 'encode_text', 'load_model'
+
+======================================================================
+ERROR: test_compute_similarity (tests.TestBERTAdapter.test_compute_similarity)
+Test similarity computation between two texts
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\pinza\PycharmProjects\Symptom-Disease-Quiz-Application\ml\system\tests.py", line 64, in setUp
+    self.adapter = BERTModelAdapter(model_name="bert-base-uncased")
+                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Can't instantiate abstract class BERTModelAdapter without an implementation for abstract methods 'compute_similarity', 'encode_text', 'load_model'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+FAILED (errors=2)
