@@ -1,5 +1,6 @@
 from django.test import TestCase
 from ninja.testing import TestClient
+
 from .models import User
 from .views import auth_router
 
@@ -14,8 +15,119 @@ class AuthenticationTest(TestCase):
             institution='Test Hospital',
             year_of_study=3
         )
+        self.register_url = '/register'
         self.login_url = '/login'
+        self.logout_url = '/logout'
         self.me_url = '/me'
+        self.refresh_url = '/refresh'
+
+    def test_user_registration(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'newuser',
+                'email': 'new@example.com',
+                'password': 'newpass123',
+                'institution': 'New Hospital',
+                'year_of_study': 2
+            }
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json()['message'], "Registration successful")
+        self.assertTrue('access_token' in response.cookies)
+        self.assertTrue('refresh_token' in response.cookies)
+
+    def test_duplicate_username_registration(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'testuser',
+                'email': 'another@example.com',
+                'password': 'ValidPassword123!',
+                'institution': 'Hospital',
+                'year_of_study': 1
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        print(errors)
+        self.assertTrue(any(error['field'] == 'username' and 'exists' in error['message'] for error in errors))
+
+    def test_registration_invalid_username(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'u@',
+                'email': 'test@example.com',
+                'password': 'ValidPass123!',
+                'institution': 'Test Hospital',
+                'year_of_study': 3
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        self.assertTrue(any(error['field'] == 'username' for error in errors))
+
+    def test_registration_invalid_email(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'validuser',
+                'email': 'not-an-email',
+                'password': 'ValidPass123!',
+                'institution': 'Test Hospital',
+                'year_of_study': 3
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        self.assertTrue(any(error['field'] == 'email' for error in errors))
+
+    def test_registration_weak_password(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'validuser',
+                'email': 'test@example.com',
+                'password': '123',
+                'institution': 'Test Hospital',
+                'year_of_study': 3
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        self.assertTrue(any(error['field'] == 'password' for error in errors))
+
+    def test_registration_invalid_year(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'validuser',
+                'email': 'test@example.com',
+                'password': 'ValidPass123!',
+                'institution': 'Test Hospital',
+                'year_of_study': 8
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        print(errors)
+        self.assertTrue(any(error['field'] == 'year_of_study' for error in errors))
+
+    def test_registration_invalid_institution(self):
+        response = self.client.post(
+            self.register_url,
+            json={
+                'username': 'validuser',
+                'email': 'test@example.com',
+                'password': 'ValidPass123!',
+                'institution': '  ',
+                'year_of_study': 3
+            }
+        )
+        self.assertEqual(response.status_code, 400)
+        errors = response.json()['errors']
+        self.assertTrue(any(error['field'] == 'institution' for error in errors))
 
     def test_user_can_login_with_valid_credentials(self):
         response = self.client.post(
@@ -25,9 +137,10 @@ class AuthenticationTest(TestCase):
                 'password': 'testpass123'
             }
         )
-
         self.assertEqual(response.status_code, 200)
-        self.assertIn('token', response.json())
+        self.assertEqual(response.json()['message'], "Login successful")
+        self.assertTrue('access_token' in response.cookies)
+        self.assertTrue('refresh_token' in response.cookies)
 
     def test_user_cannot_login_with_invalid_credentials(self):
         response = self.client.post(
@@ -37,14 +150,14 @@ class AuthenticationTest(TestCase):
                 'password': 'wrongpass'
             }
         )
-
         self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.json()['message'], "Invalid credentials")
 
-    def test_protected_endpoint_requires_token(self):
+    def test_protected_endpoint_requires_auth(self):
         response = self.client.get(self.me_url)
         self.assertEqual(response.status_code, 401)
 
-    def test_protected_endpoint_accepts_valid_token(self):
+    def test_protected_endpoint_accepts_valid_auth(self):
         login_response = self.client.post(
             self.login_url,
             json={
@@ -52,14 +165,49 @@ class AuthenticationTest(TestCase):
                 'password': 'testpass123'
             }
         )
-        token = login_response.json()['token']
+
+        access_token = login_response.cookies['access_token'].value
 
         response = self.client.get(
             self.me_url,
-            headers={'Authorization': f'Bearer {token}'}
+            headers={'Authorization': f'Bearer {access_token}'}
         )
-
         self.assertEqual(response.status_code, 200)
         user_data = response.json()
         self.assertEqual(user_data['username'], 'testuser')
         self.assertEqual(user_data['email'], 'test@example.com')
+
+    def test_refresh_token(self):
+        login_response = self.client.post(
+            self.login_url,
+            json={
+                'username': 'testuser',
+                'password': 'testpass123'
+            }
+        )
+
+        refresh_token = login_response.cookies['refresh_token'].value
+
+        refresh_response = self.client.post(
+            self.refresh_url,
+            headers={'Authorization': f'Bearer {refresh_token}'}
+        )
+
+        self.assertEqual(refresh_response.status_code, 200)
+        self.assertEqual(refresh_response.json()['message'], "Tokens refreshed")
+        self.assertTrue('access_token' in refresh_response.cookies)
+        self.assertTrue('refresh_token' in refresh_response.cookies)
+
+    def test_logout(self):
+        response = self.client.post(self.logout_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['message'], "Logout successful")
+
+        self.assertTrue(
+            response.cookies['access_token'].get('max-age') == 0 or
+            response.cookies['access_token'].value == ''
+        )
+        self.assertTrue(
+            response.cookies['refresh_token'].get('max-age') == 0 or
+            response.cookies['refresh_token'].value == ''
+        )

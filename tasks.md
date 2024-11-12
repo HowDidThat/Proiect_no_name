@@ -11,31 +11,32 @@
     - Laboratory 4:
         - 2 Iterations of
           TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
-        - BPMN diagram - Analytics and Mailing [Click here to see the diagram](Lab5/CatiruStefan/BPMN.png)
+        - BPMN Diagrams for Mailing Service and Analysis Service [Mailing Diagram](Lab5/CatiruStefan/BPMN%20-%20Mailing%20Service.png) - [Analysis Diagram](Lab5/CatiruStefan/BPMN%20-%20Analysis%20Service.PNG) 
+        - Tasks distribution and administrative stuff (like editing this markdown)
 - Maftei Briana Stefania
-	- Laboratory 1:
-		- Relevant Datasets
-		- Existing applications
-		- Relevant Links
-	- Laboratory 2:
-		- Use Case Diagram & Requirements Analysis - Use case part
-		- Activity Diagram
-	- Laboratory 3:
-		- ML side of the application [Click here to see a short description](ml/lab4.md)
-    	- Laboratory 4:
-       	  	- 2 Iterations of TDD
-          	- BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/BPMN.png)
-- Maxim Matei 
-	- Laboratory 1:
-		- Key Research Papers on this topic
-		- Use cases of our app
-		- What did the others do
-	- Laboratory 2:
-		- State chart diagram
-		- Classes diagram
-  	- Laboratory 3:
-  	  	- Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
-  	- Laboratory 4:
-  	  	- 2 Iterations of MDD: [MDD login/register](Lab5/MaximMatei/Maxim_Matei_1.md), [MDD user info](Lab5/MaximMatei/Maxim_Matei_2.md), [pictures](Lab5/MaximMatei) 
-  	  	- BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/BPMN.png)
- 
+    - Laboratory 1:
+        - Relevant Datasets
+        - Existing applications
+        - Relevant Links
+    - Laboratory 2:
+        - Use Case Diagram & Requirements Analysis - Use case part
+        - Activity Diagram
+    - Laboratory 3:
+        - ML side of the application [Click here to see a short description](ml/lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of TDD [It1Fail](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Pass.png) [Code1](ml/ml_system/tests.py) --- [It2Fail](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Pass.png) [Code2](ml/ml_system/tests.py)
+        - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/Quiz_Taking_BPMN.png)
+- Maxim Matei
+    - Laboratory 1:
+        - Key Research Papers on this topic
+        - Use cases of our app
+        - What did the others do
+    - Laboratory 2:
+        - State chart diagram
+        - Classes diagram
+    - Laboratory 3:
+        - Frontend side of the application [Click here to see a short description](frontend/Lab4.md)
+    - Laboratory 4:
+        - 2 Iterations of
+          MDD: [MDD login/register](Lab5/MaximMatei/Maxim_Matei_1.md), [MDD user info](Lab5/MaximMatei/Maxim_Matei_2.md), [pictures](Lab5/MaximMatei)
+        - BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/Login_Signup_BPMN.png)
