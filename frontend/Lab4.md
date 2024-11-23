@@ -4,7 +4,7 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 
 # Core Architecture Pattern
 
-- Implements Model-View-Controller (MVC) pattern
+- Implements Model-View-Controller (MVC)(MVVM) pattern
 - Strict separation of concerns between data, presentation, and business logic
 
 # Backend Communication Layer
@@ -19,7 +19,7 @@ The frontend architecture follows a Model-View-Controller (MVC) pattern, with a 
 - Progress indicators
 - Interactive elements
 
-### 1. MVC pattern
+### 1. MVC pattern (MVVM)
 The main application frontend will be structured in a mvc fashion for separation of concerns
 ***Usage***
 - User profiles
