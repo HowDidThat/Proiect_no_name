@@ -62,7 +62,19 @@ export default {
     },
     methods:{
       async handleSubmit(){
-        console.log(getToken(this.formData.email,this.formData.password));
+        let t = await getToken(this.formData.email,this.formData.password)
+        
+        try{
+          if (t.data.message == "Login successful")
+            {
+              this.$cookie.set('access_token',t.data.access_token,1);
+              this.$cookie.set('refresh_token',t.data.refresh_token,30);
+            }
+          else
+            console.log(t.data.message)
+        }catch(error){
+          console.log(error);
+        }
         /*
         let token = validatePassword(this.formData.email,this.formData.password)
         if (token.status !== 200)

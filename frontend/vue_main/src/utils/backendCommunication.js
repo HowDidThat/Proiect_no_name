@@ -30,7 +30,27 @@ export const validatePassword = (email,password) => {
         }
 }
 
-export const createAccount = async (data) => {
+import { beforeMethod, afterMethod } from 'kaop-ts';
+
+const logBeforeReg = beforeMethod((meta) => {
+  const userData = meta.args[0];
+  console.log(`Starting account creation for user: ${userData.name}`);
+  console.log('Initiating registration request...');
+});
+
+const logAfterReg = afterMethod(async (meta) => {
+  const result = await meta.result;
+  if (result.message?.includes('bad request')) {
+    console.log('Registration failed: Bad request');
+  } else {
+    console.log('Registration completed successfully');
+  }
+});
+
+export class AccountService {
+  @logBeforeReg
+  @logAfterReg
+  static async createAccount(data) {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
         method: 'POST',
@@ -45,43 +65,63 @@ export const createAccount = async (data) => {
           year_of_study: 3
         })
       });
-  
+
       if (!response.ok) {
-        
         console.log(Object(response.json()));
-        return {message: ["bad request"]};
+        return { message: ["bad request"] };
       }
-      
+
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error during registration:', error.message);
       throw error;
     }
-  };
+  }
+}
+
+export const { createAccount } = AccountService;
 
 
-
-export const getToken = async(email, password) =>{
-    try {
-        const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
-          method: 'POST',
+  import axios from 'axios';
+  
+/*
+  const logBefore = beforeMethod((meta) => {
+    console.log(`Attempting login for email: ${meta.args[0]}`);
+    console.log(`Attempting login for password: ${meta.args[1]}`);
+    console.log('Starting authentication request...');
+  });
+  
+  const logAfter = afterMethod((meta) => {
+    if (meta.result?.data) {
+      console.log('Authentication successful');
+    } else {
+      console.log('Authentication completed without token');
+    }
+  });
+*/
+  export class AuthService {
+    //@logBefore
+    //@logAfter
+    static async getToken(email, password) {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/auth/login', {
+          username: email,
+          password: password
+        }, {
+          withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            "username":email,
-            "password":password
-          })
+            'Content-Type': 'application/json'
+          }
         });
-    
-        console.log(response.json());
-        return await "ok";
+        return response;
       } catch (error) {
-        
-        console.log()
+        console.error('Authentication failed:', error.message);
         throw error;
       }
-}
+    }
+  }
+  
+  export const { getToken } = AuthService;
 
 export const getUserData = (token)=>{
     if (token === "good_token")

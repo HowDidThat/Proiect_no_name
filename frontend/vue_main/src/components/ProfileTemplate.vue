@@ -226,7 +226,8 @@ export default {
       this.userData = getUserData(this.$cookie.get("token"))
       if (this.userData.status == "")
         {
-          this.$cookie.set('token',"None",-1);
+          this.$cookie.set('access_token',"None",-1);
+          this.$cookie.set('refresh_token',"None",-1);
           this.$router.push({ path: 'login' })
         }
       this.quizIds = getQuizIds(this.$cookie.get("token"));
