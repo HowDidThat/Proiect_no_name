@@ -26,8 +26,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 load_dotenv()
 
-print()
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -38,7 +36,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
-print("HERE", DATABASES)
 
 # Application definition
 
@@ -129,3 +126,23 @@ AUTH_USER_MODEL = 'authentication.User'
 ML_API_URL = 'http://localhost:8001/api/ml'
 SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
 
+
+
+
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Partitioned',
+]

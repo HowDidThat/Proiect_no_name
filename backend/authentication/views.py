@@ -24,18 +24,23 @@ def set_auth_cookies(response: HttpResponse, access_token: str, refresh_token: s
         access_token,
         httponly=True,
         secure=True,
-        samesite='Lax',
+        #samesite='Lax',
         max_age=900,
-        path='/'
+        samesite='None',
+        path='/',
+        
     )
     response.set_cookie(
         'refresh_token',
         refresh_token,
         httponly=True,
         secure=True,
-        samesite='Lax',
-        max_age=86400,
-        path='/'
+        #samesite='Lax',
+        max_age=8640,
+        samesite='None',
+        path='/',
+        
+    
     )
 
 
@@ -114,11 +119,14 @@ def register(request, data: RegisterSchema):
         )
         access_token, refresh_token = create_tokens(user.id)
         response = HttpResponse(
-            json.dumps({"message": "Registration successful"}),
+            json.dumps({"message": "Registration successful",
+                        "access_token": access_token,
+                        "refresh_token": refresh_token}),
             content_type='application/json',
             status=201
         )
         set_auth_cookies(response, access_token, refresh_token)
+        
         return response
 
     except Exception as e:
@@ -138,7 +146,9 @@ def login(request, credentials: LoginSchema):
 
     access_token, refresh_token = create_tokens(user.id)
     response = HttpResponse(
-        json.dumps({"message": "Login successful"}),
+        json.dumps({"message": "Login successful",
+                        "access_token": access_token,
+                        "refresh_token": refresh_token}),
         content_type='application/json',
         status=200
     )
