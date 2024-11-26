@@ -174,7 +174,7 @@ import { getUserInfo } from '@/utils/backendCommunication';
 import { updateUserInfo } from '@/utils/backendCommunication'
 //import { getQuizIds } from '@/utils/backendCommunication'
 import { getQuizInfo } from "@/utils/backendCommunication";
-import { getCompletedQuizData } from '@/utils/backendCommunication'
+//import { getCompletedQuizData } from '@/utils/backendCommunication'
 export default {
   name: 'ProfileTemplate',
   data(){
@@ -210,6 +210,7 @@ export default {
     showQuizInfo(quizId){
       //this.questions = getCompletedQuizData(quizId)
       console.log(this.questions)
+      console.log(quizId)
       
     },
     choseQuestion(value) {
@@ -233,9 +234,6 @@ export default {
     },
     
   
-  },
-  async mounted(){
-    
   },
   async mounted(){
     try {
