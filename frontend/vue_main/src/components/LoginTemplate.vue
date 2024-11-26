@@ -91,8 +91,9 @@ export default {
           */
       },
       login(){
-        let token = this.$cookie.get('token')
-        if (token !== null)
+        let acces_token = this.$cookie.get('acces_token')
+        let refresh_token = this.$cookie.get('refresh_token')
+        if (acces_token !== null && refresh_token != null)
           this.$router.push({ path: 'profile' })
       }
     },

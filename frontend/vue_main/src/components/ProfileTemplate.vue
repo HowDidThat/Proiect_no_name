@@ -67,17 +67,17 @@
         <div class="card">
             <div class="row quiz-info-row">
               <div class="col-3">Id</div>
-              <div class="col-3">Date</div>
-              <div class="col-3">Points</div>
+              <div class="col-3">Title</div>
+              <div class="col-3">Description</div>
               <div class="col-3"></div>
             </div>
             <div v-for="(quiz,index) in quizIds" :key="index">
               <div class="row quiz-info-row">
               <div class="col-3">{{ quiz.id }}</div>
-              <div class="col-3">{{ quiz.date }}</div>
-              <div class="col-3">{{ quiz.points }}</div>
+              <div class="col-3">{{ quiz.title }}</div>
+              <div class="col-3">{{ quiz.description }}</div>
               <div class="col-3">
-                <button @click="showQuizInfo(quiz.id)">Info</button>
+                <!--<button @click="showQuizInfo(quiz.id)">Info</button>-->
               </div>
             </div>
           </div>
@@ -170,15 +170,25 @@
 
 <script>
 
-import { getUserData } from '@/utils/backendCommunication';
+import { getUserInfo } from '@/utils/backendCommunication';
 import { updateUserInfo } from '@/utils/backendCommunication'
-import { getQuizIds } from '@/utils/backendCommunication'
+//import { getQuizIds } from '@/utils/backendCommunication'
+import { getQuizInfo } from "@/utils/backendCommunication";
 import { getCompletedQuizData } from '@/utils/backendCommunication'
 export default {
   name: 'ProfileTemplate',
   data(){
     return {
-    userData: null,
+    userData: 
+    {
+      name: "Carol Smith",
+      email: "carol.smt@hot.com",
+      description: "Teacher at 'University of Lodon'.",
+      testTaken: "101",
+      picture:"/home/doom/Documents/GitHub/Symptom_Disease_Quiz_Application_for_Cardiology_Students_using_AI/frontend/vue_main/src/assets/BG.jpg",
+      averageTestScore: 97.6,
+      favoriteQuizType:"Classic",
+    },
     editing: false,
     currentPage: 0,
     quizIds: null,
@@ -198,7 +208,7 @@ export default {
       this.$router.push({ path: 'login' })
     },
     showQuizInfo(quizId){
-      this.questions = getCompletedQuizData(quizId)
+      //this.questions = getCompletedQuizData(quizId)
       console.log(this.questions)
       
     },
@@ -221,18 +231,39 @@ export default {
       }
 
     },
-  },
-  beforeMount() {
-      this.userData = getUserData(this.$cookie.get("token"))
-      if (this.userData.status == "")
-        {
-          this.$cookie.set('access_token',"None",-1);
-          this.$cookie.set('refresh_token',"None",-1);
-          this.$router.push({ path: 'login' })
-        }
-      this.quizIds = getQuizIds(this.$cookie.get("token"));
-    },
+    
   
+  },
+  async mounted(){
+    
+  },
+  async mounted(){
+    try {
+    let partial = await getUserInfo(this.$cookie.get("access_token"));
+    console.log(partial.data);
+    this.userData.name = partial.data.username
+    this.userData.email = partial.data.email
+    this.userData.description = "University: "+ partial.data.institution+ ", Year of study: " + partial.data.year_of_study
+
+    try {
+    let partial = await getQuizInfo(this.$cookie.get("access_token"));
+    this.quizIds = partial.data
+    console.log(this.quizIds)
+    } catch (error) {
+      console.error("Error fetching user data:", error);    
+      //this.$router.push({ path: 'login' });
+    }
+
+
+    
+  } catch (error) {
+    console.error("Error fetching user data:", error);    
+    //this.$router.push({ path: 'login' });
+  }
+    },
+   beforeMount() {
+  
+},
 }
 </script>
 

@@ -143,7 +143,7 @@
 
 <script>
 import { sendQuizData } from "@/utils/backendCommunication";
-
+import { getQuizInfo } from "@/utils/backendCommunication";
 export default {
   name: "QuizTemplate",
   data() {
@@ -172,6 +172,16 @@ export default {
       currentQuestion: 0,
       numberQuestions: 2,
     };
+  },
+  async mounted(){
+    try {
+    let partial = await getQuizInfo(this.$cookie.get("access_token"));
+    console.log(partial.data);
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);    
+    //this.$router.push({ path: 'login' });
+  }
   },
   methods: {
     choseQuestion(value) {

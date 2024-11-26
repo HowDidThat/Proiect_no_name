@@ -84,7 +84,7 @@ export const { createAccount } = AccountService;
 
   import axios from 'axios';
   
-/*
+
   const logBefore = beforeMethod((meta) => {
     console.log(`Attempting login for email: ${meta.args[0]}`);
     console.log(`Attempting login for password: ${meta.args[1]}`);
@@ -92,16 +92,17 @@ export const { createAccount } = AccountService;
   });
   
   const logAfter = afterMethod((meta) => {
-    if (meta.result?.data) {
+    if (meta.data?.message == "Login successful") {
       console.log('Authentication successful');
     } else {
       console.log('Authentication completed without token');
+      
     }
   });
-*/
+
   export class AuthService {
-    //@logBefore
-    //@logAfter
+    @logBefore
+    @logAfter
     static async getToken(email, password) {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/auth/login', {
