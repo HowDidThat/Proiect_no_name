@@ -4,10 +4,9 @@ import os
 import joblib
 import numpy as np
 from typing import Dict, Any
-
 import pandas as pd
 
-from ..utils.decorators import log_execution
+from ..utils.decorators import log_execution_time
 
 
 class PredictionStrategy:
@@ -30,6 +29,8 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.label_encoder_path = os.path.join(self.model_dir, 'label_encoder.joblib')
         self.all_symptoms_path = os.path.join(self.model_dir, 'all_symptoms.joblib')
 
+
+    @log_execution_time
     def load_model(self):
         if not os.path.exists(self.model_path):
             raise FileNotFoundError("Model file not found. Please train the model first")
@@ -42,8 +43,6 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.label_encoder = joblib.load(self.label_encoder_path)
         self.all_symptoms = joblib.load(self.all_symptoms_path)
 
-    import pandas as pd
-    from typing import Dict, Any
 
     def predict(self, input_data: Dict[str, Any]) -> Dict[str, float]:
         if self.model is None or self.label_encoder is None or self.all_symptoms is None:
@@ -57,9 +56,19 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
 
         return sorted_result
 
+    def validate_symptom_domain(self, symptoms):
+        valid_symptoms = set(self.all_symptoms)
+        for symptom in symptoms:
+            if symptom not in valid_symptoms:
+                raise ValueError(f"Invalid symptom: {symptom}")
+
     def preprocess_input(self, input_data: Dict[str, Any]) -> np.ndarray:
+        symptoms = input_data.get('symptoms', [])
+        self.validate_symptom_domain(symptoms)
+
+        input_symptoms = [s.lower().replace(" ", "_") for s in input_data.get('symptoms', [])]
         input_vector = np.zeros(len(self.all_symptoms))
-        for symptom in input_data.get('symptoms', []):
+        for symptom in input_symptoms:
             if symptom in self.all_symptoms:
                 index = self.all_symptoms.index(symptom)
                 input_vector[index] = 1

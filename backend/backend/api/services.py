@@ -6,7 +6,6 @@ auth = ApiAuth()
 
 def get_ml_prediction(symptoms: list) -> dict:
     try:
-
         response = requests.post(
             f"{settings.ML_API_URL}/predict",
             json={'symptoms': symptoms},

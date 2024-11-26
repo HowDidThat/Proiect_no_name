@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
 from .auth import ApiAuth
+
 auth = ApiAuth()
 
 
