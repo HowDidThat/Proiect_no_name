@@ -123,6 +123,15 @@ export const { createAccount } = AccountService;
   
   export const { getToken } = AuthService;
 
+
+
+
+
+
+
+
+
+  
 export const getUserData = (token)=>{
     if (token === "good_token")
     {
