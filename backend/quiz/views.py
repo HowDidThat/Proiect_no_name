@@ -4,11 +4,13 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 
 from authentication.views import AuthBearer
-from .models import Quiz
+from backend.api.auth import ApiAuth
+from backend.api.services import get_ml_prediction
+from .models import Quiz, UserQuizProgress
 from .schemas import (
     QuizCreateSchema,
     QuizResponseSchema,
-    ErrorResponseSchema
+    ErrorResponseSchema, QuizSubmitResponseSchema, QuizSubmitSchema
 )
 
 quiz_router = Router(tags=["Quiz"])
@@ -43,3 +45,17 @@ def get_quiz(request, quiz_id: int):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     return 200, {"id": quiz.id, "title": quiz.title, "description": quiz.description, "quiz_type": quiz.quiz_type,
                  "difficulty": quiz.difficulty}
+
+
+@quiz_router.post("/{quiz_id}",
+                  response={200: QuizSubmitResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+
+    if not payload.answers:
+        return 400, {"error": "No answers provided"}
+
+    ml_response = get_ml_prediction(payload.answers)
+    if 'predictions' not in ml_response:
+        return 400, {"error": "Failed to get ML predictions or invalid token"}
+    return 200, {"diseases": ml_response["predictions"]}

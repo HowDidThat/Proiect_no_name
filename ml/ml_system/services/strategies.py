@@ -4,6 +4,9 @@ import os
 import joblib
 import numpy as np
 from typing import Dict, Any
+
+import pandas as pd
+
 from ..utils.decorators import log_execution
 
 
@@ -39,15 +42,19 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.label_encoder = joblib.load(self.label_encoder_path)
         self.all_symptoms = joblib.load(self.all_symptoms_path)
 
-    def predict(self, input_data: Dict[str, Any]) -> Dict[str, float]:
+    import pandas as pd
+    from typing import Dict, Any
 
+    def predict(self, input_data: Dict[str, Any]) -> Dict[str, float]:
         if self.model is None or self.label_encoder is None or self.all_symptoms is None:
             self.load_model()
         features = self.preprocess_input(input_data)
-        probabilities = self.model.predict_proba([features])[0]
+        features_df = pd.DataFrame([features], columns=self.all_symptoms)
+        probabilities = self.model.predict_proba(features_df)[0]
         disease_names = self.label_encoder.inverse_transform(range(len(probabilities)))
         result = dict(zip(disease_names, probabilities))
         sorted_result = dict(sorted(result.items(), key=lambda item: item[1], reverse=True))
+
         return sorted_result
 
     def preprocess_input(self, input_data: Dict[str, Any]) -> np.ndarray:

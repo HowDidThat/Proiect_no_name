@@ -1,5 +1,5 @@
 from ninja import Schema
-from typing import Dict
+from typing import Dict, List
 
 
 class QuizCreateSchema(Schema):
@@ -10,7 +10,7 @@ class QuizCreateSchema(Schema):
 
 
 class QuizSubmitSchema(Schema):
-    answers: Dict
+    answers: List[str]
 
 
 class QuizResponseSchema(Schema):
@@ -22,7 +22,7 @@ class QuizResponseSchema(Schema):
 
 
 class QuizSubmitResponseSchema(Schema):
-    score: float
+    diseases: Dict[str, float]
 
 
 class ErrorResponseSchema(Schema):
