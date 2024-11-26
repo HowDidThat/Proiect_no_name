@@ -126,9 +126,6 @@ AUTH_USER_MODEL = 'authentication.User'
 ML_API_URL = 'http://localhost:8001/api/ml'
 SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
 
-
-
-
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True

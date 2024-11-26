@@ -1,4 +1,5 @@
 import os
+import time
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -6,6 +7,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import joblib
+
+from ..utils.decorators import log_execution_time
+
 
 class DiagnosisModel:
     def __init__(self, data_path):
@@ -16,6 +20,9 @@ class DiagnosisModel:
 
     def load_and_preprocess_data(self):
         data = pd.read_csv(self.data_path)
+
+        data['prognosis'] = data['prognosis'].str.lower().replace(" ", "_", regex=True)
+
         X = data.drop('prognosis', axis=1)
         y = data['prognosis']
         self.all_symptoms = X.columns.tolist()
@@ -24,18 +31,35 @@ class DiagnosisModel:
         X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
         return X_train, X_test, y_train, y_test
 
+    @log_execution_time
     def train_model(self):
         X_train, X_test, y_train, y_test = self.load_and_preprocess_data()
-        self.model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+        start_time = time.time()
+        self.model = RandomForestClassifier(
+            n_estimators=150,
+            max_depth=10,
+            min_samples_split=5,
+            min_samples_leaf=3,
+            max_features='sqrt',
+            class_weight='balanced',
+            random_state=42
+        )
+
         self.model.fit(X_train, y_train)
+        training_time = time.time() - start_time
+
         y_pred = self.model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
-        print(f'Accuracy: {accuracy}')
+
+        print(f'Training completed in {training_time:.2f} seconds.')
+        print(f'Model accuracy: {accuracy:.2f}')
 
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         data_path = os.path.join(base_dir, 'saved_models')
 
-        joblib.dump(self.model, os.path.join(data_path,'diagnosis_model.joblib'))
-        joblib.dump(self.label_encoder, os.path.join(data_path,'label_encoder.joblib'))
+        joblib.dump(self.model, os.path.join(data_path, 'diagnosis_model.joblib'))
+        joblib.dump(self.label_encoder, os.path.join(data_path, 'label_encoder.joblib'))
+        joblib.dump(self.all_symptoms, os.path.join(data_path, 'all_symptoms.joblib'))
 
-        joblib.dump(self.all_symptoms, os.path.join(data_path,'all_symptoms.joblib'))
+        return {"training_time": training_time, "accuracy": accuracy}
