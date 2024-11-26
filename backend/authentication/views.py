@@ -10,12 +10,28 @@ from ninja import Router
 from ninja.security import HttpBearer
 
 from .models import User
-from .schemas import (
-    LoginSchema, UserSchema, ErrorSchema, RegisterSchema,
-    MessageSchema, ValidationErrorResponse
-)
+from .schemas import LoginSchema, UserSchema, ErrorSchema, RegisterSchema, MessageSchema, ValidationErrorResponse
+from backend.aspects import QuizMonitoringAspect, AuthenticationAspect, RateLimitingAspect
+
 
 auth_router = Router(tags=['Authentication'])
+
+
+class AuthBearer(HttpBearer):
+    def authenticate(self, request, token):
+        try:
+            if not token:
+                token = request.COOKIES.get('access_token')
+
+            if not token:
+                return None
+
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            user = User.objects.get(id=payload['user_id'])
+            request.user = user
+            return token
+        except (jwt.PyJWTError, User.DoesNotExist):
+            return None
 
 
 def set_auth_cookies(response: HttpResponse, access_token: str, refresh_token: str) -> None:
@@ -24,23 +40,22 @@ def set_auth_cookies(response: HttpResponse, access_token: str, refresh_token: s
         access_token,
         httponly=True,
         secure=True,
-        #samesite='Lax',
+        # samesite='Lax',
         max_age=900,
         samesite='None',
         path='/',
-        
+
     )
     response.set_cookie(
         'refresh_token',
         refresh_token,
         httponly=True,
         secure=True,
-        #samesite='Lax',
+        # samesite='Lax',
         max_age=8640,
         samesite='None',
         path='/',
-        
-    
+
     )
 
 
@@ -65,24 +80,10 @@ def create_tokens(user_id: int) -> tuple[str, str]:
     return access_token, refresh_token
 
 
-class AuthBearer(HttpBearer):
-    def authenticate(self, request, token):
-        try:
-            if not token:
-                token = request.COOKIES.get('access_token')
-
-            if not token:
-                return None
-
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
-            user = User.objects.get(id=payload['user_id'])
-            request.user = user
-            return token
-        except (jwt.PyJWTError, User.DoesNotExist):
-            return None
-
-
 @auth_router.post("/register", response={201: MessageSchema, 400: ValidationErrorResponse})
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='register')
 def register(request, data: RegisterSchema):
     errors = []
 
@@ -126,7 +127,7 @@ def register(request, data: RegisterSchema):
             status=201
         )
         set_auth_cookies(response, access_token, refresh_token)
-        
+
         return response
 
     except Exception as e:
@@ -135,6 +136,9 @@ def register(request, data: RegisterSchema):
 
 
 @auth_router.post("/login", response={200: MessageSchema, 401: ErrorSchema})
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='login')
 def login(request, credentials: LoginSchema):
     user = authenticate(
         username=credentials.username,
@@ -147,8 +151,8 @@ def login(request, credentials: LoginSchema):
     access_token, refresh_token = create_tokens(user.id)
     response = HttpResponse(
         json.dumps({"message": "Login successful",
-                        "access_token": access_token,
-                        "refresh_token": refresh_token}),
+                    "access_token": access_token,
+                    "refresh_token": refresh_token}),
         content_type='application/json',
         status=200
     )
@@ -157,6 +161,9 @@ def login(request, credentials: LoginSchema):
 
 
 @auth_router.post("/refresh", response={200: MessageSchema, 401: ErrorSchema})
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='default')
 def refresh_token(request):
     refresh_token = request.COOKIES.get('refresh_token')
 
@@ -191,6 +198,9 @@ def refresh_token(request):
 
 
 @auth_router.post("/logout", response={200: MessageSchema})
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='default')
 def logout(request):
     response = HttpResponse(
         json.dumps({"message": "Logout successful"}),
@@ -203,5 +213,8 @@ def logout(request):
 
 
 @auth_router.get("/me", response=UserSchema, auth=AuthBearer())
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='default')
 def get_current_user(request):
     return request.user
