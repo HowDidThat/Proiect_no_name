@@ -12,7 +12,7 @@ class QuizCreateSchema(Schema):
 
 
 class QuizSubmitSchema(Schema):
-    answers: List[str]
+    answers: List[Dict[str, List[str]]]
 
 
 class QuizResponseSchema(Schema):
@@ -21,6 +21,7 @@ class QuizResponseSchema(Schema):
     description: str
     quiz_type: str
     difficulty: str
+    created_by: str
     symptoms: List[str]
     diseases: Dict[str, float]
 

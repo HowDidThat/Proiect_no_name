@@ -39,6 +39,7 @@ def create_quiz(request, payload: QuizCreateSchema):
             description=payload.description,
             quiz_type=payload.quiz_type,
             difficulty=payload.difficulty,
+            created_by=request.user,
             symptoms=payload.symptoms,
             diseases=relevant_diseases
         )
@@ -49,6 +50,7 @@ def create_quiz(request, payload: QuizCreateSchema):
             "description": quiz.description,
             "quiz_type": quiz.quiz_type,
             "difficulty": quiz.difficulty,
+            "created_by": quiz.created_by.username,
             "symptoms": quiz.symptoms,
             "diseases": quiz.diseases
         }
@@ -92,18 +94,38 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
     if not payload.answers:
         return 400, {"error": "No answers provided"}
 
-    ml_response = get_ml_prediction(payload.answers)
-    if 'predictions' not in ml_response:
-        return 400, {"error": "Failed to get ML predictions or invalid token"}
+    results = []
+    total_score = 0
+
+    for idx, answer in enumerate(payload.answers):
+        ml_response = get_ml_prediction(answer.get('symptoms', []))
+        if 'predictions' not in ml_response:
+            return 400, {"error": f"Failed to get ML predictions for answer {idx + 1}"}
+
+        pair_score = calculate_score(
+            quiz.symptom_disease_pairs[idx]['expected_diseases'],
+            ml_response["predictions"]
+        )
+        total_score += pair_score
+        results.append({
+            "symptoms": answer.get('symptoms', []),
+            "predictions": ml_response["predictions"],
+            "score": pair_score
+        })
+
+    average_score = total_score / len(payload.answers)
 
     UserQuizProgress.objects.create(
         user=request.user,
         quiz=quiz,
         answers=payload.answers,
-        score=calculate_score(quiz.diseases, ml_response["predictions"])
+        score=average_score
     )
 
-    return 200, {"diseases": ml_response["predictions"]}
+    return 200, {
+        "results": results,
+        "average_score": average_score
+    }
 
 
 def calculate_score(expected_diseases: Dict[str, float], submitted_diseases: Dict[str, float]) -> float:

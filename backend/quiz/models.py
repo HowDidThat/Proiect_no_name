@@ -1,4 +1,5 @@
 from django.db import models
+
 from authentication.models import User
 
 
@@ -7,6 +8,7 @@ class Quiz(models.Model):
     description = models.TextField()
     quiz_type = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=50)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_quizzes')
     symptoms = models.JSONField()
     diseases = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
