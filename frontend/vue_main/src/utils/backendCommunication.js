@@ -41,9 +41,9 @@ const logBeforeReg = beforeMethod((meta) => {
 const logAfterReg = afterMethod(async (meta) => {
     const result = await meta.result;
     if (result.message?.includes('bad request')) {
-        console.log('Registration failed: Bad request');
+        //console.log('Registration failed: Bad request');
     } else {
-        console.log('Registration completed successfully');
+        //console.log('Registration completed successfully');
     }
 });
 
@@ -52,6 +52,7 @@ export class AccountService {
     @logAfterReg
     static async createAccount(data) {
         try {
+            data;
             const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
                 method: 'POST',
                 headers: {
@@ -67,8 +68,10 @@ export class AccountService {
             });
 
             if (!response.ok) {
-                console.log(Object(response.json()));
-                return {message: ["bad request"]};
+                const errorData = await response.json();
+                console.log(errorData["errors"][0]["message"]);
+                
+                return {message: [errorData["errors"][0]["message"]]};
             }
 
             return await response.json();
@@ -157,8 +160,9 @@ export class AuthService {
             });
             return response;
         } catch (error) {
-            console.error('Authentication failed:', error.message);
-            throw error;
+            console.error('Authentication failed:', error.status);
+            return 401;
+
         }
     }
 }
@@ -183,11 +187,6 @@ export const getUserData = (token) => {
         status: "404"
     }
 }
-// eslint-disable-next-line
-export const updateUserInfo = (info) => {
-
-}
-
 
 export const validateToken = (token) => {
     if (token == "fK7zT9gLwM3XcV8pY6QsD2jN5RxBhP4l") {

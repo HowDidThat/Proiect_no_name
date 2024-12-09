@@ -13,7 +13,7 @@
                   <p class="text-white-50 mb-5">Create your account</p>
 
                   <div data-mdb-input-init class="form-outline form-white mb-4">
-                    <label class="form-label" for="typeName">Full Name</label>
+                    <label class="form-label" for="typeName">Username</label>
                     <input type="text" id="typeName" class="form-control form-control-lg" v-model="formData.name"/>
                   </div>
 
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { validatePassword } from '@/utils/formUtils'
+//import { validatePassword } from '@/utils/formUtils'
 import { createAccount } from '@/utils/backendCommunication';
 export default {
   name: "RegisterTemplate",
@@ -80,11 +80,12 @@ export default {
   },
   methods: {
   async handleSubmit() {
-    this.problems = validatePassword(this.formData.password, this.formData.confirmPassword);
+    //this.problems = validatePassword(this.formData.password, this.formData.confirmPassword);
+    this.problems = []
     if (this.problems.length === 0) {
       try {
         this.formResponse = await createAccount(this.formData);
-        console.log(this.formResponse.message);
+        //console.log(this.formResponse.message);
         if (this.formResponse.message == "Registration successful")
           this.$router.push({ path: 'login' });
         else
