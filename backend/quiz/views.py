@@ -5,6 +5,7 @@ from ninja import Router
 
 from authentication.views import AuthBearer
 from backend.api.services import get_ml_prediction
+from .utils import generate_quiz_questions
 from .models import Quiz, UserQuizProgress
 from .schemas import (
     QuizCreateSchema,
@@ -20,19 +21,7 @@ quiz_router = Router(tags=["Quiz"])
 @quiz_router.post("/", response={201: QuizResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 def create_quiz(request, payload: QuizCreateSchema):
     try:
-        ml_response = get_ml_prediction(payload.symptoms)
-
-        if 'predictions' not in ml_response:
-            return 400, {"error": "Failed to get ML predictions"}
-
-        relevant_diseases = {
-            disease: prob
-            for disease, prob in ml_response["predictions"].items()
-            if prob > 0
-        }
-
-        if not relevant_diseases:
-            return 400, {"error": "No relevant diseases found for the given symptoms"}
+        questions = generate_quiz_questions(get_ml_prediction)
 
         quiz = Quiz.objects.create(
             title=payload.title,
@@ -40,8 +29,7 @@ def create_quiz(request, payload: QuizCreateSchema):
             quiz_type=payload.quiz_type,
             difficulty=payload.difficulty,
             created_by=request.user,
-            symptoms=payload.symptoms,
-            diseases=relevant_diseases
+            questions=questions
         )
 
         return 201, {
@@ -51,8 +39,7 @@ def create_quiz(request, payload: QuizCreateSchema):
             "quiz_type": quiz.quiz_type,
             "difficulty": quiz.difficulty,
             "created_by": quiz.created_by.username,
-            "symptoms": quiz.symptoms,
-            "diseases": quiz.diseases
+            "questions": questions
         }
 
     except Exception as e:

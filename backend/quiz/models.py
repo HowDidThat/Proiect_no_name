@@ -9,10 +9,12 @@ class Quiz(models.Model):
     quiz_type = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=50)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_quizzes')
-    symptoms = models.JSONField()
-    diseases = models.JSONField()
+    questions = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
 
     def __str__(self):
         return self.title
