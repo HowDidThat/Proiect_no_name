@@ -44,4 +44,4 @@
           MDD: [MDD login/register](Lab5/MaximMatei/Maxim_Matei_1.md), [MDD user info](Lab5/MaximMatei/Maxim_Matei_2.md), [pictures](Lab5/MaximMatei)
         - BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/Login_Signup_BPMN.png)
     - Laboratory 9:
-        - MOP - When the user tries to login after a inactivity period and the JVT expires, the webpage will try to aquire a new JVT using the "reset_token", and in case of failiure will prompt the user to login again.
+        - MOP - When the user tries to login after a inactivity period and the JWT expires, the webpage will try to acquire a new JWT using the "refresh_token", and in case of failure will prompt the user to login again.
