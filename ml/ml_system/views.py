@@ -32,8 +32,8 @@ def predict_disease(request, payload: SymptomsSchema):
 def train_model(request):
     from .ml_models.diagnosis_model import DiagnosisModel
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    data_path = os.path.join(base_dir, 'data', 'symbipredict_2022.csv')
-
-    diagnosis_model = DiagnosisModel(data_path)
+    data_path = os.path.join(base_dir, 'data', 'dataset.csv')
+    severity_data_path = os.path.join(base_dir, 'data', 'Symptom-severity.csv')
+    diagnosis_model = DiagnosisModel(data_path, severity_data_path)
     response = diagnosis_model.train_model()
     return {'message': 'Model trained successfully', 'metrics': response}
