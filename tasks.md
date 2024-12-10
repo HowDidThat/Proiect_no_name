@@ -29,6 +29,9 @@
     - Laboratory 4:
         - 2 Iterations of TDD [It1Fail](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Pass.png) [Code1](ml/ml_system/tests.py) --- [It2Fail](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Pass.png) [Code2](ml/ml_system/tests.py)
         - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/Quiz_Taking_BPMN.png)
+    - Laboratory 9:
+        - MOP: Implemented a data validator for new datasets and ensured compatibility with the updated model.
+        - Enhanced the classification model by adapting it to new data.
 - Maxim Matei
     - Laboratory 1:
         - Key Research Papers on this topic
