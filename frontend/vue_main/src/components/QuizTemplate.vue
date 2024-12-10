@@ -4,6 +4,82 @@
       class="vh-100 px-4 py-5 gradient-custom"
       style="border-radius: 0.5rem 0.5rem 0 0"
     >
+
+    <div v-if ="creating_quiz" class="quiz_creation_part">
+    <form @submit.prevent="createQuiz" class="challenge-form">
+      <div class="form-group">
+        <label for="name">Quiz name:</label>
+        <input 
+          type="text" 
+          id="name" 
+          v-model="quiz_info.name" 
+          required 
+          placeholder="Enter quiz info"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea 
+          id="description" 
+          v-model="quiz_info.description" 
+          required 
+          placeholder="Describe the usage of the quiz"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Quiz type:</label>
+        <div class="difficulty-options">
+          <label>
+            <input 
+              type="radio" 
+              v-model="quiz_info.type" 
+              value="std" 
+            >Symptom -> Disease
+          </label>
+          <label>
+            <input 
+              type="radio" 
+              v-model="quiz_info.type" 
+              value="dts"
+            >Disease -> Symptom
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Difficulty:</label>
+        <div class="difficulty-options">
+          <label>
+            <input 
+              type="radio" 
+              v-model="quiz_info.difficulty" 
+              value="easy" 
+            > Easy
+          </label>
+          <label>
+            <input 
+              type="radio" 
+              v-model="quiz_info.difficulty" 
+              value="medium"
+            > Medium
+          </label>
+          <label>
+            <input 
+              type="radio" 
+              v-model="quiz_info.difficulty" 
+              value="hard"
+            > Hard
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Create Challenge</button>
+    </form>
+    </div>
+    <div v-if = "!creating_quiz" class="quiz_part">
       <div class="row d-flex justify-content-center">
         <div class="col col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px">
@@ -95,6 +171,7 @@
           </div>
         </div>
       </div>
+    </div>
     </section>
     <div
       class="modal fade"
@@ -142,12 +219,20 @@
 </template>
 
 <script>
+import "@/css/quiz.css";
 import { sendQuizData } from "@/utils/backendCommunication";
-
+import { getQuizInfo } from "@/utils/backendCommunication";
 export default {
   name: "QuizTemplate",
   data() {
     return {
+      creating_quiz : true,
+      quiz_info:{
+        name:"",
+        description:"",
+        type:"",
+        difficulty:""
+      },
       questions: [
         {
           text:"This is a test for the question field",
@@ -172,6 +257,16 @@ export default {
       currentQuestion: 0,
       numberQuestions: 2,
     };
+  },
+  async mounted(){
+    try {
+    let partial = await getQuizInfo(this.$cookie.get("access_token"));
+    console.log(partial.data);
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);    
+    //this.$router.push({ path: 'login' });
+  }
   },
   methods: {
     choseQuestion(value) {
@@ -212,6 +307,13 @@ export default {
       sendQuizData(token, this.questions);
       this.$router.push({ path: "profile" });
     },
+    createQuiz(){
+      console.log(this.quiz_info);
+      this.creating_quiz = false;
+      
+
+
+    }
   },
 };
 </script>

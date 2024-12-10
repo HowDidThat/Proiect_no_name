@@ -5,6 +5,7 @@ from ninja import Router
 
 from authentication.views import AuthBearer
 from backend.api.services import get_ml_prediction
+from .utils import generate_quiz_questions
 from .models import Quiz, UserQuizProgress
 from .schemas import (
     QuizCreateSchema,
@@ -20,27 +21,15 @@ quiz_router = Router(tags=["Quiz"])
 @quiz_router.post("/", response={201: QuizResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 def create_quiz(request, payload: QuizCreateSchema):
     try:
-        ml_response = get_ml_prediction(payload.symptoms)
-
-        if 'predictions' not in ml_response:
-            return 400, {"error": "Failed to get ML predictions"}
-
-        relevant_diseases = {
-            disease: prob
-            for disease, prob in ml_response["predictions"].items()
-            if prob > 0
-        }
-
-        if not relevant_diseases:
-            return 400, {"error": "No relevant diseases found for the given symptoms"}
+        questions = generate_quiz_questions(get_ml_prediction)
 
         quiz = Quiz.objects.create(
             title=payload.title,
             description=payload.description,
             quiz_type=payload.quiz_type,
             difficulty=payload.difficulty,
-            symptoms=payload.symptoms,
-            diseases=relevant_diseases
+            created_by=request.user,
+            questions=questions
         )
 
         return 201, {
@@ -49,8 +38,8 @@ def create_quiz(request, payload: QuizCreateSchema):
             "description": quiz.description,
             "quiz_type": quiz.quiz_type,
             "difficulty": quiz.difficulty,
-            "symptoms": quiz.symptoms,
-            "diseases": quiz.diseases
+            "created_by": quiz.created_by.username,
+            "questions": questions
         }
 
     except Exception as e:
@@ -92,18 +81,38 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
     if not payload.answers:
         return 400, {"error": "No answers provided"}
 
-    ml_response = get_ml_prediction(payload.answers)
-    if 'predictions' not in ml_response:
-        return 400, {"error": "Failed to get ML predictions or invalid token"}
+    results = []
+    total_score = 0
+
+    for idx, answer in enumerate(payload.answers):
+        ml_response = get_ml_prediction(answer.get('symptoms', []))
+        if 'predictions' not in ml_response:
+            return 400, {"error": f"Failed to get ML predictions for answer {idx + 1}"}
+
+        pair_score = calculate_score(
+            quiz.symptom_disease_pairs[idx]['expected_diseases'],
+            ml_response["predictions"]
+        )
+        total_score += pair_score
+        results.append({
+            "symptoms": answer.get('symptoms', []),
+            "predictions": ml_response["predictions"],
+            "score": pair_score
+        })
+
+    average_score = total_score / len(payload.answers)
 
     UserQuizProgress.objects.create(
         user=request.user,
         quiz=quiz,
         answers=payload.answers,
-        score=calculate_score(quiz.diseases, ml_response["predictions"])
+        score=average_score
     )
 
-    return 200, {"diseases": ml_response["predictions"]}
+    return 200, {
+        "results": results,
+        "average_score": average_score
+    }
 
 
 def calculate_score(expected_diseases: Dict[str, float], submitted_diseases: Dict[str, float]) -> float:

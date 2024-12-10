@@ -16,6 +16,10 @@
       <li class="nav-item active">
         <a class="nav-link" href="/quiz">Quiz</a> 
       </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/profile">Profile</a>
+      </li>
     </ul>
   </div>
 </nav>

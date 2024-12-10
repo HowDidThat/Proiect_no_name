@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from ninja import Schema
 
@@ -8,11 +8,10 @@ class QuizCreateSchema(Schema):
     description: str
     quiz_type: str
     difficulty: str
-    symptoms: List[str]
 
 
 class QuizSubmitSchema(Schema):
-    answers: List[str]
+    answers: List[Dict[str, List[str]]]
 
 
 class QuizResponseSchema(Schema):
@@ -21,8 +20,8 @@ class QuizResponseSchema(Schema):
     description: str
     quiz_type: str
     difficulty: str
-    symptoms: List[str]
-    diseases: Dict[str, float]
+    created_by: str
+    questions: List[Dict[str, Union[List[str], Dict[str, float]]]]
 
 
 class QuizSubmitResponseSchema(Schema):

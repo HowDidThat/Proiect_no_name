@@ -9,11 +9,11 @@ from .base import BaseAspect, logger
 
 class RateLimitingAspect(BaseAspect):
     RATE_LIMITS = {
-        'register': {'max_requests': 3, 'window': 3600},
-        'login': {'max_requests': 5, 'window': 300},
-        'quiz_creation': {'max_requests': 20, 'window': 7200},
-        'quiz_submission': {'max_requests': 50, 'window': 1800},
-        'default': {'max_requests': 15, 'window': 3600}
+        'register': {'max_requests': 3000, 'window': 3600},
+        'login': {'max_requests': 5000, 'window': 300},
+        'quiz_creation': {'max_requests': 20000, 'window': 7200},
+        'quiz_submission': {'max_requests': 50000, 'window': 1800},
+        'default': {'max_requests': 15000, 'window': 3600}
     }
 
     @classmethod

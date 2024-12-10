@@ -143,3 +143,12 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
     'Partitioned',
 ]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]

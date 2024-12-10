@@ -20,9 +20,10 @@
                 <label class="form-label" for="typePasswordX">Password</label>
                 <input type="password" id="typePasswordX" class="form-control form-control-lg" v-model="formData.password"/>
               </div>
-              <div class="errors" v-if="validLoginInfo">
-                "Invalid login information"
+              <div class="errors" v-if="invalidLoginInfo">
+                Wrong email or password
               </div>
+              <br> 
               <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               
               </form>
@@ -57,42 +58,31 @@ export default {
           email:"",
           password: ""
         },
-        validLoginInfo:""
+        invalidLoginInfo: false
       }
     },
     methods:{
       async handleSubmit(){
         let t = await getToken(this.formData.email,this.formData.password)
-        
-        try{
-          if (t.data.message == "Login successful")
-            {
-              this.$cookie.set('access_token',t.data.access_token,1);
-              this.$cookie.set('refresh_token',t.data.refresh_token,30);
-            }
-          else
-            console.log(t.data.message)
-        }catch(error){
-          console.log(error);
+        if (t == 401)
+        {
+          this.invalidLoginInfo = true
         }
-        /*
-        let token = validatePassword(this.formData.email,this.formData.password)
-        if (token.status !== 200)
-          {
-          this.validLoginInfo = false
-          
-          }
-        else {
-          {
-          this.$cookie.set('token',token.token,30) // expires after 30 days
-          this.$router.push({ path: 'profile' })
-          }
+        else
+        {
+          this.set_cookies(t.data.access_token,t.data.refresh_token);
+          this.$router.push({ path: 'profile' });          
         }
-          */
+
+      },
+      set_cookies(at,rt){
+        this.$cookie.set('access_token',at,1);
+        this.$cookie.set('refresh_token',rt,30);
       },
       login(){
-        let token = this.$cookie.get('token')
-        if (token !== null)
+        let acces_token = this.$cookie.get('acces_token')
+        let refresh_token = this.$cookie.get('refresh_token')
+        if (acces_token !== null && refresh_token !== null)
           this.$router.push({ path: 'profile' })
       }
     },
