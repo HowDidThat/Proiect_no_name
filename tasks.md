@@ -13,6 +13,9 @@
           TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
         - BPMN Diagrams for Mailing Service and Analysis Service [Mailing Diagram](Lab5/CatiruStefan/BPMN%20-%20Mailing%20Service.png) - [Analysis Diagram](Lab5/CatiruStefan/BPMN%20-%20Analysis%20Service.PNG) 
         - Tasks distribution and administrative stuff (like editing this markdown)
+    - Laboratory 9
+        - MOP - In case of too many requests, now we throttle the connection
+        - MOP - When generating a quiz, if the combination of symptoms gives too few diseases, we retry.
 - Maftei Briana Stefania
     - Laboratory 1:
         - Relevant Datasets
