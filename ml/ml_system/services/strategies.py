@@ -21,7 +21,6 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.label_encoder = None
         self.all_symptoms = None
         self.symptom_severity = None
-
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.model_dir = os.path.join(base_dir, 'ml_models', 'saved_models')
         self.model_path = os.path.join(self.model_dir, 'diagnosis_model.joblib')
@@ -46,17 +45,7 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.all_symptoms = joblib.load(self.all_symptoms_path)
         self.symptom_severity = joblib.load(self.symptom_severity_path)
 
-
-    def predict(self, input_data: Dict[str, Any]) -> Dict[str, float]:
-        if self.model is None or self.label_encoder is None or self.all_symptoms is None or self.symptom_severity is None:
-            self.load_model()
-
-        symptoms = input_data.get('symptoms', [])
-        self.validate_symptom_domain(symptoms)
-
-        features = self.preprocess_input(input_data)
-        features_df = pd.DataFrame([features], columns=self.all_symptoms)
-
+    def predict(self, features_df) -> Dict[str, float]:
         probabilities = self.model.predict_proba(features_df)[0]
         disease_names = self.label_encoder.inverse_transform(range(len(probabilities)))
         result = dict(zip(disease_names, probabilities))
@@ -72,7 +61,6 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
                 raise ValueError(f"Invalid symptom: {symptom}")
 
     def preprocess_input(self, input_data: Dict[str, Any]) -> np.ndarray:
-        print("All symptoms", self.all_symptoms)
         input_symptoms = [s.lower().replace(" ", "_") for s in input_data.get('symptoms', [])]
         input_vector = np.zeros(len(self.all_symptoms))
         for symptom in input_symptoms:
