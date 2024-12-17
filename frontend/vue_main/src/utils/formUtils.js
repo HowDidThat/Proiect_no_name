@@ -45,18 +45,3 @@ export const validatePassword = (password, confirmPassword) => {
     }
     return  errors;
 }
-
-/*
-function testPassword(password) {
-    console.log(`Testing password: ${password}`);
-    const result = validatePassword(password);
-    console.log('Validation result:', result);
-    console.log('------------------------');
-}
-testPassword("weak", "weak");
-testPassword("Password123","asdeqwdasadqwdas");
-testPassword("Password123!","Password123!");
-testPassword("SuperStr0ng!Pass","kkkk");
-testPassword("aaa123!A","dqwdaasd1wqsad");  
-testPassword("Pass word","sadqw");
-*/

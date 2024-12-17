@@ -48,3 +48,6 @@
         - BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/Login_Signup_BPMN.png)
     - Laboratory 9:
         - MOP - When the user tries to login after a inactivity period and the JWT expires, the webpage will try to acquire a new JWT using the "refresh_token", and in case of failure will prompt the user to login again.
+    - Laboratory 10:
+        - Created test classes for the functions responsible for : backend communication, mop and input data verification.[Test](Lab10/MaximMatei/Tests.png)
+        - Run security check using ZAP. [Manual](Lab10/MaximMatei/ZAP_manual_routing.png), [Automatic](Lab10/MaximMatei/ZAP_automatic_routing.png)
