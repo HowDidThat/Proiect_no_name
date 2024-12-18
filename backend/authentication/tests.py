@@ -1,11 +1,26 @@
+# tests.py
+import os
+import warnings
+from django.core.cache import CacheKeyWarning
+warnings.simplefilter("ignore", CacheKeyWarning)
+
 from django.test import TestCase
 from ninja.testing import TestClient
 
+from django.conf import settings
 from .models import User
-from .views import auth_router
+from .views import auth_router, create_tokens
+
+os.environ.setdefault('SECRET_KEY', 'pisica')
+os.environ.setdefault('SHARED_SECRET_KEY', 'pinguin')
 
 
 class AuthenticationTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        settings.SECRET_KEY = os.getenv('SECRET_KEY')
+        settings.SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
+
     def setUp(self):
         self.client = TestClient(auth_router)
         self.user = User.objects.create_user(
@@ -15,6 +30,10 @@ class AuthenticationTest(TestCase):
             institution='Test Hospital',
             year_of_study=3
         )
+
+        self.access_token, self.refresh_token = create_tokens(self.user.id)
+        self.user_headers = {"Authorization": f"Bearer {self.access_token}"}
+
         self.register_url = '/register'
         self.login_url = '/login'
         self.logout_url = '/logout'
@@ -27,7 +46,7 @@ class AuthenticationTest(TestCase):
             json={
                 'username': 'newuser',
                 'email': 'new@example.com',
-                'password': 'newpass123',
+                'password': 'ValidPass123!',
                 'institution': 'New Hospital',
                 'year_of_study': 2
             }
@@ -50,8 +69,28 @@ class AuthenticationTest(TestCase):
         )
         self.assertEqual(response.status_code, 400)
         errors = response.json()['errors']
-        print(errors)
         self.assertTrue(any(error['field'] == 'username' and 'exists' in error['message'] for error in errors))
+
+    def test_protected_endpoint_accepts_valid_auth(self):
+        response = self.client.get(
+            self.me_url,
+            headers=self.user_headers
+        )
+        self.assertEqual(response.status_code, 200)
+        user_data = response.json()
+        self.assertEqual(user_data['username'], 'testuser')
+        self.assertEqual(user_data['email'], 'test@example.com')
+
+    def test_refresh_token(self):
+        response = self.client.post(
+            self.refresh_url,
+            headers={"Authorization": f"Bearer {self.refresh_token}"}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['message'], "Tokens refreshed")
+        self.assertTrue('access_token' in response.cookies)
+        self.assertTrue('refresh_token' in response.cookies)
 
     def test_registration_invalid_username(self):
         response = self.client.post(
@@ -111,7 +150,6 @@ class AuthenticationTest(TestCase):
         )
         self.assertEqual(response.status_code, 400)
         errors = response.json()['errors']
-        print(errors)
         self.assertTrue(any(error['field'] == 'year_of_study' for error in errors))
 
     def test_registration_invalid_institution(self):

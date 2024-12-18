@@ -2,7 +2,9 @@ import requests
 from django.conf import settings
 
 from .auth import ApiAuth
+
 auth = ApiAuth()
+
 
 def get_ml_prediction(symptoms: list) -> dict:
     try:
