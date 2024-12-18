@@ -172,9 +172,9 @@
 
 import { getUserInfo } from '@/utils/backendCommunication';
 import { updateUserInfo } from '@/utils/backendCommunication'
-//import { getQuizIds } from '@/utils/backendCommunication'
 import { getQuizInfo } from "@/utils/backendCommunication";
-//import { getCompletedQuizData } from '@/utils/backendCommunication'
+import { checkToken } from '@/utils/mop';
+
 export default {
   name: 'ProfileTemplate',
   data(){
@@ -232,32 +232,34 @@ export default {
       }
 
     },
-    
+    async setUserInfo(){
+      let partial = await getUserInfo(this.$cookie.get("access_token"));
+        console.log(partial.data);
+        this.userData.name = partial.data.username
+        this.userData.email = partial.data.email
+        this.userData.description = "University: "+ partial.data.institution+ ", Year of study: " + partial.data.year_of_study
+    },
+    async setQuizInfo(){
+      let partial = await getQuizInfo(this.$cookie.get("access_token"));
+      this.quizIds = partial.data
+    }
   
   },
   async mounted(){
-    try {
-    let partial = await getUserInfo(this.$cookie.get("access_token"));
-    console.log(partial.data);
-    this.userData.name = partial.data.username
-    this.userData.email = partial.data.email
-    this.userData.description = "University: "+ partial.data.institution+ ", Year of study: " + partial.data.year_of_study
-
-    try {
-    let partial = await getQuizInfo(this.$cookie.get("access_token"));
-    this.quizIds = partial.data
-    console.log(this.quizIds)
-    } catch (error) {
-      console.error("Error fetching user data:", error);    
-      //this.$router.push({ path: 'login' });
+    let tokenCheck = checkToken(this.$cookie.get("access_token"),this.$cookie.get("refresh_token"))
+    if (tokenCheck["status"] === 200)
+    {
+      if (tokenCheck["new_token"] !== null)
+        this.$cookie.set('access_token',tokenCheck["new_token"],1);
+      this.setUserInfo()
+      
+    }
+    else{
+      this.$cookie.set("access_token", null, -1);
+      this.$cookie.set("refresh_token", null, -1);
+      this.$router.push({ path: 'login' });
     }
 
-
-    
-  } catch (error) {
-    console.error("Error fetching user data:", error);    
-    //this.$router.push({ path: 'login' });
-  }
     },
    beforeMount() {
   

@@ -20,6 +20,7 @@ def clean_and_validate_data(func):
         if data:
             symptoms = [s.lower().replace(' ', '_') for s in data.symptoms]
             data.symptoms = symptoms
+        print("Clean and validate data decorator")
         print(f"Cleaned data: {data}")
         return func(*args, **kwargs)
     return wrapper

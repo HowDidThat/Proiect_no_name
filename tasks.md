@@ -13,6 +13,9 @@
           TDD [It1Fail](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/CatiruStefan/TDD%20Iteration%201%20Tests%20Pass.PNG) [Code1](backend/authentication/tests.py) --- [It2Fail](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/CatiruStefan/TDD%20Iteration%202%20Tests%20Pass.PNG) [Code2](backend/quiz/tests.py)
         - BPMN Diagrams for Mailing Service and Analysis Service [Mailing Diagram](Lab5/CatiruStefan/BPMN%20-%20Mailing%20Service.png) - [Analysis Diagram](Lab5/CatiruStefan/BPMN%20-%20Analysis%20Service.PNG) 
         - Tasks distribution and administrative stuff (like editing this markdown)
+    - Laboratory 9
+        - MOP - In case of too many requests, now we throttle the connection
+        - MOP - When generating a quiz, if the combination of symptoms gives too few diseases, we retry.
 - Maftei Briana Stefania
     - Laboratory 1:
         - Relevant Datasets
@@ -26,6 +29,9 @@
     - Laboratory 4:
         - 2 Iterations of TDD [It1Fail](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Fail.txt) [It1Pass](Lab5/MafteiBriana/TDD%20Iteration%201%20Tests%20Pass.png) [Code1](ml/ml_system/tests.py) --- [It2Fail](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Fail.txt) [It2Pass](Lab5/MafteiBriana/TDD%20Iteration%202%20Tests%20Pass.png) [Code2](ml/ml_system/tests.py)
         - BPMN diagram - Quiz [Click here to see the diagram](Lab5/MafteiBriana/Quiz_Taking_BPMN.png)
+    - Laboratory 9:
+        - MOP: Implemented a data validator for new datasets and ensured compatibility with the updated model.
+        - Enhanced the classification model by adapting it to new data.
 - Maxim Matei
     - Laboratory 1:
         - Key Research Papers on this topic
@@ -40,3 +46,8 @@
         - 2 Iterations of
           MDD: [MDD login/register](Lab5/MaximMatei/Maxim_Matei_1.md), [MDD user info](Lab5/MaximMatei/Maxim_Matei_2.md), [pictures](Lab5/MaximMatei)
         - BPMN diagram - Authentication [Click here to see the diagram](Lab5/MaximMatei/Login_Signup_BPMN.png)
+    - Laboratory 9:
+        - MOP - When the user tries to login after a inactivity period and the JWT expires, the webpage will try to acquire a new JWT using the "refresh_token", and in case of failure will prompt the user to login again.
+    - Laboratory 10:
+        - Created test classes for the functions responsible for : backend communication, mop and input data verification.[Test](Lab10/MaximMatei/Tests.png)
+        - Run security check using ZAP. [Manual](Lab10/MaximMatei/ZAP_manual_routing.png), [Automatic](Lab10/MaximMatei/ZAP_automatic_routing.png)

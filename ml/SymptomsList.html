@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptoms List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .symptom {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin: 5px 0;
+        }
+    </style>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied: ' + text);
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Symptoms List</h1>
+    <p>Click on a symptom to copy it to the clipboard.</p>
+    <div>
+        <p class="symptom" onclick="copyToClipboard('itching')">itching</p>
+        <p class="symptom" onclick="copyToClipboard('skin_rash')">skin_rash</p>
+        <p class="symptom" onclick="copyToClipboard('nodal_skin_eruptions')">nodal_skin_eruptions</p>
+        <p class="symptom" onclick="copyToClipboard('continuous_sneezing')">continuous_sneezing</p>
+        <p class="symptom" onclick="copyToClipboard('shivering')">shivering</p>
+        <p class="symptom" onclick="copyToClipboard('chills')">chills</p>
+        <p class="symptom" onclick="copyToClipboard('joint_pain')">joint_pain</p>
+        <p class="symptom" onclick="copyToClipboard('stomach_pain')">stomach_pain</p>
+        <p class="symptom" onclick="copyToClipboard('acidity')">acidity</p>
+        <p class="symptom" onclick="copyToClipboard('ulcers_on_tongue')">ulcers_on_tongue</p>
+        <p class="symptom" onclick="copyToClipboard('muscle_wasting')">muscle_wasting</p>
+        <p class="symptom" onclick="copyToClipboard('vomiting')">vomiting</p>
+        <p class="symptom" onclick="copyToClipboard('burning_micturition')">burning_micturition</p>
+        <p class="symptom" onclick="copyToClipboard('spotting_urination')">spotting_urination</p>
+        <p class="symptom" onclick="copyToClipboard('fatigue')">fatigue</p>
+        <p class="symptom" onclick="copyToClipboard('weight_gain')">weight_gain</p>
+        <p class="symptom" onclick="copyToClipboard('anxiety')">anxiety</p>
+        <p class="symptom" onclick="copyToClipboard('cold_hands_and_feets')">cold_hands_and_feets</p>
+        <p class="symptom" onclick="copyToClipboard('mood_swings')">mood_swings</p>
+        <p class="symptom" onclick="copyToClipboard('weight_loss')">weight_loss</p>
+        <p class="symptom" onclick="copyToClipboard('restlessness')">restlessness</p>
+        <p class="symptom" onclick="copyToClipboard('lethargy')">lethargy</p>
+        <p class="symptom" onclick="copyToClipboard('patches_in_throat')">patches_in_throat</p>
+        <p class="symptom" onclick="copyToClipboard('irregular_sugar_level')">irregular_sugar_level</p>
+        <p class="symptom" onclick="copyToClipboard('cough')">cough</p>
+        <p class="symptom" onclick="copyToClipboard('high_fever')">high_fever</p>
+        <p class="symptom" onclick="copyToClipboard('sunken_eyes')">sunken_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('breathlessness')">breathlessness</p>
+        <p class="symptom" onclick="copyToClipboard('sweating')">sweating</p>
+        <p class="symptom" onclick="copyToClipboard('dehydration')">dehydration</p>
+        <p class="symptom" onclick="copyToClipboard('indigestion')">indigestion</p>
+        <p class="symptom" onclick="copyToClipboard('headache')">headache</p>
+        <p class="symptom" onclick="copyToClipboard('yellowish_skin')">yellowish_skin</p>
+        <p class="symptom" onclick="copyToClipboard('dark_urine')">dark_urine</p>
+        <p class="symptom" onclick="copyToClipboard('nausea')">nausea</p>
+        <p class="symptom" onclick="copyToClipboard('loss_of_appetite')">loss_of_appetite</p>
+        <p class="symptom" onclick="copyToClipboard('pain_behind_the_eyes')">pain_behind_the_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('back_pain')">back_pain</p>
+        <p class="symptom" onclick="copyToClipboard('constipation')">constipation</p>
+        <p class="symptom" onclick="copyToClipboard('abdominal_pain')">abdominal_pain</p>
+        <p class="symptom" onclick="copyToClipboard('diarrhoea')">diarrhoea</p>
+        <p class="symptom" onclick="copyToClipboard('mild_fever')">mild_fever</p>
+        <p class="symptom" onclick="copyToClipboard('yellow_urine')">yellow_urine</p>
+        <p class="symptom" onclick="copyToClipboard('yellowing_of_eyes')">yellowing_of_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('acute_liver_failure')">acute_liver_failure</p>
+        <p class="symptom" onclick="copyToClipboard('fluid_overload')">fluid_overload</p>
+        <p class="symptom" onclick="copyToClipboard('swelling_of_stomach')">swelling_of_stomach</p>
+        <p class="symptom" onclick="copyToClipboard('swelled_lymph_nodes')">swelled_lymph_nodes</p>
+        <p class="symptom" onclick="copyToClipboard('malaise')">malaise</p>
+        <p class="symptom" onclick="copyToClipboard('blurred_and_distorted_vision')">blurred_and_distorted_vision</p>
+        <p class="symptom" onclick="copyToClipboard('phlegm')">phlegm</p>
+        <p class="symptom" onclick="copyToClipboard('throat_irritation')">throat_irritation</p>
+        <p class="symptom" onclick="copyToClipboard('redness_of_eyes')">redness_of_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('sinus_pressure')">sinus_pressure</p>
+        <p class="symptom" onclick="copyToClipboard('runny_nose')">runny_nose</p>
+        <p class="symptom" onclick="copyToClipboard('congestion')">congestion</p>
+        <p class="symptom" onclick="copyToClipboard('chest_pain')">chest_pain</p>
+        <p class="symptom" onclick="copyToClipboard('weakness_in_limbs')">weakness_in_limbs</p>
+        <p class="symptom" onclick="copyToClipboard('fast_heart_rate')">fast_heart_rate</p>
+        <p class="symptom" onclick="copyToClipboard('pain_during_bowel_movements')">pain_during_bowel_movements</p>
+        <p class="symptom" onclick="copyToClipboard('pain_in_anal_region')">pain_in_anal_region</p>
+        <p class="symptom" onclick="copyToClipboard('bloody_stool')">bloody_stool</p>
+        <p class="symptom" onclick="copyToClipboard('irritation_in_anus')">irritation_in_anus</p>
+        <p class="symptom" onclick="copyToClipboard('neck_pain')">neck_pain</p>
+        <p class="symptom" onclick="copyToClipboard('dizziness')">dizziness</p>
+        <p class="symptom" onclick="copyToClipboard('cramps')">cramps</p>
+        <p class="symptom" onclick="copyToClipboard('bruising')">bruising</p>
+        <p class="symptom" onclick="copyToClipboard('obesity')">obesity</p>
+        <p class="symptom" onclick="copyToClipboard('swollen_legs')">swollen_legs</p>
+        <p class="symptom" onclick="copyToClipboard('swollen_blood_vessels')">swollen_blood_vessels</p>
+        <p class="symptom" onclick="copyToClipboard('puffy_face_and_eyes')">puffy_face_and_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('enlarged_thyroid')">enlarged_thyroid</p>
+        <p class="symptom" onclick="copyToClipboard('brittle_nails')">brittle_nails</p>
+        <p class="symptom" onclick="copyToClipboard('swollen_extremeties')">swollen_extremeties</p>
+        <p class="symptom" onclick="copyToClipboard('excessive_hunger')">excessive_hunger</p>
+        <p class="symptom" onclick="copyToClipboard('extra_marital_contacts')">extra_marital_contacts</p>
+        <p class="symptom" onclick="copyToClipboard('drying_and_tingling_lips')">drying_and_tingling_lips</p>
+        <p class="symptom" onclick="copyToClipboard('slurred_speech')">slurred_speech</p>
+        <p class="symptom" onclick="copyToClipboard('knee_pain')">knee_pain</p>
+        <p class="symptom" onclick="copyToClipboard('hip_joint_pain')">hip_joint_pain</p>
+        <p class="symptom" onclick="copyToClipboard('muscle_weakness')">muscle_weakness</p>
+        <p class="symptom" onclick="copyToClipboard('stiff_neck')">stiff_neck</p>
+        <p class="symptom" onclick="copyToClipboard('swelling_joints')">swelling_joints</p>
+        <p class="symptom" onclick="copyToClipboard('movement_stiffness')">movement_stiffness</p>
+        <p class="symptom" onclick="copyToClipboard('spinning_movements')">spinning_movements</p>
+        <p class="symptom" onclick="copyToClipboard('loss_of_balance')">loss_of_balance</p>
+        <p class="symptom" onclick="copyToClipboard('unsteadiness')">unsteadiness</p>
+        <p class="symptom" onclick="copyToClipboard('weakness_of_one_body_side')">weakness_of_one_body_side</p>
+        <p class="symptom" onclick="copyToClipboard('loss_of_smell')">loss_of_smell</p>
+        <p class="symptom" onclick="copyToClipboard('bladder_discomfort')">bladder_discomfort</p>
+        <p class="symptom" onclick="copyToClipboard('foul_smell_of_urine')">foul_smell_of_urine</p>
+        <p class="symptom" onclick="copyToClipboard('continuous_feel_of_urine')">continuous_feel_of_urine</p>
+        <p class="symptom" onclick="copyToClipboard('passage_of_gases')">passage_of_gases</p>
+        <p class="symptom" onclick="copyToClipboard('internal_itching')">internal_itching</p>
+        <p class="symptom" onclick="copyToClipboard('toxic_look_(typhos)')">toxic_look_(typhos)</p>
+        <p class="symptom" onclick="copyToClipboard('depression')">depression</p>
+        <p class="symptom" onclick="copyToClipboard('irritability')">irritability</p>
+        <p class="symptom" onclick="copyToClipboard('muscle_pain')">muscle_pain</p>
+        <p class="symptom" onclick="copyToClipboard('altered_sensorium')">altered_sensorium</p>
+        <p class="symptom" onclick="copyToClipboard('red_spots_over_body')">red_spots_over_body</p>
+        <p class="symptom" onclick="copyToClipboard('belly_pain')">belly_pain</p>
+        <p class="symptom" onclick="copyToClipboard('abnormal_menstruation')">abnormal_menstruation</p>
+        <p class="symptom" onclick="copyToClipboard('dischromic_patches')">dischromic_patches</p>
+        <p class="symptom" onclick="copyToClipboard('watering_from_eyes')">watering_from_eyes</p>
+        <p class="symptom" onclick="copyToClipboard('increased_appetite')">increased_appetite</p>
+        <p class="symptom" onclick="copyToClipboard('polyuria')">polyuria</p>
+        <p class="symptom" onclick="copyToClipboard('family_history')">family_history</p>
+        <p class="symptom" onclick="copyToClipboard('mucoid_sputum')">mucoid_sputum</p>
+        <p class="symptom" onclick="copyToClipboard('rusty_sputum')">rusty_sputum</p>
+        <p class="symptom" onclick="copyToClipboard('lack_of_concentration')">lack_of_concentration</p>
+        <p class="symptom" onclick="copyToClipboard('visual_disturbances')">visual_disturbances</p>
+        <p class="symptom" onclick="copyToClipboard('receiving_blood_transfusion')">receiving_blood_transfusion</p>
+        <p class="symptom" onclick="copyToClipboard('receiving_unsterile_injections')">receiving_unsterile_injections</p>
+        <p class="symptom" onclick="copyToClipboard('coma')">coma</p>
+        <p class="symptom" onclick="copyToClipboard('stomach_bleeding')">stomach_bleeding</p>
+        <p class="symptom" onclick="copyToClipboard('distention_of_abdomen')">distention_of_abdomen</p>
+        <p class="symptom" onclick="copyToClipboard('history_of_alcohol_consumption')">history_of_alcohol_consumption</p>
+        <p class="symptom" onclick="copyToClipboard('blood_in_sputum')">blood_in_sputum</p>
+        <p class="symptom" onclick="copyToClipboard('prominent_veins_on_calf')">prominent_veins_on_calf</p>
+        <p class="symptom" onclick="copyToClipboard('palpitations')">palpitations</p>
+        <p class="symptom" onclick="copyToClipboard('painful_walking')">painful_walking</p>
+        <p class="symptom" onclick="copyToClipboard('pus_filled_pimples')">pus_filled_pimples</p>
+        <p class="symptom" onclick="copyToClipboard('blackheads')">blackheads</p>
+        <p class="symptom" onclick="copyToClipboard('scurring')">scurring</p>
+        <p class="symptom" onclick="copyToClipboard('skin_peeling')">skin_peeling</p>
+        <p class="symptom" onclick="copyToClipboard('silver_like_dusting')">silver_like_dusting</p>
+        <p class="symptom" onclick="copyToClipboard('small_dents_in_nails')">small_dents_in_nails</p>
+        <p class="symptom" onclick="copyToClipboard('inflammatory_nails')">inflammatory_nails</p>
+        <p class="symptom" onclick="copyToClipboard('blister')">blister</p>
+        <p class="symptom" onclick="copyToClipboard('red_sore_around_nose')">red_sore_around_nose</p>
+        <p class="symptom" onclick="copyToClipboard('yellow_crust_ooze')">yellow_crust_ooze</p>
+        <p class="symptom" onclick="copyToClipboard('prognosis')">prognosis</p>
+
+    </div>
+</body>
+</html>
