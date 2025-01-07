@@ -134,3 +134,5 @@ BACKEND_API_URL = 'http://localhost:8000/api'
 load_dotenv()
 
 SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
+
+# NINJA_SKIP_REGISTRY = True  #pentru teste

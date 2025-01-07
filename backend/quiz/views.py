@@ -1,19 +1,20 @@
-from typing import List, Dict
+from typing import List
 
 from django.shortcuts import get_object_or_404
 from ninja import Router
 
 from authentication.views import AuthBearer
 from backend.api.services import get_ml_prediction
-from .utils import generate_quiz_questions
 from .models import Quiz, UserQuizProgress
 from .schemas import (
     QuizCreateSchema,
+    QuizSubmitSchema,
+    QuizResultSchema,
     QuizResponseSchema,
     ErrorResponseSchema,
-    QuizSubmitResponseSchema,
-    QuizSubmitSchema
+    QuizSubmitResponseSchema
 )
+from .utils import generate_quiz_questions
 
 quiz_router = Router(tags=["Quiz"])
 
@@ -22,6 +23,9 @@ quiz_router = Router(tags=["Quiz"])
 def create_quiz(request, payload: QuizCreateSchema):
     try:
         questions = generate_quiz_questions(get_ml_prediction)
+
+        if not questions:
+            return 400, {"error": "Failed to generate questions"}
 
         quiz = Quiz.objects.create(
             title=payload.title,
@@ -55,8 +59,8 @@ def get_quizzes(request):
         "description": quiz.description,
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
-        "symptoms": quiz.symptoms,
-        "diseases": quiz.diseases
+        "created_by": quiz.created_by.username,
+        "questions": quiz.questions
     } for quiz in quizzes]
 
 
@@ -69,60 +73,55 @@ def get_quiz(request, quiz_id: int):
         "description": quiz.description,
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
-        "symptoms": quiz.symptoms,
-        "diseases": quiz.diseases
+        "created_by": quiz.created_by.username,
+        "questions": quiz.questions
     }
 
 
-@quiz_router.post("/{quiz_id}", response={200: QuizSubmitResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+@quiz_router.post("/{quiz_id}/submit", response={200: QuizSubmitResponseSchema, 400: ErrorResponseSchema},
+                  auth=AuthBearer())
 def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
-    quiz = get_object_or_404(Quiz, id=quiz_id)
+    try:
+        quiz = get_object_or_404(Quiz, id=quiz_id)
 
-    if not payload.answers:
-        return 400, {"error": "No answers provided"}
+        total_questions = len(quiz.questions)
+        correct_answers = 0
 
-    results = []
-    total_score = 0
+        for i, user_answer in enumerate(payload.answers):
+            question = quiz.questions[i]
+            if set(user_answer.get('answer', [])) == set(question.get('symptoms', [])) or \
+                    set(user_answer.get('answer', [])) == set(question.get('diseases', {}).keys()):
+                correct_answers += 1
 
-    for idx, answer in enumerate(payload.answers):
-        ml_response = get_ml_prediction(answer.get('symptoms', []))
-        if 'predictions' not in ml_response:
-            return 400, {"error": f"Failed to get ML predictions for answer {idx + 1}"}
+        score = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
 
-        pair_score = calculate_score(
-            quiz.symptom_disease_pairs[idx]['expected_diseases'],
-            ml_response["predictions"]
+        UserQuizProgress.objects.create(
+            user=request.user,
+            quiz=quiz,
+            answers=payload.answers,
+            score=score
         )
-        total_score += pair_score
-        results.append({
-            "symptoms": answer.get('symptoms', []),
-            "predictions": ml_response["predictions"],
-            "score": pair_score
-        })
 
-    average_score = total_score / len(payload.answers)
+        return 200, {"score": score}
 
-    UserQuizProgress.objects.create(
-        user=request.user,
-        quiz=quiz,
-        answers=payload.answers,
-        score=average_score
-    )
-
-    return 200, {
-        "results": results,
-        "average_score": average_score
-    }
+    except Exception as e:
+        return 400, {"error": str(e)}
 
 
-def calculate_score(expected_diseases: Dict[str, float], submitted_diseases: Dict[str, float]) -> float:
-    total_score = 0
-    total_weight = sum(expected_diseases.values())
+@quiz_router.get("/{quiz_id}/results", response={200: QuizResultSchema, 404: ErrorResponseSchema}, auth=AuthBearer())
+def get_quiz_result(request, quiz_id: int):
+    try:
+        result = get_object_or_404(
+            UserQuizProgress,
+            user=request.user,
+            quiz_id=quiz_id
+        )
 
-    for disease, expected_prob in expected_diseases.items():
-        submitted_prob = submitted_diseases.get(disease, 0)
-        difference = abs(expected_prob - submitted_prob)
-        score_for_disease = (1 - difference) * (expected_prob / total_weight)
-        total_score += score_for_disease
-
-    return total_score * 100
+        return 200, {
+            "quiz_id": result.quiz.id,
+            "score": result.score,
+            "answers": result.answers,
+            "completed_at": result.completed_at.isoformat()
+        }
+    except UserQuizProgress.DoesNotExist:
+        return 404, {"error": "Quiz result not found"}

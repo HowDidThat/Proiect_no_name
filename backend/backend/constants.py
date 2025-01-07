@@ -37,3 +37,15 @@ ALL_SYMPTOMS = [
     "inflammatory_nails", "blister", "red_sore_around_nose",
     "yellow_crust_ooze", "prognosis"
 ]
+
+ALL_DISEASES = [
+    "Drug Reaction", "Hepatitis B", "Chronic cholestasis", "Dengue", "AIDS",
+    "Hypothyroidism", "GERD", "Hepatitis A", "Varicose veins", "Osteoarthritis",
+    "Urinary tract infection", "Pneumonia", "Hepatitis C", "Common Cold", "Heart attack",
+    "Dimorphic hemorrhoids (piles)", "Migraine", "Tuberculosis", "Peptic ulcer disease",
+    "Typhoid", "Chicken pox", "Acne", "Fungal infection", "Hepatitis D", "Alcoholic hepatitis",
+    "Bronchial Asthma", "Hyperthyroidism", "Gastroenteritis", "Malaria", "Cervical spondylosis",
+    "Diabetes", "Psoriasis", "Hepatitis E", "Paralysis (brain hemorrhage)", "Allergy",
+    "(vertigo) Paroxysmal Positional Vertigo", "Impetigo", "Hypertension", "Arthritis",
+    "Jaundice", "Hypoglycemia"
+]
