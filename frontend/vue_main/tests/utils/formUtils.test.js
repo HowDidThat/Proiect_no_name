@@ -14,7 +14,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for uppercase letter requirement
   describe('Uppercase Letter Validation', () => {
     it('should return an error if no uppercase letter is present', () => {
       const errors = validatePassword('nouppercase1!', 'nouppercase1!')
@@ -27,7 +26,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for lowercase letter requirement
   describe('Lowercase Letter Validation', () => {
     it('should return an error if no lowercase letter is present', () => {
       const errors = validatePassword('NOLOWERCASE1!', 'NOLOWERCASE1!')
@@ -40,7 +38,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for number requirement
   describe('Number Validation', () => {
     it('should return an error if no number is present', () => {
       const errors = validatePassword('NoNumberHere!', 'NoNumberHere!')
@@ -53,7 +50,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for special character requirement
   describe('Special Character Validation', () => {
     it('should return an error if no special character is present', () => {
       const errors = validatePassword('NoSpecialChar1', 'NoSpecialChar1')
@@ -66,7 +62,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for spaces
   describe('Space Validation', () => {
     it('should return an error if spaces are present', () => {
       const errors = validatePassword('Space 1!Test', 'Space 1!Test')
@@ -79,7 +74,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for consecutive identical characters
   describe('Consecutive Characters Validation', () => {
     it('should return an error for three or more consecutive identical characters', () => {
       const errors = validatePassword('Password111!', 'Password111!')
@@ -92,7 +86,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Test cases for password matching
   describe('Password Matching Validation', () => {
     it('should return an error if passwords do not match', () => {
       const errors = validatePassword('Password1!', 'DifferentPassword1!')
@@ -105,7 +98,6 @@ describe('Password Validation Function', () => {
     })
   })
 
-  // Comprehensive valid password test
   describe('Valid Password Scenario', () => {
     it('should return no errors for a valid password', () => {
       const errors = validatePassword('ValidPass1!', 'ValidPass1!')

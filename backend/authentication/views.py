@@ -62,7 +62,7 @@ def set_auth_cookies(response: HttpResponse, access_token: str, refresh_token: s
 def create_tokens(user_id: int) -> tuple[str, str]:
     access_payload = {
         'user_id': user_id,
-        'exp': datetime.utcnow() + timedelta(minutes=15),
+        'exp': datetime.utcnow() + timedelta(minutes=600),
         'iat': datetime.utcnow(),
         'type': 'access'
     }

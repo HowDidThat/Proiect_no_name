@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TokenVerifier } from '../../src/utils/mop';
 import { CachedTestsVerifier } from '../../src/utils/mop';
 
-// Mock axios
+
 vi.mock('axios');
 
 describe('TokenVerifier', () => {
@@ -34,11 +34,11 @@ describe('TokenVerifier', () => {
 
         it('should return 200 with new token when refresh succeeds after token fails', async () => {
             axios.get
-                .mockRejectedValueOnce(new Error('Token expired')) // First request fails
+                .mockRejectedValueOnce(new Error('Token expired')) 
                 .mockResolvedValueOnce({
                     status: 200,
                     data: { refresh_token: 'new_token' },
-                }); // Refresh token request succeeds
+                });
 
             const result = await TokenVerifier.checkToken('expired_token', 'valid_refresh');
 

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <NavbarTemplate/>
-    <div class="cie-wrapper">
-    <router-view />
-    </div>
+      <div>
+      <router-view />
+      </div>
   </div>
 </template>
 
@@ -19,6 +19,15 @@ export default {
 }
 </script>
 
-<style>
 
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
