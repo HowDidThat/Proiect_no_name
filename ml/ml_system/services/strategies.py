@@ -54,6 +54,7 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         return sorted_result
 
     def validate_symptom_domain(self, symptoms):
+        print("Severity symptoms", symptoms)
         severity_symptoms = self.symptom_severity.keys()
         for symptom in symptoms:
             norm_symptom = symptom.lower().replace(" ", "_")

@@ -17,6 +17,10 @@ def send_to_backend(quiz_id: int, predictions: dict) -> dict:
             timeout=10
         )
 
-        return response.json()
+        try:
+            return response.json()
+        except ValueError:
+            return None
+
     except requests.RequestException:
         return None
