@@ -1,12 +1,8 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router.js'
-var VueCookie = require('vue-cookie');
+import app_router from '../src/router'
 
-Vue.config.productionTip = false
-Vue.use(VueCookie);
+const app = createApp(App)
+app.use(app_router)
+app.mount('#app')
 
-new Vue({
-  router,
-  render: h => h(App),
-}).$mount('#app')

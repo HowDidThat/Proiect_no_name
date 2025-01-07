@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'ml.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'symptom',
+        'NAME': 'symptom_db',
         'USER': 'postgres',
-        'PASSWORD': 'briana100',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }

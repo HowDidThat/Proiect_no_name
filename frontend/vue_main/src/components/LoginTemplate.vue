@@ -70,15 +70,18 @@ export default {
         }
         else
         {
+
           this.set_cookies(t.data.access_token,t.data.refresh_token);
           this.$router.push({ path: 'profile' });          
         }
 
       },
-      set_cookies(at,rt){
-        this.$cookie.set('access_token',at,1);
-        this.$cookie.set('refresh_token',rt,30);
-      },
+      set_cookies(at, rt) {
+      console.log(at);
+      console.log(rt);
+      this.$cookie.set('access_token', at, 1)
+      this.$cookie.set('refresh_token', rt, 30)
+    },
       login(){
         let acces_token = this.$cookie.get('acces_token')
         let refresh_token = this.$cookie.get('refresh_token')
