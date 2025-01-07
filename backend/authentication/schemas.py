@@ -1,4 +1,5 @@
 import re
+from typing import List, Dict
 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -114,5 +115,17 @@ class ValidationErrorResponse(Schema):
     errors: list[ValidationErrorSchema]
 
 
-class MessageSchema(Schema):
-    message: str
+class ErrorResponseSchema(Schema):
+    error: str
+
+
+class QuizResultSchema(Schema):
+    quiz_id: int
+    score: float
+    answers: List[Dict[str, List[str]]]
+    completed_at: str
+
+
+class UserQuizResultsSchema(Schema):
+    results: List[QuizResultSchema]
+
