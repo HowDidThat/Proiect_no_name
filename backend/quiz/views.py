@@ -12,14 +12,23 @@ from .schemas import (
     QuizResultSchema,
     QuizResponseSchema,
     ErrorResponseSchema,
-    QuizSubmitResponseSchema
+    QuizSubmitResponseSchema, QuizCreateResponseSchema
 )
 from .utils import generate_quiz_questions
 
 quiz_router = Router(tags=["Quiz"])
 
 
-@quiz_router.post("/", response={201: QuizResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+def remove_disease_probabilities(questions):
+    cleaned_questions = []
+    for question in questions:
+        cleaned_question = question.copy()
+        cleaned_question['diseases'] = list(question['diseases'].keys())
+        cleaned_questions.append(cleaned_question)
+    return cleaned_questions
+
+
+@quiz_router.post("/", response={201: QuizCreateResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 def create_quiz(request, payload: QuizCreateSchema):
     try:
         questions = generate_quiz_questions(get_ml_prediction)
@@ -60,7 +69,7 @@ def get_quizzes(request):
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
         "created_by": quiz.created_by.username,
-        "questions": quiz.questions
+        "questions": remove_disease_probabilities(quiz.questions)
     } for quiz in quizzes]
 
 
@@ -74,7 +83,7 @@ def get_quiz(request, quiz_id: int):
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
         "created_by": quiz.created_by.username,
-        "questions": quiz.questions
+        "questions": remove_disease_probabilities(quiz.questions)
     }
 
 

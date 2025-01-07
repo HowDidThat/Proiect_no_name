@@ -14,7 +14,7 @@ class QuizSubmitSchema(Schema):
     answers: List[Dict[str, List[str]]]
 
 
-class QuizResponseSchema(Schema):
+class QuizCreateResponseSchema(Schema):
     id: int
     title: str
     description: str
@@ -22,6 +22,16 @@ class QuizResponseSchema(Schema):
     difficulty: str
     created_by: str
     questions: List[Dict[str, Union[List[str], Dict[str, float]]]]
+
+
+class QuizResponseSchema(Schema):
+    id: int
+    title: str
+    description: str
+    quiz_type: str
+    difficulty: str
+    created_by: str
+    questions: List[Dict[str, List[str]]]
 
 
 class QuizSubmitResponseSchema(Schema):
