@@ -37,10 +37,3 @@ class QuizResultSchema(Schema):
     score: float
     answers: List[Dict[str, List[str]]]
     completed_at: str
-
-
-class SymptomsListSchema(Schema):
-    symptoms: List[str]
-
-class DiseasesListSchema(Schema):
-    diseases: List[str]
