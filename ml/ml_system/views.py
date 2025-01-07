@@ -1,9 +1,10 @@
 import os
+from typing import List
 
 import pandas as pd
 from ninja import Router
 
-from .schemas import PredictionSchema, SymptomsSchema
+from .schemas import PredictionSchema, SymptomsSchema, SymptomsListSchema, DiseasesListSchema
 from .services.strategies import DiagnosisPredictionStrategy
 from .utils.decorators import log_execution_time, clean_and_validate_data
 from ml.api.auth import ApiAuth
@@ -13,15 +14,15 @@ from ml.api.services import send_to_backend
 ml_router = Router()
 prediction_strategy = DiagnosisPredictionStrategy()
 
-if prediction_strategy.model is None or prediction_strategy.label_encoder is None or prediction_strategy.all_symptoms is None or prediction_strategy.symptom_severity is None:
-    prediction_strategy.load_model()
-
 from .utils.cache_manager import CacheManager
 
 @ml_router.post('/predict', response=PredictionSchema, auth=ApiAuth())
 @log_execution_time
 @clean_and_validate_data
 def predict_disease(request, payload: SymptomsSchema):
+    if prediction_strategy.model is None or prediction_strategy.label_encoder is None or prediction_strategy.all_symptoms is None or prediction_strategy.symptom_severity is None:
+        prediction_strategy.load_model()
+
     if not request.auth:
         return 401, {"error": "Unauthorized request. Please provide a valid token"}
 
@@ -63,3 +64,13 @@ def train_model(request):
     diagnosis_model = DiagnosisModel(data_path, severity_data_path)
     response = diagnosis_model.train_model()
     return {'message': 'Model trained successfully', 'metrics': response}
+
+@ml_router.get('/symptoms', response=SymptomsListSchema)
+def get_symptoms(request):
+    symptoms = prediction_strategy.get_all_symptoms()
+    return {'symptoms': symptoms}
+
+@ml_router.get('/diseases', response=DiseasesListSchema)
+def get_diseases(request):
+    diseases = prediction_strategy.get_all_diseases()
+    return {'diseases': diseases}

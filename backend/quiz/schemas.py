@@ -30,3 +30,10 @@ class QuizSubmitResponseSchema(Schema):
 
 class ErrorResponseSchema(Schema):
     error: str
+
+
+class SymptomsListSchema(Schema):
+    symptoms: List[str]
+
+class DiseasesListSchema(Schema):
+    diseases: List[str]

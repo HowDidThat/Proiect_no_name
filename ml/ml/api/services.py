@@ -24,3 +24,32 @@ def send_to_backend(quiz_id: int, predictions: dict) -> dict:
 
     except requests.RequestException:
         return None
+
+
+def send_symptoms_to_backend() -> list:
+    try:
+        response = requests.get(
+            f"{settings.BACKEND_API_URL}/symptoms",
+            headers={
+                'Authorization': auth.create_token(),
+                'Content-Type': 'application/json'
+            },
+            timeout=10
+        )
+        return response.json().get('symptoms', [])
+    except requests.RequestException:
+        return []
+
+def send_diseases_to_backend() -> list:
+    try:
+        response = requests.get(
+            f"{settings.BACKEND_API_URL}/diseases",
+            headers={
+                'Authorization': auth.create_token(),
+                'Content-Type': 'application/json'
+            },
+            timeout=10
+        )
+        return response.json().get('diseases', [])
+    except requests.RequestException:
+        return []

@@ -27,6 +27,7 @@ class DiagnosisModel:
         self.scaler = MinMaxScaler()
         self.validator = DataValidator()
         self.logger = logging.getLogger(__name__)
+        self.diseases = None
 
     def create_severity_matrix(self, df: pd.DataFrame) -> pd.DataFrame:
         symptom_columns = [col for col in df.columns if col.startswith('Symptom_')]
@@ -74,6 +75,8 @@ class DiagnosisModel:
             severity_df['Symptom'],
             severity_df['weight']
         ))
+
+        self.diseases = list(transformed_df['Disease'].unique())
 
         transformed_df = self.create_severity_matrix(transformed_df)
 
@@ -171,7 +174,8 @@ class DiagnosisModel:
             'label_encoder.joblib': self.label_encoder,
             'all_symptoms.joblib': self.all_symptoms,
             'symptom_severity.joblib': self.symptom_severity,
-            'scaler.joblib': self.scaler
+            'scaler.joblib': self.scaler,
+            'diseases.joblib': self.diseases
         }
 
         for filename, component in components.items():

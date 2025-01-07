@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 
 from authentication.views import AuthBearer
-from backend.api.services import get_ml_prediction
+from backend.api.services import get_ml_prediction, get_ml_symptoms, get_ml_diseases
 from .utils import generate_quiz_questions
 from .models import Quiz, UserQuizProgress
 from .schemas import (
@@ -13,7 +13,7 @@ from .schemas import (
     QuizResponseSchema,
     ErrorResponseSchema,
     QuizSubmitResponseSchema,
-    QuizSubmitSchema
+    QuizSubmitSchema, SymptomsListSchema, DiseasesListSchema
 )
 
 quiz_router = Router(tags=["Quiz"])
@@ -76,3 +76,23 @@ def get_quiz(request, quiz_id: int):
         "created_by": quiz.created_by.username,
         "questions": quiz.questions
     }
+
+
+medical_router = Router(tags=["Medical"])
+
+
+@medical_router.get("/symptoms", response={200: SymptomsListSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+def get_symptoms_list(request):
+    try:
+        symptoms = get_ml_symptoms()
+        return 200, {"symptoms": symptoms}
+    except Exception as e:
+        return 400, {"error": str(e)}
+
+@medical_router.get("/diseases", response={200: DiseasesListSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+def get_diseases_list(request):
+    try:
+        diseases = get_ml_diseases()
+        return 200, {"diseases": diseases}
+    except Exception as e:
+        return 400, {"error": str(e)}
