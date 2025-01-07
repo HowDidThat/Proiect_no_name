@@ -7,7 +7,7 @@ from ninja.testing import TestClient
 
 from authentication.models import User
 from authentication.views import create_tokens
-from quiz.models import Quiz
+from quiz.models import Quiz, UserQuizProgress
 from quiz.utils import generate_random_symptoms, generate_quiz_questions
 from quiz.views import quiz_router
 
@@ -143,7 +143,6 @@ class QuizTests(TestCase):
         self.client = TestClient(quiz_router)
         self.user_headers = {"Authorization": f"Bearer {self.access_token}"}
 
-        # Create a test quiz
         self.test_questions = [
             {
                 "symptoms": ["fever"],
@@ -267,3 +266,31 @@ class QuizTests(TestCase):
         invalid_headers = {"Authorization": "Bearer invalid_token"}
         response = self.client.get("/", headers=invalid_headers)
         self.assertEqual(response.status_code, 401)
+
+    def test_submit_quiz_success(self):
+        payload = {
+            "answers": [
+                {"answer": ["fever"]},
+                {"answer": ["pneumonia"]}
+            ]
+        }
+
+        response = self.client.post(
+            f"/{self.test_quiz.id}/submit",
+            json=payload,
+            headers=self.user_headers
+        )
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('score', data)
+        self.assertIsInstance(data['score'], (int, float))
+
+        quiz_progress = UserQuizProgress.objects.get(
+            user=self.user,
+            quiz=self.test_quiz
+        )
+
+        self.assertIsNotNone(quiz_progress)
+        self.assertEqual(quiz_progress.answers, payload['answers'])
+        self.assertEqual(quiz_progress.score, data['score'])

@@ -25,8 +25,15 @@ class QuizResponseSchema(Schema):
 
 
 class QuizSubmitResponseSchema(Schema):
-    diseases: Dict[str, float]
+    score: float
 
 
 class ErrorResponseSchema(Schema):
     error: str
+
+
+class QuizResultSchema(Schema):
+    quiz_id: int
+    score: float
+    answers: List[Dict[str, List[str]]]
+    completed_at: str
