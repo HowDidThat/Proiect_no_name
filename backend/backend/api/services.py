@@ -1,3 +1,5 @@
+from typing import Dict
+
 import requests
 from django.conf import settings
 
@@ -22,7 +24,7 @@ def get_ml_prediction(symptoms: list) -> dict:
         return None
 
 
-def get_ml_symptoms() -> list:
+def get_ml_symptoms() -> Dict[str, str]:
     try:
         response = requests.get(
             f"{settings.ML_API_URL}/symptoms",
@@ -32,12 +34,12 @@ def get_ml_symptoms() -> list:
             },
             timeout=10
         )
-        return response.json().get('symptoms', [])
+        return response.json().get('symptoms', {})
     except requests.RequestException:
-        return []
+        return {}
 
 
-def get_ml_diseases() -> list:
+def get_ml_diseases() -> Dict[str, str]:
     try:
         response = requests.get(
             f"{settings.ML_API_URL}/diseases",
@@ -47,6 +49,6 @@ def get_ml_diseases() -> list:
             },
             timeout=10
         )
-        return response.json().get('diseases', [])
+        return response.json().get('diseases', {})
     except requests.RequestException:
-        return []
+        return {}

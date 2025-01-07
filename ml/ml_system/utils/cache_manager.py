@@ -1,5 +1,5 @@
 from hashlib import sha256
-from typing import List
+from typing import List, Dict
 
 from ml_system.models import PredictionCache
 import json
@@ -27,13 +27,13 @@ class CacheManager:
         CacheManager._diseases_cache = diseases
 
     @staticmethod
-    def get_symptoms() -> List[str]:
+    def get_symptoms() -> Dict[str, str]:
         if CacheManager._symptoms_cache is None:
             raise ValueError("Symptoms cache not initialized")
         return CacheManager._symptoms_cache
 
     @staticmethod
-    def get_diseases() -> List[str]:
+    def get_diseases() -> Dict[str, str]:
         if CacheManager._diseases_cache is None:
             raise ValueError("Diseases cache not initialized")
         return CacheManager._diseases_cache

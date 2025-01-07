@@ -1,14 +1,13 @@
-from typing import List
+from typing import Dict
 
 from ninja import Schema
 
 
 class SymptomsListSchema(Schema):
-    symptoms: List[str]
-
+    symptoms: Dict[str, str]
 
 class DiseasesListSchema(Schema):
-    diseases: List[str]
+    diseases: Dict[str, str]
 
 
 class ErrorResponseSchema(Schema):

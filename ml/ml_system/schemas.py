@@ -8,7 +8,7 @@ class PredictionSchema(Schema):
     predictions: Dict[str, float]
 
 class SymptomsListSchema(Schema):
-    symptoms: List[str]
+    symptoms: Dict[str, str]
 
 class DiseasesListSchema(Schema):
-    diseases: List[str]
+    diseases: Dict[str, str]

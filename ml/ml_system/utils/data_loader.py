@@ -1,6 +1,4 @@
-
-
-from typing import List, Tuple, Optional, Set
+from typing import List, Tuple, Optional, Set, Dict
 import pandas as pd
 from .data_validator import DataValidator
 
@@ -24,7 +22,13 @@ class DataLoader:
 
         return sorted(list(all_unique_symptoms))
 
-    def load_and_validate_data(self) -> Tuple[List[str], List[str]]:
+    def format_text(self, text: str) -> str:
+        return ' '.join(word.capitalize() for word in text.replace('_', ' ').split())
+
+    def create_formatted_dict(self, items: List[str]) -> Dict[str, str]:
+        return {item: self.format_text(item) for item in items}
+
+    def load_and_validate_data(self) -> Tuple[Dict[str, str], Dict[str, str]]:
         cleaned_symptoms_df, cleaned_severity_df = self.validator.spec_validate_then_send(
             self.data_path, self.severity_path
         )
@@ -33,4 +37,8 @@ class DataLoader:
 
         all_symptoms = self.extract_unique_symptoms(cleaned_symptoms_df)
         all_diseases = list(cleaned_symptoms_df['Disease'].unique())
-        return all_symptoms, all_diseases
+
+        symptoms_dict = self.create_formatted_dict(all_symptoms)
+        diseases_dict = self.create_formatted_dict(all_diseases)
+
+        return symptoms_dict, diseases_dict
