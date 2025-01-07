@@ -8,11 +8,11 @@ from django.http import HttpResponse
 from ninja import Router
 from ninja.security import HttpBearer
 
+from backend.aspects import QuizMonitoringAspect, AuthenticationAspect, RateLimitingAspect
 from quiz.models import UserQuizProgress
 from .models import User
 from .schemas import LoginSchema, UserSchema, ErrorSchema, RegisterSchema, ErrorResponseSchema, ValidationErrorResponse, \
     UserQuizResultsSchema
-from backend.aspects import QuizMonitoringAspect, AuthenticationAspect, RateLimitingAspect
 
 auth_router = Router(tags=['Authentication'])
 
@@ -233,3 +233,11 @@ def get_user_results(request):
         }
     except Exception as e:
         return 400, {"error": str(e)}
+
+
+@auth_router.get("/me", response=UserSchema, auth=AuthBearer())
+@QuizMonitoringAspect.monitor_quiz_operations()
+@AuthenticationAspect.audit_auth()
+@RateLimitingAspect.limit_rate(endpoint_type='default')
+def get_current_user(request):
+    return request.user
