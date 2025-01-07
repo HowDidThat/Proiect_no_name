@@ -1,4 +1,3 @@
-# views.py
 import json
 from datetime import datetime, timedelta
 
@@ -9,10 +8,11 @@ from django.http import HttpResponse
 from ninja import Router
 from ninja.security import HttpBearer
 
+from quiz.models import UserQuizProgress
 from .models import User
-from .schemas import LoginSchema, UserSchema, ErrorSchema, RegisterSchema, MessageSchema, ValidationErrorResponse
+from .schemas import LoginSchema, UserSchema, ErrorSchema, RegisterSchema, ErrorResponseSchema, ValidationErrorResponse, \
+    UserQuizResultsSchema
 from backend.aspects import QuizMonitoringAspect, AuthenticationAspect, RateLimitingAspect
-
 
 auth_router = Router(tags=['Authentication'])
 
@@ -80,7 +80,7 @@ def create_tokens(user_id: int) -> tuple[str, str]:
     return access_token, refresh_token
 
 
-@auth_router.post("/register", response={201: MessageSchema, 400: ValidationErrorResponse})
+@auth_router.post("/register", response={201: ErrorResponseSchema, 400: ValidationErrorResponse})
 @QuizMonitoringAspect.monitor_quiz_operations()
 @AuthenticationAspect.audit_auth()
 @RateLimitingAspect.limit_rate(endpoint_type='register')
@@ -135,7 +135,7 @@ def register(request, data: RegisterSchema):
         return 400, {"errors": errors}
 
 
-@auth_router.post("/login", response={200: MessageSchema, 401: ErrorSchema})
+@auth_router.post("/login", response={200: ErrorResponseSchema, 401: ErrorSchema})
 @QuizMonitoringAspect.monitor_quiz_operations()
 @AuthenticationAspect.audit_auth()
 @RateLimitingAspect.limit_rate(endpoint_type='login')
@@ -160,7 +160,7 @@ def login(request, credentials: LoginSchema):
     return response
 
 
-@auth_router.post("/refresh", response={200: MessageSchema, 401: ErrorSchema})
+@auth_router.post("/refresh", response={200: ErrorResponseSchema, 401: ErrorSchema})
 @QuizMonitoringAspect.monitor_quiz_operations()
 @AuthenticationAspect.audit_auth()
 @RateLimitingAspect.limit_rate(endpoint_type='default')
@@ -197,7 +197,7 @@ def refresh_token(request):
         return 401, {"message": "Invalid refresh token"}
 
 
-@auth_router.post("/logout", response={200: MessageSchema})
+@auth_router.post("/logout", response={200: ErrorResponseSchema})
 @QuizMonitoringAspect.monitor_quiz_operations()
 @AuthenticationAspect.audit_auth()
 @RateLimitingAspect.limit_rate(endpoint_type='default')
@@ -212,9 +212,24 @@ def logout(request):
     return response
 
 
-@auth_router.get("/me", response=UserSchema, auth=AuthBearer())
+@auth_router.get("/results", response={200: UserQuizResultsSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 @QuizMonitoringAspect.monitor_quiz_operations()
 @AuthenticationAspect.audit_auth()
 @RateLimitingAspect.limit_rate(endpoint_type='default')
-def get_current_user(request):
-    return request.user
+def get_user_results(request):
+    try:
+        results = UserQuizProgress.objects.filter(user=request.user).select_related('quiz')
+
+        return 200, {
+            "results": [
+                {
+                    "quiz_id": result.quiz.id,
+                    "score": result.score,
+                    "answers": result.answers,
+                    "completed_at": result.completed_at.isoformat()
+                }
+                for result in results
+            ]
+        }
+    except Exception as e:
+        return 400, {"error": str(e)}

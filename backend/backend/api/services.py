@@ -21,6 +21,7 @@ def get_ml_prediction(symptoms: list) -> dict:
     except requests.RequestException:
         return None
 
+
 def get_ml_symptoms() -> list:
     try:
         response = requests.get(
@@ -34,6 +35,7 @@ def get_ml_symptoms() -> list:
         return response.json().get('symptoms', [])
     except requests.RequestException:
         return []
+
 
 def get_ml_diseases() -> list:
     try:

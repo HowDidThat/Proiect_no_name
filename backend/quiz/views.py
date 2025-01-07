@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 
 from authentication.views import AuthBearer
-from backend.api.services import get_ml_prediction, get_ml_symptoms, get_ml_diseases
+from backend.api.services import get_ml_prediction
 from .models import Quiz, UserQuizProgress
 from .schemas import (
     QuizCreateSchema,
@@ -12,16 +12,23 @@ from .schemas import (
     QuizResultSchema,
     QuizResponseSchema,
     ErrorResponseSchema,
-    QuizSubmitResponseSchema,
-    SymptomsListSchema,
-    DiseasesListSchema
+    QuizSubmitResponseSchema, QuizCreateResponseSchema
 )
 from .utils import generate_quiz_questions
 
 quiz_router = Router(tags=["Quiz"])
 
 
-@quiz_router.post("/", response={201: QuizResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+def remove_disease_probabilities(questions):
+    cleaned_questions = []
+    for question in questions:
+        cleaned_question = question.copy()
+        cleaned_question['diseases'] = list(question['diseases'].keys())
+        cleaned_questions.append(cleaned_question)
+    return cleaned_questions
+
+
+@quiz_router.post("/", response={201: QuizCreateResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 def create_quiz(request, payload: QuizCreateSchema):
     try:
         questions = generate_quiz_questions(get_ml_prediction)
@@ -62,7 +69,7 @@ def get_quizzes(request):
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
         "created_by": quiz.created_by.username,
-        "questions": quiz.questions
+        "questions": remove_disease_probabilities(quiz.questions)
     } for quiz in quizzes]
 
 
@@ -76,7 +83,7 @@ def get_quiz(request, quiz_id: int):
         "quiz_type": quiz.quiz_type,
         "difficulty": quiz.difficulty,
         "created_by": quiz.created_by.username,
-        "questions": quiz.questions
+        "questions": remove_disease_probabilities(quiz.questions)
     }
 
 
@@ -127,23 +134,3 @@ def get_quiz_result(request, quiz_id: int):
         }
     except UserQuizProgress.DoesNotExist:
         return 404, {"error": "Quiz result not found"}
-
-
-medical_router = Router(tags=["Medical"])
-
-
-@medical_router.get("/symptoms", response={200: SymptomsListSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
-def get_symptoms_list(request):
-    try:
-        symptoms = get_ml_symptoms()
-        return 200, {"symptoms": symptoms}
-    except Exception as e:
-        return 400, {"error": str(e)}
-
-@medical_router.get("/diseases", response={200: DiseasesListSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
-def get_diseases_list(request):
-    try:
-        diseases = get_ml_diseases()
-        return 200, {"diseases": diseases}
-    except Exception as e:
-        return 400, {"error": str(e)}
