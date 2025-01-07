@@ -28,10 +28,6 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.all_symptoms_path = os.path.join(self.model_dir, 'all_symptoms.joblib')
         self.symptom_severity_path = os.path.join(self.model_dir, 'symptom_severity.joblib')
 
-        self.diseases_path = os.path.join(self.model_dir, 'diseases.joblib')
-        self._all_symptoms = None
-        self._all_diseases = None
-
     @log_execution_time
     def load_model(self):
         if not os.path.exists(self.model_path):
@@ -47,22 +43,6 @@ class DiagnosisPredictionStrategy(PredictionStrategy):
         self.label_encoder = joblib.load(self.label_encoder_path)
         self.all_symptoms = joblib.load(self.all_symptoms_path)
         self.symptom_severity = joblib.load(self.symptom_severity_path)
-
-
-    def get_all_symptoms(self) -> List[str]:
-        if self._all_symptoms is None:
-            if not os.path.exists(self.all_symptoms_path):
-                raise FileNotFoundError("All symptoms file not found. Please train the model first")
-            self._all_symptoms = joblib.load(self.all_symptoms_path)
-        return self._all_symptoms
-
-    def get_all_diseases(self) -> List[str]:
-        if self._all_diseases is None:
-            if not os.path.exists(self.diseases_path):
-                raise FileNotFoundError("Diseases file not found. Please train the model first")
-            self._all_diseases = joblib.load(self.diseases_path)
-        return self._all_diseases
-
 
     def predict(self, features_df) -> Dict[str, float]:
         probabilities = self.model.predict_proba(features_df)[0]

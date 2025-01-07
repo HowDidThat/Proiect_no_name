@@ -136,3 +136,6 @@ load_dotenv()
 SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
 
 # NINJA_SKIP_REGISTRY = True  #pentru teste
+
+DATA_PATH = os.path.join(BASE_DIR, 'data', 'dataset.csv')
+SEVERITY_PATH = os.path.join(BASE_DIR, 'data', 'Symptom-severity.csv')

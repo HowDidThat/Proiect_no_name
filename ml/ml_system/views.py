@@ -4,6 +4,7 @@ from typing import List
 import pandas as pd
 from ninja import Router
 
+from ml import settings
 from .schemas import PredictionSchema, SymptomsSchema, SymptomsListSchema, DiseasesListSchema
 from .services.strategies import DiagnosisPredictionStrategy
 from .utils.decorators import log_execution_time, clean_and_validate_data
@@ -15,6 +16,8 @@ ml_router = Router()
 prediction_strategy = DiagnosisPredictionStrategy()
 
 from .utils.cache_manager import CacheManager
+
+CacheManager.initialize_cache(settings.DATA_PATH, settings.SEVERITY_PATH)
 
 @ml_router.post('/predict', response=PredictionSchema, auth=ApiAuth())
 @log_execution_time
@@ -65,12 +68,15 @@ def train_model(request):
     response = diagnosis_model.train_model()
     return {'message': 'Model trained successfully', 'metrics': response}
 
+
 @ml_router.get('/symptoms', response=SymptomsListSchema)
+@log_execution_time
 def get_symptoms(request):
-    symptoms = prediction_strategy.get_all_symptoms()
+    symptoms = CacheManager.get_symptoms()
     return {'symptoms': symptoms}
 
 @ml_router.get('/diseases', response=DiseasesListSchema)
+@log_execution_time
 def get_diseases(request):
-    diseases = prediction_strategy.get_all_diseases()
+    diseases = CacheManager.get_diseases()
     return {'diseases': diseases}
