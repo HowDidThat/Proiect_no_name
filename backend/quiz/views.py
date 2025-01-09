@@ -92,26 +92,52 @@ def get_quiz(request, quiz_id: int):
 def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
     try:
         quiz = get_object_or_404(Quiz, id=quiz_id)
-
-        total_questions = len(quiz.questions)
-        correct_answers = 0
+        total_score = 0
 
         for i, user_answer in enumerate(payload.answers):
             question = quiz.questions[i]
-            if set(user_answer.get('answer', [])) == set(question.get('symptoms', [])) or \
-                    set(user_answer.get('answer', [])) == set(question.get('diseases', {}).keys()):
-                correct_answers += 1
+            user_diseases = set(user_answer.get('answer', []))
+            actual_diseases = question.get('diseases', {})
 
-        score = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
+            all_probabilities = list(actual_diseases.values())
+            all_probabilities.sort(reverse=True)
+
+            max_score = sum(all_probabilities[:2]) / 2
+
+            min_score = sum(all_probabilities[-2:]) / 2
+
+            user_probabilities = [actual_diseases[disease] for disease in user_diseases if disease in actual_diseases]
+            if not user_probabilities:
+                question_score = 0
+            else:
+                avg_probability = sum(user_probabilities) / len(user_probabilities)
+
+                scaled_score = ((avg_probability - min_score) / (
+                            max_score - min_score)) * 100 if max_score != min_score else 0
+
+                num_answers = len(user_diseases)
+                if num_answers == 2:
+                    multiplier = 1.0
+                elif num_answers == 1:
+                    multiplier = 0.8
+                else:
+                    multiplier = 0.7
+
+                question_score = scaled_score * multiplier
+
+            question_score = max(0, min(100, question_score))
+            total_score += question_score
+
+        final_score = total_score / len(quiz.questions)
 
         UserQuizProgress.objects.create(
             user=request.user,
             quiz=quiz,
             answers=payload.answers,
-            score=score
+            score=final_score
         )
 
-        return 200, {"score": score}
+        return 200, {"score": final_score}
 
     except Exception as e:
         return 400, {"error": str(e)}
