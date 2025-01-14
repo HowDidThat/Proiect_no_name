@@ -12,9 +12,11 @@ from .schemas import (
     QuizResultSchema,
     QuizResponseSchema,
     ErrorResponseSchema,
-    QuizSubmitResponseSchema, QuizCreateResponseSchema
+    CustomQuizCreateSchema,
+    QuizSubmitResponseSchema,
+    QuizCreateResponseSchema
 )
-from .utils import generate_quiz_questions
+from .utils import get_top_and_bottom_diseases, generate_quiz_questions
 
 quiz_router = Router(tags=["Quiz"])
 
