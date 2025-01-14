@@ -28,7 +28,7 @@ def remove_disease_probabilities(questions):
     return cleaned_questions
 
 
-@quiz_router.post("/", response={201: QuizCreateResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
+@quiz_router.post("/create", response={201: QuizCreateResponseSchema, 400: ErrorResponseSchema}, auth=AuthBearer())
 def create_quiz(request, payload: QuizCreateSchema):
     try:
         questions = generate_quiz_questions(get_ml_prediction)
@@ -53,6 +53,60 @@ def create_quiz(request, payload: QuizCreateSchema):
             "difficulty": quiz.difficulty,
             "created_by": quiz.created_by.username,
             "questions": questions
+        }
+
+    except Exception as e:
+        return 400, {"error": str(e)}
+
+
+@quiz_router.post("/create/custom", response={201: QuizCreateResponseSchema, 400: ErrorResponseSchema},
+                  auth=AuthBearer())
+def create_custom_quiz(request, payload: CustomQuizCreateSchema):
+    try:
+        processed_questions = []
+
+        for idx, question in enumerate(payload.questions):
+            if not question.symptoms:
+                return 400, {"error": f"Question {idx + 1} must have at least one symptom"}
+
+            ml_response = get_ml_prediction(question.symptoms)
+
+            if not ml_response or 'predictions' not in ml_response:
+                return 400, {"error": f"Failed to get predictions for question {idx + 1}"}
+
+            relevant_diseases = {
+                disease: prob
+                for disease, prob in ml_response["predictions"].items()
+                if prob > 0
+            }
+
+            if not relevant_diseases:
+                return 400, {"error": f"No relevant diseases found for question {idx + 1}"}
+
+            selected_diseases = get_top_and_bottom_diseases(relevant_diseases)
+
+            processed_questions.append({
+                "symptoms": question.symptoms,
+                "diseases": selected_diseases
+            })
+
+        quiz = Quiz.objects.create(
+            title=payload.title,
+            description=payload.description,
+            quiz_type=payload.quiz_type,
+            difficulty=payload.difficulty,
+            created_by=request.user,
+            questions=processed_questions
+        )
+
+        return 201, {
+            "id": quiz.id,
+            "title": quiz.title,
+            "description": quiz.description,
+            "quiz_type": quiz.quiz_type,
+            "difficulty": quiz.difficulty,
+            "created_by": quiz.created_by.username,
+            "questions": processed_questions
         }
 
     except Exception as e:
@@ -93,8 +147,8 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
     try:
         quiz = get_object_or_404(Quiz, id=quiz_id)
         total_score = 0
-     
-        for i,key in enumerate(payload.answers[0].keys()):
+
+        for i, key in enumerate(payload.answers[0].keys()):
             user_answer = payload.answers[0][key]
             question = quiz.questions[i]
             user_diseases = user_answer
@@ -114,7 +168,7 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
                 avg_probability = sum(user_probabilities) / len(user_probabilities)
 
                 scaled_score = ((avg_probability - min_score) / (
-                            max_score - min_score)) * 100 if max_score != min_score else 0
+                        max_score - min_score)) * 100 if max_score != min_score else 0
 
                 num_answers = len(user_diseases)
                 if num_answers == 2:
@@ -128,7 +182,7 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
 
             question_score = max(0, min(100, question_score))
             total_score += question_score
-      
+
         final_score = round(total_score / len(quiz.questions), 2)
 
         UserQuizProgress.objects.create(

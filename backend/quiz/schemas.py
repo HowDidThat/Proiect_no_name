@@ -10,6 +10,18 @@ class QuizCreateSchema(Schema):
     difficulty: str
 
 
+class QuestionSymptomsSchema(Schema):
+    symptoms: List[str]
+
+
+class CustomQuizCreateSchema(Schema):
+    title: str
+    description: str
+    quiz_type: str
+    difficulty: str
+    questions: List[QuestionSymptomsSchema]
+
+
 class QuizSubmitSchema(Schema):
     answers: List[Dict[str, List[str]]]
 
