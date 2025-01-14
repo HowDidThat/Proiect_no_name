@@ -49,3 +49,12 @@ ml/.idea/modules.xml
 ml/.idea/vcs.xml
 ml/db.sqlite3
 ml/ml/.env
+ml/data_validation.log
+ml/.env
+backend/quiz/migrations/0005_rename_diseases_quiz_questions_remove_quiz_symptoms.py
+backend/quiz/migrations/0004_rename_symptom_disease_pairs_quiz_diseases_and_more.py
+backend/quiz/migrations/0003_rename_diseases_quiz_symptom_disease_pairs_and_more.py
+backend/quiz/migrations/0003_rename_diseases_quiz_questions_remove_quiz_symptoms_and_more.py
+backend/quiz/migrations/0002_quiz_diseases_quiz_symptoms.py
+backend/quiz/migrations/0001_initial.py
+backend/quiz/migrations/0004_rename_symptom_disease_pairs_quiz_diseases_and_more.py

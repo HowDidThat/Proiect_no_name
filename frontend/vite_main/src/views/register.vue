@@ -12,6 +12,7 @@ export default {
     const password = ref("");
     const repeat_password = ref("");
     const problems = ref([]);
+    
     const visibleProblems = computed(() => {
       return problems.value.slice(0, 2);
     });
@@ -134,7 +135,7 @@ export default {
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="year"
             type="text"
-            placeholder="NA-> not a student"
+            placeholder="0 if not applicable"
             v-model="year_of_study"
           />
         </div>

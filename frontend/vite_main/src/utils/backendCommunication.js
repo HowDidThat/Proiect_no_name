@@ -79,6 +79,7 @@ export class QuizInfo {
 export const { getUserInfo } = UserInfo;
 export const { getQuizInfo } = QuizInfo;
 
+
 export class CreateRandomQuiz {
   static async crq(token, title,description,difficulty) {
     try {
@@ -109,7 +110,83 @@ export class CreateRandomQuiz {
 export const { crq } = CreateRandomQuiz;
 
 
+export class GetQuiz {
+  static async quizData(token, id) {
+    try {
+      console.log(token);
+      const urlC = `http://127.0.0.1:8000/api/quiz/${id}`;
+      console.log(urlC);
+      const response = await axios({
+        method: "get",
+        url: urlC,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      return response;
+      ;
+    } catch (error) {
+      console.error("Error failed:", error.message);
+      return "error"
+    }
+  }
+}
 
+export const { quizData } = GetQuiz;
+
+
+
+export class SubmitQuiz {
+  static async sq(token, quizId,answers) {
+    try {
+      console.log(token);
+      const response = await axios({
+        method: "post",
+        url: `http://127.0.0.1:8000/api/quiz/${quizId}/submit`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          answers:[answers]
+        },
+      })
+      return response;
+      ;
+    } catch (error) {
+      console.error("Authentication failed:", error.message);
+      return "error"
+    }
+  }
+}
+
+export const { sq } = SubmitQuiz;
+
+
+
+export class UserTests {
+  static async getUserTests(token) {
+    try {
+      console.log(token);
+      const response = await axios({
+        method: "get",
+        url: `http://127.0.0.1:8000/api/auth/results`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      return response;
+      ;
+    } catch (error) {
+      console.error("Authentication failed:", error.message);
+      return "error"
+    }
+  }
+}
+
+export const { getUserTests } = UserTests;
 
 
 
@@ -178,3 +255,4 @@ export class QuizService {
 }
 export const { getAllDeseases } = QuizService;
 export const { getAllSymptoms } = QuizService;
+

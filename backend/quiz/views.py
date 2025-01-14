@@ -93,10 +93,11 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
     try:
         quiz = get_object_or_404(Quiz, id=quiz_id)
         total_score = 0
-
-        for i, user_answer in enumerate(payload.answers):
+     
+        for i,key in enumerate(payload.answers[0].keys()):
+            user_answer = payload.answers[0][key]
             question = quiz.questions[i]
-            user_diseases = set(user_answer.get('answer', []))
+            user_diseases = user_answer
             actual_diseases = question.get('diseases', {})
 
             all_probabilities = list(actual_diseases.values())
@@ -127,8 +128,8 @@ def submit_quiz(request, quiz_id: int, payload: QuizSubmitSchema):
 
             question_score = max(0, min(100, question_score))
             total_score += question_score
-
-        final_score = total_score / len(quiz.questions)
+      
+        final_score = round(total_score / len(quiz.questions), 2)
 
         UserQuizProgress.objects.create(
             user=request.user,

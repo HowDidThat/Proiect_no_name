@@ -199,9 +199,7 @@ export default defineComponent({
     }
 
     const create_quiz = async() => {
-      console.log(title.value);
-      console.log(description.value);
-      console.log(difficulty.value);
+
       const token = $cookies.get("access_token");
       const response = await(crq(token,title.value,description.value,difficulty.value));
       console.log(response.data.id);
@@ -369,7 +367,7 @@ const filteredSymptoms = computed(() => {
           <ul class="border p-2 rounded h-48 overflow-y-auto">
             <li v-for="(value, key) in filteredDiseases" 
                 :key="key" 
-                @click="addDiseaseToQuestion(key)"
+                
                 class="cursor-pointer hover:bg-gray-100 p-1">
                 {{ value }}
             </li>
