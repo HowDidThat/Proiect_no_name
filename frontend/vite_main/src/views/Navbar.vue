@@ -9,13 +9,13 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo/Brand -->
         <div class="flex-shrink-0">
-          <span class="text-white text-xl font-bold">Logo</span>
+          <span class="text-white text-xl font-bold">Symptom</span>
         </div>
 
         <!-- Desktop Menu -->
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#" class="text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+            <a href="/" class="text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
             <a href="/register" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</a>
             <a href="/login" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
             <a href="/account" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User</a>

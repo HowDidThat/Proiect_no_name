@@ -5,5 +5,5 @@
 body{
     height: 100vh;
     width : 100vw;
-    background: linear-gradient( #8213d2, #953935 );
+    background: linear-gradient(to left, #8213d2 0%, #953935 70%, #6d1a59 100%);
 }
