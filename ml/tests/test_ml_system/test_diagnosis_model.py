@@ -5,7 +5,7 @@ from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 import os
 import joblib
-from ml_system.ml_models.diagnosis_model import DiagnosisModel
+from ml_system.model.diagnosis_model import DiagnosisModel
 
 
 class TestDiagnosisModel:

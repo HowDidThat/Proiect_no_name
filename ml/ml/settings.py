@@ -135,3 +135,8 @@ SHARED_SECRET_KEY = os.getenv('SHARED_SECRET_KEY')
 
 DATA_PATH = os.path.join(BASE_DIR, 'data', 'dataset.csv')
 SEVERITY_PATH = os.path.join(BASE_DIR, 'data', 'Symptom-severity.csv')
+
+print("Herehere")
+print(SEVERITY_PATH)
+print(BASE_DIR)
+

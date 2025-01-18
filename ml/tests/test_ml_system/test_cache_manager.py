@@ -1,6 +1,6 @@
 from django.test import TestCase
-from ml_system.utils.cache_manager import CacheManager
-from ml_system.models import PredictionCache
+from ml_system.services.cache_manager import CacheManager
+from ml_system.model import PredictionCache
 import json
 
 

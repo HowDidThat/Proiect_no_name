@@ -1,4 +1,3 @@
-from ninja.security import HttpBearer
 import hashlib
 import hmac
 

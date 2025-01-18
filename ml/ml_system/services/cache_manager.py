@@ -4,7 +4,7 @@ from typing import List, Dict
 from ml_system.models import PredictionCache
 import json
 
-from .data_loader import DataLoader
+from ml_system.utils.data_loader import DataLoader
 
 
 class CacheManager:
@@ -20,10 +20,12 @@ class CacheManager:
 
     @staticmethod
     def set_symptoms(symptoms: List[str]):
+        print("Symptoms cached")
         CacheManager._symptoms_cache = symptoms
 
     @staticmethod
     def set_diseases(diseases: List[str]):
+        print("Diseases cached")
         CacheManager._diseases_cache = diseases
 
     @staticmethod
@@ -37,7 +39,6 @@ class CacheManager:
         if CacheManager._diseases_cache is None:
             raise ValueError("Diseases cache not initialized")
         return CacheManager._diseases_cache
-
 
     @staticmethod
     def calculate_symptoms_hash(symptoms: list) -> str:

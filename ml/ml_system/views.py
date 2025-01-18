@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 import pandas as pd
 from ninja import Router
@@ -7,17 +6,16 @@ from ninja import Router
 from ml import settings
 from .schemas import PredictionSchema, SymptomsSchema, SymptomsListSchema, DiseasesListSchema
 from .services.strategies import DiagnosisPredictionStrategy
-from .utils.decorators import log_execution_time, clean_and_validate_data
+from ml_system.services.decorators import log_execution_time, clean_and_validate_data
 from ml.api.auth import ApiAuth
-
-from ml.api.services import send_to_backend
 
 ml_router = Router()
 prediction_strategy = DiagnosisPredictionStrategy()
 
-from .utils.cache_manager import CacheManager
+from ml_system.services.cache_manager import CacheManager
 
 CacheManager.initialize_cache(settings.DATA_PATH, settings.SEVERITY_PATH)
+
 
 @ml_router.post('/predict', response=PredictionSchema, auth=ApiAuth())
 @log_execution_time
@@ -38,7 +36,6 @@ def predict_disease(request, payload: SymptomsSchema):
     if cached_predictions:
         return {'predictions': cached_predictions}
 
-
     features = prediction_strategy.preprocess_input({'symptoms': symptoms})
     features_df = pd.DataFrame([features], columns=prediction_strategy.all_symptoms)
 
@@ -51,16 +48,12 @@ def predict_disease(request, payload: SymptomsSchema):
 
     CacheManager.save_predictions_to_cache(symptoms, predictions_in_percentages)
 
-    if hasattr(payload, 'quiz_id'):
-        send_to_backend(payload.quiz_id, predictions_in_percentages)
-
     return {'predictions': predictions_in_percentages}
-
 
 
 @ml_router.get('/train')
 def train_model(request):
-    from .ml_models.diagnosis_model import DiagnosisModel
+    from ml_system.model.diagnosis_model import DiagnosisModel
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     data_path = os.path.join(base_dir, 'data', 'dataset.csv')
     severity_data_path = os.path.join(base_dir, 'data', 'Symptom-severity.csv')
@@ -74,6 +67,7 @@ def train_model(request):
 def get_symptoms(request):
     symptoms = CacheManager.get_symptoms()
     return {'symptoms': symptoms}
+
 
 @ml_router.get('/diseases', response=DiseasesListSchema)
 @log_execution_time

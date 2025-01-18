@@ -1,7 +1,6 @@
 # tests/test_ml_system/test_decorators.py
-import pytest
 from unittest.mock import Mock, patch
-from ml_system.utils.decorators import log_execution_time, clean_and_validate_data
+from ml_system.services.decorators import log_execution_time, clean_and_validate_data
 import time
 
 

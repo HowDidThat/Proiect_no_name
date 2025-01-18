@@ -2,6 +2,7 @@ from collections import OrderedDict
 
 from django.db import models
 
+
 class PredictionCache(models.Model):
     symptoms_hash = models.CharField(max_length=64, unique=True)
     predictions = models.TextField()
