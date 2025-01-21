@@ -1,7 +1,7 @@
 <script>
-import { defineComponent, onMounted, ref, computed } from "vue";
+import { defineComponent, onMounted, ref, computed, toRaw } from "vue";
 import { getAllDeseases, getAllSymptoms } from "../utils/backendCommunication";
-import { crq } from "../utils/backendCommunication";
+import { crq , ccq} from "../utils/backendCommunication";
 const quiz_type = ref("Random")
 const random_quiz = ref(true)
 const title = ref("")
@@ -188,6 +188,7 @@ const questions = ref([])
 const currentQuestionIndex = ref(0)
 const diseaseSearch = ref('')
 const symptomSearch = ref('')
+const createdQuizId = ref(0)
 import router from '../router';
 export default defineComponent({
   setup() {
@@ -246,12 +247,22 @@ export default defineComponent({
       }
     }
 
-    const submitQuestions = () => {
+    const submitQuestions = async() => {
       console.log('Submitting questions:', questions.value);
+      let answers = []
+      questions.value.forEach(element => {
+        //console.log(toRaw(element.selectedSymptoms));
+        answers.push(toRaw(element.selectedSymptoms));
+      });
+      const token = $cookies.get("access_token");
+      const response = await(ccq(token, answers));
+      createdQuizId.value = response.data.id;
+      console.log(createdQuizId.value);
+      router.push(`/takeQuiz/${createdQuizId.value}`)
 
     }
 
-    const filteredDiseases = computed(() => {
+  const filteredDiseases = computed(() => {
   const entries = Object.entries(diseases.value)
   return Object.fromEntries(
     entries.filter(([key, value]) => 
@@ -293,7 +304,8 @@ const filteredSymptoms = computed(() => {
       questions,
       currentQuestionIndex,
       diseaseSearch,
-      symptomSearch
+      symptomSearch,
+      createdQuizId
     }
   },
 });
@@ -355,7 +367,9 @@ const filteredSymptoms = computed(() => {
             <div class="container mx-auto p-4">
     <div class="bg-white rounded-lg shadow-lg p-6">
       <h1 class="text-2xl mb-4">Medical Questionnaire Builder</h1>
-      
+      <div v-if="createdQuizId.value">
+      <h1>Created quiz id: {{ createdQuizId.value }}</h1>
+      </div>
       <div class="grid grid-cols-2 gap-4 mb-6">
         <div>
           <h2 class="text-lg mb-2">Diseases</h2>
@@ -439,6 +453,7 @@ const filteredSymptoms = computed(() => {
   </div>
         </div>
     </div>  
+
 </div>
 </template>
 

@@ -80,13 +80,13 @@ export const { getUserInfo } = UserInfo;
 export const { getQuizInfo } = QuizInfo;
 
 
-export class CreateRandomQuiz {
+export class CreateQuiz {
   static async crq(token, title,description,difficulty) {
     try {
       console.log(token);
       const response = await axios({
         method: "post",
-        url: "http://127.0.0.1:8000/api/quiz/",
+        url: "http://127.0.0.1:8000/api/quiz/create",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -105,10 +105,39 @@ export class CreateRandomQuiz {
       return "error"
     }
   }
+
+  static async ccq(token, data) {
+    try {
+      console.log(data);
+      const response = await axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/quiz/create/custom",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          title: "default",
+          description: "default",
+          quiz_type: "default",
+          difficulty: "easy",
+          questions: data.map(symptoms => ({ symptoms }))
+        },
+      })
+      return response;
+      ;
+    } catch (error) {
+      console.error("Authentication failed:", error.message);
+      return "error"
+    }
+  }
+
+
 }
 
-export const { crq } = CreateRandomQuiz;
+export const { crq } = CreateQuiz;
 
+export const { ccq } = CreateQuiz;
 
 export class GetQuiz {
   static async quizData(token, id) {
@@ -125,7 +154,7 @@ export class GetQuiz {
         }
       })
       return response;
-      ;
+    
     } catch (error) {
       console.error("Error failed:", error.message);
       return "error"
@@ -238,15 +267,7 @@ export class QuizService {
 
   static async getAllSymptoms(token) {
     try {
-    //   const response = await axios({
-    //     method: "get",
-    //     url: "http://127.0.0.1:8000/api/quiz/diseases",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorisation: `Bearer ${token}`,
-    //     },
-    //   });
-    //   return response
+
     return ["Symptom 1", "Symptom 2", "Symptom 3", "Symptom 4"];
     } catch (error){
         return "404";

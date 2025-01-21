@@ -44,7 +44,7 @@
       imageName : "classroom.webp"
     },
     {
-      title: "Chalange your friends",
+      title: "Challenge your friends",
       description: "",
       buttonText: "Meet Our Team",
       imageWidth: 600,

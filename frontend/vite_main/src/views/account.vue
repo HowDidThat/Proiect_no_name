@@ -16,6 +16,7 @@ const totalPages = ref(0) ;//computed(() => Math.ceil(totalItems.value / itemsPe
 const startIndex = ref(0) ;//computed(() => (currentPage.value - 1) * itemsPerPage)
 const endIndex = ref(0) ;//computed(() => startIndex.value + itemsPerPage)
 const testResults = ref([]);
+const quizId = ref('');
 
 onMounted(async () => {
   const token = $cookies.get("access_token");
@@ -121,6 +122,12 @@ const logout = () =>{
   router.push("/login");
 }
 
+const goToQuiz = () => {
+  if (quizId.value) {
+    router.push(`/takeQuiz/${quizId.value}`)
+  }
+}
+
 </script>
 
 <template>
@@ -173,24 +180,39 @@ const logout = () =>{
              </dd>
            </div>
          </dl>
-         <div class="flex gap-4 mt-4">
-      <!-- Navigation button -->
-      <router-link 
-        to="/quiz" 
-        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200 shadow-sm"
-      >
-        Create quiz
-      </router-link>
+        </div>
+        <div class="flex gap-4 mt-4">
+     <!-- Navigation button -->
+     <router-link 
+       to="/quiz" 
+       class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200 shadow-sm"
+     >
+       Create quiz
+     </router-link>
 
-      <!-- Function button -->
-      <button 
-        @click="logout" 
-        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200 shadow-sm"
-      >
-        Log out
-      </button>
-    </div>
-       </div>
+     <input
+     v-model="quizId"
+     type="number"
+     class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+     placeholder="Enter quiz ID"
+   />
+
+   <!-- Dynamic navigation button -->
+   <button
+     @click="goToQuiz"
+     class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-200 shadow-sm"
+   >
+     Go to Quiz
+   </button>
+
+     <!-- Function button -->
+     <button 
+       @click="logout" 
+       class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200 shadow-sm"
+     >
+       Log out
+     </button>
+   </div>
      </div>
     </div>
     </div>
@@ -225,7 +247,7 @@ const logout = () =>{
                 {{ test.quiz_id }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {{ quizName(test.quiz_name) }}
+                Quiz {{ test.quiz_id }}
               </td>
               <td class="px-6 py-4 text-sm text-gray-500">
                 {{ toReadableDate(test.completed_at) }}

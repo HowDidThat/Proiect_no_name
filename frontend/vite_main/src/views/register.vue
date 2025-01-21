@@ -1,5 +1,5 @@
 <script>
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref, computed, defineAsyncComponent, toRaw} from "vue";
 import { validatePassword } from "../utils/formUtils";
 import { createAccount } from "../utils/backendCommunication";
 import router from "../router/index";
@@ -14,8 +14,16 @@ export default {
     const problems = ref([]);
     
     const visibleProblems = computed(() => {
-      return problems.value.slice(0, 2);
+      const data = toRaw(problems.value);
+      //console.log(data.slice(0,2))
+      return data.slice(0, 2);
     });
+
+    const numberProblems = computed(()=>{
+      if (problems.value.length)
+        return problems.value.length;
+      return 0
+    })
 
     const handleCreateAccount = () => {
       problems.value = [];
@@ -54,19 +62,27 @@ export default {
           institution.value,
           year_of_study.value
         )
-        console.log(problems.value)
-        if (response === "ok")
-          {
-            router.push('/login');
-          }
-        else{
-        problems.value = [...problems.value, response];
-        console.log(problems.value);
+        problems.value = toRaw(problems.value);
+        if (response === "ok") {
+        router.push('/login');
+    } else {
+        const server_complaints = response;
+        console.log('Server Complaints:', server_complaints); // Add this to inspect complaints
+        
+        if (Array.isArray(server_complaints)) {
+            server_complaints.forEach(element => {
+                console.log(element);
+            });
+            problems.value.push(server_complaints);
+        } else {
+            console.warn('Server complaints are not an array:', server_complaints);
+            problems.value.push({message : server_complaints});
         }
+    }
+    const clone = toRaw(problems.value);
+      problems.value = clone;
+      console.log(Array(problems.value))
       };
-
-    
-
 
     return {
       username,
@@ -78,7 +94,8 @@ export default {
       handleCreateAccount,
       problems,
       visibleProblems,
-      create_account
+      create_account,
+      numberProblems
     };
   },
 };
@@ -176,8 +193,8 @@ export default {
             {{ message }}
           </li>
           <!-- Show indication if there are more problems -->
-          <li v-if="problems.length > 2" class="text-gray-500 italic">
-            ...and {{ problems.length - 2 }} more issues to fix
+          <li v-if="numberProblems > 2" class="text-gray-500 italic">
+            ...and {{ numberProblems - 2 }} more issues to fix
           </li>
         </ul>
 
