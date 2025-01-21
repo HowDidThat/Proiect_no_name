@@ -59,7 +59,7 @@ class QuizAppUser(HttpUser):
     @task(1)
     def create_quiz(self):
         with self.client.post(
-                "/api/quiz/",
+                "/api/quiz/create",
                 json={
                     "title": f"Load Test Quiz - {self.username}",
                     "description": "Quiz created during load testing",
